@@ -1,0 +1,28 @@
+.App {
+  /* background-color: #282c34; */
+  font-size: 16px;
+  color: white;
+}
+
+.App li span{
+  cursor: pointer;
+}
+
+.App li span:hover{
+  color: #ccc;
+}
+
+.app-header {
+  position: fixed;
+  background-color:#2B3E50;
+  z-index: 2;
+}
+
+.app-content{
+  margin-top: 40px;
+}
+
+.app-side-tags{
+  margin-top: 40px;
+  position: fixed;
+}

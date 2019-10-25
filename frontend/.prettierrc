@@ -1,0 +1,10 @@
+{
+	"useTabs": true,
+	"printWidth": 75,
+	"tabWidth": 1,
+	"singleQuote": false,
+	"trailingComma": "es5",
+	"jsxBracketSameLine": false,
+	"parser": "flow",
+	"semi": false
+}

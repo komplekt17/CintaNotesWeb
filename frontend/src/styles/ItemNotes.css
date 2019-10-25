@@ -1,0 +1,20 @@
+.note {
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+.note-header,
+.note-footer {
+  font-weight: bold;
+  padding: 3px;
+  /* background-color: #282C34; */
+}
+.note-footer span {
+  cursor: pointer;
+}
+.note-date {
+  text-align: right;
+}
+.note-text {
+  min-height: 50px;
+}

@@ -1,0 +1,13 @@
+.section-panel{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #4E5D6C;
+}
+
+.nav-tabs{
+ border: none !important; 
+}
+
+.section-tab:hover{
+  background-color: #282C34;
+}

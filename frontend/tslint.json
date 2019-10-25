@@ -1,0 +1,34 @@
+{
+	"extends": [
+		"tslint:recommended", 
+		"tslint-react", 
+		"tslint-config-prettier"
+	],
+	"linterOptions": {
+	  "exclude": [
+			"node_modules/**/*.ts"
+	  ]
+	},
+	"rules": {
+	  "object-literal-sort-keys": false,
+	  "member-access": false,
+		"member-ordering": false,
+		"variable-name": false,
+	  "ordered-imports": false,
+	  "quotemark": false,
+	  "no-console": false,
+	  "semicolon": false,
+		"jsx-no-lambda": false,
+		"jsx-boolean-value": false,
+		"jsx-self-close": false,
+		"jsx-a11y/anchor-is-valid": [ "error", {
+			"components": [ "Link" ],
+			"specialLink": [ "hrefLeft", "hrefRight" ],
+			"aspects": [ "noHref", "invalidHref", "preferButton" ]
+		}],
+		"no-shadowed-variable": false,
+		"no-var-requires": false,
+		"no-empty": false, 
+		"no-empty-interface": false
+	}
+}
