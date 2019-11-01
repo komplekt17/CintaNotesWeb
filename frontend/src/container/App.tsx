@@ -5,19 +5,21 @@ import {
 	SideTags,
 	SearchPanel,
 	ItemNotes,
+	AddNewSectionPopup,
 } from "../components"
-import { getAllNotesAction } from "../actions"
+import { getAllNotesAction, addNewSectionAction } from "../actions"
 import "bootswatch/dist/superhero/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
 import "../styles/App.css"
 
 interface IAppProps {
 	store: { sections: [], tags: [], notes: [] };
-	getAllNotesToApp: any;
+	getAllNotesToApp: () => void;
+	addNewSectionToApp: (text: string) => string;
 }
 
 const App: React.FC<IAppProps> = props => {
-	const { store, getAllNotesToApp } = props
+	const { store, getAllNotesToApp, addNewSectionToApp } = props
 	const { sections, tags, notes } = store
 
 	return (
@@ -38,6 +40,7 @@ const App: React.FC<IAppProps> = props => {
 					</main>
 				</div>
 			</div>
+			<AddNewSectionPopup addNewSection={addNewSectionToApp} />
 		</div>
 	)
 }
@@ -49,6 +52,8 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
 	return {
 		getAllNotesToApp: () => dispatch(getAllNotesAction()),
+		addNewSectionToApp: (text: string) =>
+			dispatch(addNewSectionAction(text)),
 	}
 }
 

@@ -10,7 +10,7 @@ let listTags = <h3>{ERROR_TEXT}</h3>
 
 const SideTags: React.FC<ISideTagsProps> = ({ tags }) => {
 	if (tags && tags.length) {
-		listTags = tags.map((item: any, index: any) => {
+		listTags = tags.map((item: any, index: number) => {
 			return (
 				<li key={index} className="nav-item d-flex justify-content-between">
 					<span className="nav-link" onClick={() => {}}>

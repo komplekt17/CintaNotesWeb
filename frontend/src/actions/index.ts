@@ -5,4 +5,11 @@ const getAllNotesAction = () => {
 	}
 }
 
-export { getAllNotesAction }
+const addNewSectionAction = (text: string) => {
+	return {
+		type: "ADD_NEW_SECTION_ACTION",
+		text,
+	}
+}
+
+export { getAllNotesAction, addNewSectionAction }

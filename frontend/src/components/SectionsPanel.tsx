@@ -8,7 +8,9 @@ interface ISectionsPanelProps {
 
 let listSections = <h3>{ERROR_TEXT}</h3>
 
-const SectionsPanel: React.FC<ISectionsPanelProps> = ({ sections }) => {
+const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
+	const { sections } = props
+
 	if (sections && sections.length !== 0) {
 		listSections = sections.map((item: any, index: any) => {
 			return (
@@ -24,7 +26,12 @@ const SectionsPanel: React.FC<ISectionsPanelProps> = ({ sections }) => {
 			<ul className="nav nav-tabs">
 				{listSections}
 				<li className="nav-item section-tab">
-					<span className="nav-link">
+					<span
+						className="nav-link"
+						onClick={() => {
+							alert("hello, guser")
+						}}
+					>
 						<i className="fas fa-plus" />
 					</span>
 				</li>

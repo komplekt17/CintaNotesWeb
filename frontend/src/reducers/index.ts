@@ -85,7 +85,7 @@ const initialState = {
 	],
 }
 
-const Reducer = (state = initialState, action: any) => {
+export const Reducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case "GET_ALL_NOTES_ACTION":
 			return {
@@ -98,5 +98,3 @@ const Reducer = (state = initialState, action: any) => {
 			return state
 	}
 }
-
-export default Reducer
