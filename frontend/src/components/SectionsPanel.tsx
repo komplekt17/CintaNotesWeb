@@ -1,4 +1,5 @@
 import * as React from "react"
+import $ from "jquery"
 import { ERROR_TEXT } from "../constants"
 import "../styles/SectionsPanel.css"
 
@@ -15,7 +16,9 @@ const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 		listSections = sections.map((item: any, index: any) => {
 			return (
 				<li key={index} className="nav-item section-tab">
-					<span className="nav-link">{item.nameSection}</span>
+					<span className="nav-link">
+						{item.nameSection} <i className="fas fa-edit" />
+					</span>
 				</li>
 			)
 		})
@@ -29,7 +32,7 @@ const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 					<span
 						className="nav-link"
 						onClick={() => {
-							alert("hello, guser")
+							$("#modal-addsection").modal("show")
 						}}
 					>
 						<i className="fas fa-plus" />

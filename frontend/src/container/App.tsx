@@ -1,4 +1,5 @@
 import React from "react"
+// import $ from "jquery"
 import { connect } from "react-redux"
 import {
 	SectionsPanel,
@@ -7,20 +8,31 @@ import {
 	ItemNotes,
 	AddNewSectionPopup,
 } from "../components"
-import { getAllNotesAction, addNewSectionAction } from "../actions"
+import {
+	getAllNotesAction,
+	addNewSectionAction,
+	handlerInputsValueAction,
+} from "../actions/actions"
 import "bootswatch/dist/superhero/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
 import "../styles/App.css"
 
 interface IAppProps {
-	store: { sections: [], tags: [], notes: [] };
+	store: { sections: [], tags: [], notes: [], inputValueSection: string };
 	getAllNotesToApp: () => void;
-	addNewSectionToApp: (text: string) => string;
+	addNewSectionToApp: (text: string) => void;
+	handlerInputsValueToApp: (name: string, value: string) => void;
 }
 
 const App: React.FC<IAppProps> = props => {
-	const { store, getAllNotesToApp, addNewSectionToApp } = props
-	const { sections, tags, notes } = store
+	const {
+		store,
+		getAllNotesToApp,
+		addNewSectionToApp,
+		handlerInputsValueToApp,
+	} = props
+
+	const { sections, tags, notes, inputValueSection } = store
 
 	return (
 		<div className="App">
@@ -40,7 +52,11 @@ const App: React.FC<IAppProps> = props => {
 					</main>
 				</div>
 			</div>
-			<AddNewSectionPopup addNewSection={addNewSectionToApp} />
+			<AddNewSectionPopup
+				addNewSection={addNewSectionToApp}
+				handlerInputsValue={handlerInputsValueToApp}
+				inputValueSection={inputValueSection}
+			/>
 		</div>
 	)
 }
@@ -52,8 +68,10 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
 	return {
 		getAllNotesToApp: () => dispatch(getAllNotesAction()),
-		addNewSectionToApp: (text: string) =>
-			dispatch(addNewSectionAction(text)),
+		handlerInputsValueToApp: (name: string, value: string) =>
+			dispatch(handlerInputsValueAction(name, value)),
+		addNewSectionToApp: (nameButton: string) =>
+			dispatch(addNewSectionAction(nameButton)),
 	}
 }
 

@@ -10,3 +10,12 @@
   position: sticky;
   top: 42px
 }
+
+.section-tab .fa-edit{
+  opacity: 0;
+  transition: ease-in-out opacity .5s;
+}
+.section-tab:hover .fa-edit{
+  opacity: 1;
+}
+
