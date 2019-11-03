@@ -1,23 +1,38 @@
 import * as React from "react"
 import $ from "jquery"
-import { ERROR_TEXT } from "../constants"
+import { ISectionsPanelProps } from "../types"
+import {
+	ERROR_TEXT,
+	HEADER_ADD_SECTION,
+	HEADER_REMOVE_SECTION,
+} from "../constants"
 import "../styles/SectionsPanel.css"
 
-interface ISectionsPanelProps {
-	sections: any;
-}
-
-let listSections = <h3>{ERROR_TEXT}</h3>
+let listSections: any = <h3>{ERROR_TEXT}</h3>
 
 const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
-	const { sections } = props
+	const { sections, handlerHeaderPopup, handlerInputsValue } = props
 
 	if (sections && sections.length !== 0) {
 		listSections = sections.map((item: any, index: any) => {
 			return (
 				<li key={index} className="nav-item section-tab">
 					<span className="nav-link">
-						{item.nameSection} <i className="fas fa-edit" />
+						{item.nameSection}{" "}
+						<i
+							className="fas fa-edit text-success"
+							onClick={() => {
+								alert(`in progress - ${item.nameSection}`)
+							}}
+						/>{" "}
+						<i
+							className="fas fa-minus-circle text-danger"
+							onClick={() => {
+								handlerHeaderPopup(HEADER_REMOVE_SECTION)
+								handlerInputsValue("saveIdRemovedSection", item._id)
+								$("#modal-removeSection").modal("show")
+							}}
+						/>
 					</span>
 				</li>
 			)
@@ -32,7 +47,8 @@ const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 					<span
 						className="nav-link"
 						onClick={() => {
-							$("#modal-addsection").modal("show")
+							handlerHeaderPopup(HEADER_ADD_SECTION)
+							$("#modal-addSection").modal("show")
 						}}
 					>
 						<i className="fas fa-plus" />

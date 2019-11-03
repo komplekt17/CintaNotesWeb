@@ -1,13 +1,19 @@
 import $ from "jquery"
+import { ICurrentDetails, IState } from "../types"
 
 const initialState = {
 	auth: false,
-	textModal: "",
+	namePopup: "",
 	filter: "all",
 	loading: false,
 	loaded: false,
 	error: null,
-	inputValueSection: "",
+	currentDetails: {
+		section: { _id: "", nameSection: "" },
+		tag: { _id: "", value: "" },
+		note: { _id: "", value: "" },
+		user: { _id: "1", login: "", pass: "", status: "" },
+	},
 	sections: [
 		{ _id: "1", nameSection: "Tab-1", userID: "1" },
 		{ _id: "2", nameSection: "Tab-2", userID: "1" },
@@ -88,23 +94,109 @@ const initialState = {
 	],
 }
 
+// генератор случайного ID
 const idRand = (): string => {
 	const id = Math.random()
 	return id.toString()
 }
 
-const addingSection = (state: any): any => {
+// обработчик значений инпутов
+const handlerValueInputs = (
+	state: IState,
+	name: string,
+	value: string
+): ICurrentDetails => {
+	let obj = state.currentDetails
+	// сохраняем input value section
+	if (name === "nameSection") {
+		// for (const key in obj) {
+		// 	if (key === "section") {
+		// 		const innerObj = obj[key]
+		// 		// перебор полей section
+		// 		for (const innerKey in innerObj) {
+		// 			if (innerKey === "nameSection") {
+		// 				innerObj[innerKey] = value
+		// 			}
+		// 		}
+		// 	}
+		// }
+		obj = getObjDetailsSection(obj, "section", "nameSection", value)
+	}
+	// очищаем поле nameSection, если new Section добавлена
+	else if (name === "buttonAddSection") {
+		obj = getObjDetailsSection(obj, "section", "nameSection", (value = ""))
+	}
+	// сохраняем id удаляемой section
+	else if (name === "saveIdRemovedSection") {
+		obj = getObjDetailsSection(obj, "section", "_id", value)
+	}
+	// очищаем поле nameSection, если new Section добавлена
+	else if (name === "buttonRemoveSection") {
+		obj = getObjDetailsSection(obj, "section", "_id", (value = ""))
+	}
+	return obj
+}
+// перебор свойств currentDetails.section
+const getObjDetailsSection = (
+	obj: any,
+	keyName: string,
+	innerKeyName: string,
+	value: string
+): any => {
+	// перебираем свойства-объекты объекта и при совпадении полей с name
+	// присваиваем полю новое значение value
+	// перебор полей currentDetails
+	for (const key in obj) {
+		if (key === keyName) {
+			const innerObj = obj[key]
+			// перебор полей section
+			for (const innerKey in innerObj) {
+				if (innerKey === innerKeyName) {
+					innerObj[innerKey] = value
+				}
+			}
+		}
+	}
+	return obj
+}
+
+// добавление новой section
+const addingSection = (
+	state: IState
+): Array<{
+	_id: string,
+	nameSection: string,
+	userID: string,
+}> => {
 	const arr = state.sections.slice()
 	const obj = {
 		_id: idRand(),
-		nameSection: state.inputValueSection,
-		userID: "1",
+		nameSection: state.currentDetails.section.nameSection,
+		userID: state.currentDetails.user._id,
 	}
 	arr.push(obj)
 	return arr
 }
 
-export const Reducer = (state = initialState, action: any) => {
+// удаление section
+const removingSection = (
+	state: IState
+): Array<{
+	_id: string,
+	nameSection: string,
+	userID: string,
+}> => {
+	const arr = state.sections.slice()
+	const idx = state.currentDetails.section._id
+	// ищем заметку с id === idx
+	for (let i: number = 0; i < arr.length; i++) {
+		// вырезаем элемент
+		if (arr[i]._id === idx) arr.splice(i, 1)
+	}
+	return arr
+}
+
+export const Reducer = (state: IState = initialState, action: any) => {
 	switch (action.type) {
 		case "GET_ALL_NOTES_ACTION":
 			return {
@@ -113,18 +205,39 @@ export const Reducer = (state = initialState, action: any) => {
 				loaded: true,
 			}
 
-		case "HANDLER_INPUTS_VALUE_ACTION":
+		case "HANDLER_VALUE_INPUTS_ACTION":
+			console.log(action.name, action.value)
 			return {
 				...state,
-				inputValueSection: action.value,
+				currentDetails: handlerValueInputs(state, action.name, action.value),
+			}
+
+		case "HANDLER_HEADER_POPUP":
+			return {
+				...state,
+				namePopup: action.header,
 			}
 
 		case "ADD_NEW_SECTION_ACTION":
-			$("#modal-addsection").modal("hide")
+			$("#modal-addSection").modal("hide")
 			return {
 				...state,
 				sections: addingSection(state),
-				inputValueSection: " ",
+				currentDetails: handlerValueInputs(state, action.name, ""),
+			}
+
+		case "EDIT_SECTION_ACTION":
+			$("#modal-editSection").modal("hide")
+			return {
+				...state,
+			}
+
+		case "REMOVE_SECTION_ACTION":
+			$("#modal-removeSection").modal("hide")
+			return {
+				...state,
+				sections: removingSection(state),
+				currentDetails: handlerValueInputs(state, action.name, ""),
 			}
 
 		default:

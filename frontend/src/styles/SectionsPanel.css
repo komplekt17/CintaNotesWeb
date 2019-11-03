@@ -11,3 +11,14 @@
 .section-tab:hover{
   background-color: #282C34;
 }
+
+.section-tab .fa-edit, 
+.section-tab .fa-minus-circle{
+  opacity: 0;
+  transition: ease-in-out opacity .5s;
+}
+
+.section-tab:hover .fa-edit, 
+.section-tab:hover .fa-minus-circle{
+  opacity: 1;
+}

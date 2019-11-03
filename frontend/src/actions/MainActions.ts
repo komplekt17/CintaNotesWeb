@@ -7,17 +7,21 @@ const getAllNotesAction = () => {
 
 const handlerInputsValueAction = (name: string, value: string) => {
 	return {
-		type: "HANDLER_INPUTS_VALUE_ACTION",
+		type: "HANDLER_VALUE_INPUTS_ACTION",
 		name,
 		value,
 	}
 }
 
-const addNewSectionAction = (name: string) => {
+const handlerHeaderPopupAction = (header: string) => {
 	return {
-		type: "ADD_NEW_SECTION_ACTION",
-		name,
+		type: "HANDLER_HEADER_POPUP",
+		header,
 	}
 }
 
-export { getAllNotesAction, addNewSectionAction, handlerInputsValueAction }
+export {
+	getAllNotesAction,
+	handlerInputsValueAction,
+	handlerHeaderPopupAction,
+}
