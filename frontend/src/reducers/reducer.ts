@@ -1,7 +1,7 @@
 import $ from "jquery"
 import { ICurrentDetails, IState } from "../types"
 
-const initialState = {
+export const initialState = {
 	auth: false,
 	namePopup: "",
 	filter: "all",
@@ -10,9 +10,18 @@ const initialState = {
 	error: null,
 	currentDetails: {
 		section: { _id: "", nameSection: "" },
-		tag: { _id: "", value: "" },
-		note: { _id: "", value: "" },
-		user: { _id: "1", login: "", pass: "", status: "" },
+		tag: { _id: "", nameTag: "", userID: "", sectionID: "" },
+		note: {
+			_id: "",
+			header: "",
+			text: "",
+			userID: "",
+			sectionID: "",
+			tagID: "",
+			dateCreated: "",
+			dateModified: "",
+		},
+		userProfile: { _id: "1", login: "", pass: "", status: "", lang: "EN" },
 	},
 	sections: [
 		{ _id: "1", nameSection: "Tab-1", userID: "1" },
@@ -100,56 +109,62 @@ const idRand = (): string => {
 	return id.toString()
 }
 
-// обработчик значений инпутов
+// универсальный обработчик разных значений input'ов для currentDetails
 const handlerValueInputs = (
 	state: IState,
 	name: string,
 	value: string
 ): ICurrentDetails => {
 	let obj = state.currentDetails
-	// сохраняем input value section
-	if (name === "nameSection") {
-		// for (const key in obj) {
-		// 	if (key === "section") {
-		// 		const innerObj = obj[key]
-		// 		// перебор полей section
-		// 		for (const innerKey in innerObj) {
-		// 			if (innerKey === "nameSection") {
-		// 				innerObj[innerKey] = value
-		// 			}
-		// 		}
-		// 	}
-		// }
-		obj = getObjDetailsSection(obj, "section", "nameSection", value)
+
+	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.section -------
+
+	// сохраняем value input добавляемой или редактируемой section
+	if (name === "addNameSection" || name === "editNameSection") {
+		obj = getNewObjDetails(obj, "section", "nameSection", value)
 	}
-	// очищаем поле nameSection, если new Section добавлена
-	else if (name === "buttonAddSection") {
-		obj = getObjDetailsSection(obj, "section", "nameSection", (value = ""))
+	// очищаем поле nameSection, если Section added or edited
+	else if (name === "buttonAddSection" || name === "buttonEditSection") {
+		obj = getNewObjDetails(obj, "section", "nameSection", (value = ""))
 	}
-	// сохраняем id удаляемой section
-	else if (name === "saveIdRemovedSection") {
-		obj = getObjDetailsSection(obj, "section", "_id", value)
+	// сохраняем _id удаляемой или редактируемой section
+	else if (
+		name === "saveIdRemovedSection" ||
+		name === "saveIdEditedSection"
+	) {
+		obj = getNewObjDetails(obj, "section", "_id", value)
 	}
-	// очищаем поле nameSection, если new Section добавлена
-	else if (name === "buttonRemoveSection") {
-		obj = getObjDetailsSection(obj, "section", "_id", (value = ""))
+	// очищаем поле _id, если Section removed или edited
+	else if (
+		name === "buttonRemoveSection" ||
+		name === "buttonEditIdSection"
+	) {
+		obj = getNewObjDetails(obj, "section", "_id", (value = ""))
 	}
+
+	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.tag -------
+
+	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.note -------
+
+	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.user -------
+
 	return obj
 }
-// перебор свойств currentDetails.section
-const getObjDetailsSection = (
+
+// универсальный перебор любых свойств currentDetails
+const getNewObjDetails = (
 	obj: any,
 	keyName: string,
 	innerKeyName: string,
 	value: string
 ): any => {
-	// перебираем свойства-объекты объекта и при совпадении полей с name
+	// перебираем свойства-объекты currentDetails и при совпадении имён полей
 	// присваиваем полю новое значение value
-	// перебор полей currentDetails
+	// перебор полей объкта currentDetails
 	for (const key in obj) {
 		if (key === keyName) {
 			const innerObj = obj[key]
-			// перебор полей section
+			// перебор полей объкта section
 			for (const innerKey in innerObj) {
 				if (innerKey === innerKeyName) {
 					innerObj[innerKey] = value
@@ -160,9 +175,10 @@ const getObjDetailsSection = (
 	return obj
 }
 
-// добавление новой section
+// добавление section
 const addingSection = (
-	state: IState
+	state: IState,
+	valueInputSection: string
 ): Array<{
 	_id: string,
 	nameSection: string,
@@ -171,27 +187,46 @@ const addingSection = (
 	const arr = state.sections.slice()
 	const obj = {
 		_id: idRand(),
-		nameSection: state.currentDetails.section.nameSection,
-		userID: state.currentDetails.user._id,
+		nameSection: valueInputSection,
+		userID: state.currentDetails.userProfile._id,
 	}
 	arr.push(obj)
 	return arr
 }
 
-// удаление section
-const removingSection = (
-	state: IState
+// редактирование section
+const editingSection = (
+	state: IState,
+	id: string,
+	value: string
 ): Array<{
 	_id: string,
 	nameSection: string,
 	userID: string,
 }> => {
 	const arr = state.sections.slice()
-	const idx = state.currentDetails.section._id
-	// ищем заметку с id === idx
+	// получаем index элемента массива sections с _id === id
+	const index = arr.findIndex(param => param._id === id)
+	// присваиваем новое value полю section.nameSection
+	arr[index].nameSection = value
+
+	return arr
+}
+
+// удаление section
+const removingSection = (
+	state: IState,
+	id: string
+): Array<{
+	_id: string,
+	nameSection: string,
+	userID: string,
+}> => {
+	const arr = state.sections.slice()
+	// находим section с _id === idx
 	for (let i: number = 0; i < arr.length; i++) {
 		// вырезаем элемент
-		if (arr[i]._id === idx) arr.splice(i, 1)
+		if (arr[i]._id === id) arr.splice(i, 1)
 	}
 	return arr
 }
@@ -206,7 +241,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "HANDLER_VALUE_INPUTS_ACTION":
-			console.log(action.name, action.value)
+			// console.log(action.name, action.value)
 			return {
 				...state,
 				currentDetails: handlerValueInputs(state, action.name, action.value),
@@ -218,27 +253,30 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				namePopup: action.header,
 			}
 
+		// ======= SECTIONS =======
+
 		case "ADD_NEW_SECTION_ACTION":
 			$("#modal-addSection").modal("hide")
 			return {
 				...state,
-				sections: addingSection(state),
-				currentDetails: handlerValueInputs(state, action.name, ""),
+				sections: addingSection(state, action.value),
 			}
 
 		case "EDIT_SECTION_ACTION":
 			$("#modal-editSection").modal("hide")
 			return {
 				...state,
+				sections: editingSection(state, action.id, action.value),
 			}
 
 		case "REMOVE_SECTION_ACTION":
 			$("#modal-removeSection").modal("hide")
 			return {
 				...state,
-				sections: removingSection(state),
-				currentDetails: handlerValueInputs(state, action.name, ""),
+				sections: removingSection(state, action.id),
 			}
+
+		// ======= END SECTIONS =======
 
 		default:
 			return state

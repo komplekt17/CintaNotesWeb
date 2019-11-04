@@ -7,11 +7,13 @@ import {
 	SearchPanel,
 	ItemNotes,
 	AddNewSectionPopup,
+	EditSectionPopup,
 	RemoveSectionPopup,
 } from "../components"
 import {
 	getAllNotesAction,
 	addNewSectionAction,
+	editSectionAction,
 	removeSectionAction,
 	handlerInputsValueAction,
 	handlerHeaderPopupAction,
@@ -26,6 +28,7 @@ const App: React.FC<IAppProps> = props => {
 		store,
 		getAllNotesToApp,
 		addNewSectionToApp,
+		editSectionToApp,
 		removeSectionToApp,
 		handlerInputsValueToApp,
 		handlerHeaderPopupToApp,
@@ -61,6 +64,13 @@ const App: React.FC<IAppProps> = props => {
 				inputValueSection={currentDetails.section.nameSection}
 				namePopup={namePopup}
 			/>
+			<EditSectionPopup
+				editSection={editSectionToApp}
+				handlerInputsValue={handlerInputsValueToApp}
+				inputValueSection={currentDetails.section.nameSection}
+				namePopup={namePopup}
+				idEditedSection={currentDetails.section._id}
+			/>
 			<RemoveSectionPopup
 				removeSection={removeSectionToApp}
 				handlerInputsValue={handlerInputsValueToApp}
@@ -82,8 +92,10 @@ const mapDispatchToProps = (dispatch: any) => {
 			dispatch(handlerHeaderPopupAction(header)),
 		handlerInputsValueToApp: (name: string, value: string) =>
 			dispatch(handlerInputsValueAction(name, value)),
-		addNewSectionToApp: (nameButton: string) =>
-			dispatch(addNewSectionAction(nameButton)),
+		addNewSectionToApp: (value: string) =>
+			dispatch(addNewSectionAction(value)),
+		editSectionToApp: (id: string, value: string) =>
+			dispatch(editSectionAction(id, value)),
 		removeSectionToApp: (id: string) => dispatch(removeSectionAction(id)),
 	}
 }

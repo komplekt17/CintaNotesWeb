@@ -4,6 +4,7 @@ import { ISectionsPanelProps } from "../types"
 import {
 	ERROR_TEXT,
 	HEADER_ADD_SECTION,
+	HEADER_EDIT_SECTION,
 	HEADER_REMOVE_SECTION,
 } from "../constants"
 import "../styles/SectionsPanel.css"
@@ -22,13 +23,19 @@ const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						<i
 							className="fas fa-edit text-success"
 							onClick={() => {
-								alert(`in progress - ${item.nameSection}`)
+								handlerHeaderPopup(HEADER_EDIT_SECTION)
+								// сохраняем value input редактируемой section
+								handlerInputsValue("editNameSection", item.nameSection)
+								// сохраняем _id редактируемой section
+								handlerInputsValue("saveIdEditedSection", item._id)
+								$("#modal-editSection").modal("show")
 							}}
 						/>{" "}
 						<i
 							className="fas fa-minus-circle text-danger"
 							onClick={() => {
 								handlerHeaderPopup(HEADER_REMOVE_SECTION)
+								// сохраняем _id удаляемой section
 								handlerInputsValue("saveIdRemovedSection", item._id)
 								$("#modal-removeSection").modal("show")
 							}}

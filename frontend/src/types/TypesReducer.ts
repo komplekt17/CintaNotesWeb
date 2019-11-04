@@ -5,17 +5,26 @@ export interface ICurrentDetails {
 	};
 	tag: {
 		_id: string,
-		value: string,
+		nameTag: string,
+		userID: string,
+		sectionID: string,
 	};
 	note: {
 		_id: string,
-		value: string,
+		header: string,
+		text: string,
+		userID: string,
+		sectionID: string,
+		tagID: string,
+		dateCreated: string,
+		dateModified: string,
 	};
-	user: {
+	userProfile: {
 		_id: string,
 		login: string,
 		pass: string,
 		status: string,
+		lang: string,
 	};
 }
 

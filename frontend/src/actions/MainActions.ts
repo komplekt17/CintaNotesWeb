@@ -1,3 +1,4 @@
+// получение данных с сервера
 const getAllNotesAction = () => {
 	return {
 		type: "GET_ALL_NOTES_ACTION",
@@ -5,6 +6,7 @@ const getAllNotesAction = () => {
 	}
 }
 
+// обработка input'ов
 const handlerInputsValueAction = (name: string, value: string) => {
 	return {
 		type: "HANDLER_VALUE_INPUTS_ACTION",
@@ -13,6 +15,7 @@ const handlerInputsValueAction = (name: string, value: string) => {
 	}
 }
 
+// обработка заголовков PopupWindows
 const handlerHeaderPopupAction = (header: string) => {
 	return {
 		type: "HANDLER_HEADER_POPUP",
