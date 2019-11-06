@@ -13,6 +13,8 @@ export interface ICurrentDetails {
 		_id: string,
 		header: string,
 		text: string,
+		remarks: string,
+		link: string,
 		userID: string,
 		sectionID: string,
 		tagID: string,
@@ -25,6 +27,7 @@ export interface ICurrentDetails {
 		pass: string,
 		status: string,
 		lang: string,
+		theme: string,
 	};
 }
 
@@ -51,6 +54,8 @@ export interface IState {
 		_id: string,
 		header: string,
 		text: string,
+		remarks: string,
+		link: string,
 		userID: string,
 		sectionID: string,
 		tagID: string,

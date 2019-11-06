@@ -1,6 +1,5 @@
 import * as React from "react"
 import $ from "jquery"
-import { ISectionsPanelProps } from "../types"
 import {
 	ERROR_TEXT,
 	HEADER_ADD_SECTION,
@@ -9,10 +8,16 @@ import {
 } from "../constants"
 import "../styles/SectionsPanel.css"
 
+interface ISectionsPanelProps {
+	sections: [];
+	handlerHeaderPopup: (name: string) => void;
+	handlerCurrentValue: (nameInput: string, value: string) => void;
+}
+
 let listSections: any = <h3>{ERROR_TEXT}</h3>
 
-const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
-	const { sections, handlerHeaderPopup, handlerInputsValue } = props
+export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
+	const { sections, handlerHeaderPopup, handlerCurrentValue } = props
 
 	if (sections && sections.length !== 0) {
 		listSections = sections.map((item: any, index: any) => {
@@ -25,19 +30,19 @@ const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 							onClick={() => {
 								handlerHeaderPopup(HEADER_EDIT_SECTION)
 								// сохраняем value input редактируемой section
-								handlerInputsValue("editNameSection", item.nameSection)
+								handlerCurrentValue("editNameSection", item.nameSection)
 								// сохраняем _id редактируемой section
-								handlerInputsValue("saveIdEditedSection", item._id)
+								handlerCurrentValue("saveIdEditedSection", item._id)
 								$("#modal-editSection").modal("show")
 							}}
 						/>{" "}
 						<i
-							className="fas fa-minus-circle text-danger"
+							className="fas fa-trash-alt text-danger"
 							onClick={() => {
 								handlerHeaderPopup(HEADER_REMOVE_SECTION)
 								// сохраняем _id удаляемой section
-								handlerInputsValue("saveIdRemovedSection", item._id)
-								$("#modal-removeSection").modal("show")
+								handlerCurrentValue("saveIdRemovedSection", item._id)
+								$("#modal-removeItem").modal("show")
 							}}
 						/>
 					</span>
@@ -47,26 +52,23 @@ const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 	}
 
 	return (
-		<div className="col-12 section-panel">
-			<ul className="nav nav-tabs">
-				{listSections}
-				<li className="nav-item section-tab">
-					<span
-						className="nav-link"
-						onClick={() => {
-							handlerHeaderPopup(HEADER_ADD_SECTION)
-							$("#modal-addSection").modal("show")
-						}}
-					>
-						<i className="fas fa-plus" />
-					</span>
-				</li>
-			</ul>
-			<div className="">
-				<p>User</p>
+		<div className="col-12 top-panel">
+			<div className="section-panel">
+				<ul className="nav nav-tabs">
+					{listSections}
+					<li className="nav-item section-tab">
+						<span
+							className="nav-link"
+							onClick={() => {
+								handlerHeaderPopup(HEADER_ADD_SECTION)
+								$("#modal-addSection").modal("show")
+							}}
+						>
+							<i className="fas fa-plus" />
+						</span>
+					</li>
+				</ul>
 			</div>
 		</div>
 	)
 }
-
-export { SectionsPanel }

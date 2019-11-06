@@ -1,0 +1,20 @@
+.app-side-tags{
+  margin-top: 87px;
+  position: sticky;
+}
+
+.tags-item:hover .name_tag-btns{
+  display: block;
+}
+
+.tags-item:hover{
+  background-color: #282C34;
+}
+
+.tags-item:hover .name_tag-qwt{
+  display: none;
+}
+
+.name_tag-btns {
+  display: none;
+}

@@ -15,13 +15,22 @@ export const initialState = {
 			_id: "",
 			header: "",
 			text: "",
-			userID: "",
+			remarks: "",
+			link: "",
 			sectionID: "",
 			tagID: "",
+			userID: "",
 			dateCreated: "",
 			dateModified: "",
 		},
-		userProfile: { _id: "1", login: "", pass: "", status: "", lang: "EN" },
+		userProfile: {
+			_id: "1",
+			login: "",
+			pass: "",
+			status: "",
+			lang: "EN",
+			theme: "night",
+		},
 	},
 	sections: [
 		{ _id: "1", nameSection: "Tab-1", userID: "1" },
@@ -39,9 +48,12 @@ export const initialState = {
 			header: "aud-1",
 			text:
 				"txt-aud-1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
-			userID: "1",
+
+			remarks: "",
+			link: "",
 			sectionID: "1",
 			tagID: "1",
+			userID: "1",
 			dateCreated: "20.10.2019, 11:34",
 			dateModified: "21.10.2019, 12:31",
 		},
@@ -50,9 +62,11 @@ export const initialState = {
 			header: "aud-2",
 			text:
 				"txt-aud-2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
-			userID: "1",
+			remarks: "",
+			link: "",
 			sectionID: "1",
 			tagID: "1",
+			userID: "1",
 			dateCreated: "21.10.2019, 11:31",
 			dateModified: "22.10.2019, 13:31",
 		},
@@ -61,9 +75,11 @@ export const initialState = {
 			header: "web-1",
 			text:
 				"txt-web-1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
-			userID: "1",
+			remarks: "",
+			link: "",
 			sectionID: "1",
 			tagID: "2",
+			userID: "1",
 			dateCreated: "23.10.2019, 10:34",
 			dateModified: "24.10.2019, 12:11",
 		},
@@ -72,9 +88,11 @@ export const initialState = {
 			header: "web-2",
 			text:
 				"txt-web-2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
-			userID: "1",
+			remarks: "",
+			link: "",
 			sectionID: "1",
 			tagID: "2",
+			userID: "1",
 			dateCreated: "22.10.2019, 10:34",
 			dateModified: "23.10.2019, 10:36",
 		},
@@ -83,9 +101,11 @@ export const initialState = {
 			header: "pro-1",
 			text:
 				"txt-pro-1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
-			userID: "1",
+			remarks: "",
+			link: "",
 			sectionID: "1",
 			tagID: "3",
+			userID: "1",
 			dateCreated: "20.10.2019, 11:34",
 			dateModified: "21.10.2019, 12:31",
 		},
@@ -94,9 +114,11 @@ export const initialState = {
 			header: "pro-2",
 			text:
 				"txt-pro-2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
-			userID: "1",
+			remarks: "",
+			link: "",
 			sectionID: "1",
 			tagID: "3",
+			userID: "1",
 			dateCreated: "23.10.2019, 10:31",
 			dateModified: "25.10.2019, 15:33",
 		},
@@ -110,11 +132,12 @@ const idRand = (): string => {
 }
 
 // универсальный обработчик разных значений input'ов для currentDetails
-const handlerValueInputs = (
+const handlerCurrentDetails = (
 	state: IState,
 	name: string,
-	value: string
+	value?: any
 ): ICurrentDetails => {
+	// console.log(name, value)
 	let obj = state.currentDetails
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.section -------
@@ -123,10 +146,6 @@ const handlerValueInputs = (
 	if (name === "addNameSection" || name === "editNameSection") {
 		obj = getNewObjDetails(obj, "section", "nameSection", value)
 	}
-	// очищаем поле nameSection, если Section added or edited
-	else if (name === "buttonAddSection" || name === "buttonEditSection") {
-		obj = getNewObjDetails(obj, "section", "nameSection", (value = ""))
-	}
 	// сохраняем _id удаляемой или редактируемой section
 	else if (
 		name === "saveIdRemovedSection" ||
@@ -134,24 +153,85 @@ const handlerValueInputs = (
 	) {
 		obj = getNewObjDetails(obj, "section", "_id", value)
 	}
-	// очищаем поле _id, если Section removed или edited
+	// очищаем поля section'а в currentDitails.section,
+	// если Section added, edited or removed
 	else if (
-		name === "buttonRemoveSection" ||
-		name === "buttonEditIdSection"
+		name === "buttonAddSection" ||
+		name === "buttonEditSection" ||
+		name === "buttonRemoveSection"
 	) {
 		obj = getNewObjDetails(obj, "section", "_id", (value = ""))
+		obj = getNewObjDetails(obj, "section", "nameSection", (value = ""))
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.tag -------
+
+	// сохраняем данные редактируемого tag'а в currentDitails.tag
+	else if (name === "saveIdEditedTag") {
+		// сохраняем _id редактируемого tag'а
+		obj = getNewObjDetails(obj, "tag", "_id", value)
+		// находим по _id данные редактируемого tag'а
+		const arr = state.tags.slice()
+		// получаем index элемента массива tags с _id === value
+		const index = arr.findIndex(param => param._id === value)
+		// получаем значения свойства найденного tag'а
+		const nameTag = arr[index].nameTag
+		const sectionID = arr[index].sectionID
+		// сохраняем значения полей найденного tag'а в currentDitails.tag
+		obj = getNewObjDetails(obj, "tag", "nameTag", nameTag)
+		obj = getNewObjDetails(obj, "tag", "sectionID", sectionID)
+	}
+
+	// сохраняем value input'a редактируемого поля nameTage
+	else if (name === "editNameTag") {
+		obj = getNewObjDetails(obj, "tag", "nameTag", value)
+	}
+
+	// сохраняем value select'a редактируемого поля sectionID
+	else if (name === "editTagSectionID") {
+		obj = getNewObjDetails(obj, "tag", "sectionID", value)
+	}
+
+	// сохраняем _id удаляемого tag
+	else if (name === "saveIdRemovedTag") {
+		obj = getNewObjDetails(obj, "tag", "_id", value)
+	}
+
+	// очищаем поля tag'а в currentDitails.tag,
+	// когда tag removed или edited
+	else if (name === "buttonEditTag" || name === "buttonRemoveTag") {
+		obj = getNewObjDetails(obj, "tag", "_id", (value = ""))
+		obj = getNewObjDetails(obj, "tag", "nameTag", (value = ""))
+		obj = getNewObjDetails(obj, "tag", "sectionID", (value = ""))
+	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.note -------
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.user -------
 
+	// сохраняем данные User'а
+	else if (name === "userData") {
+		// деструктурируем value, т.к. в данном случае
+		// value = user{login, pass}
+		const { login, pass } = value
+		// обновляем поле login
+		obj = getNewObjDetails(obj, "userProfile", "login", login)
+		// обновляем поле pass
+		obj = getNewObjDetails(obj, "userProfile", "pass", pass)
+	}
+
+	// удаляем данные User'а
+	else if (name === "userLogOut") {
+		// обновляем поле login
+		obj = getNewObjDetails(obj, "userProfile", "login", (value = ""))
+		// обновляем поле pass
+		obj = getNewObjDetails(obj, "userProfile", "pass", (value = ""))
+	}
+
 	return obj
 }
 
-// универсальный перебор любых свойств currentDetails
+// универсальный переборщик любых свойств currentDetails
 const getNewObjDetails = (
 	obj: any,
 	keyName: string,
@@ -175,108 +255,234 @@ const getNewObjDetails = (
 	return obj
 }
 
-// добавление section
-const addingSection = (
+// добавление newItem for sections, tags and notes
+const addingItem = (
 	state: IState,
-	valueInputSection: string
-): Array<{
-	_id: string,
-	nameSection: string,
-	userID: string,
-}> => {
-	const arr = state.sections.slice()
-	const obj = {
-		_id: idRand(),
-		nameSection: valueInputSection,
-		userID: state.currentDetails.userProfile._id,
+	nameItem: string,
+	params: {
+		valueSection?: any, // for sections
+		nameTag?: any, // for tags
+		sectionID?: any, // for tags and notes
+		header?: any, // for notes
+		text?: any, // for notes
+		remarks?: any, // for notes
+		link?: any, // for notes
+		tagID?: any, // for notes
 	}
-	arr.push(obj)
-	return arr
+): any => {
+	if (nameItem === "addSection") {
+		const arr = state.sections.slice()
+		const obj = {
+			_id: idRand(),
+			nameSection: params.valueSection,
+			userID: state.currentDetails.userProfile._id,
+		}
+		arr.push(obj)
+		return arr
+	} else if (nameItem === "addTag") {
+		const arr = state.tags.slice()
+		const obj = {
+			_id: idRand(),
+			nameTag: params.nameTag,
+			userID: state.currentDetails.userProfile._id,
+			sectionID: params.sectionID,
+		}
+		arr.push(obj)
+		return arr
+	}
 }
 
-// редактирование section
-const editingSection = (
+// редактирование Item for sections, tags and notes
+const editingItem = (
 	state: IState,
-	id: string,
-	value: string
-): Array<{
-	_id: string,
-	nameSection: string,
-	userID: string,
-}> => {
-	const arr = state.sections.slice()
-	// получаем index элемента массива sections с _id === id
-	const index = arr.findIndex(param => param._id === id)
-	// присваиваем новое value полю section.nameSection
-	arr[index].nameSection = value
+	nameItem: string,
+	params: {
+		id: string,
+		nameSection?: any, // for sections
+		nameTag?: any, // for tags
+		sectionID?: any, // for tags and notes
+		header?: any, // for notes
+		text?: any, // for notes
+		remarks?: any, // for notes
+		link?: any, // for notes
+		tagID?: any, // for notes
+	}
+): any => {
+	if (nameItem === "editSection") {
+		const arr = state.sections.slice()
+		// получаем index элемента массива sections с _id === id
+		const index = arr.findIndex(param => param._id === params.id)
+		// присваиваем новое значение полю section.nameSection
+		arr[index].nameSection = params.nameSection
 
-	return arr
+		return arr
+	} else if (nameItem === "editTag") {
+		const arr = state.tags.slice()
+		// получаем index элемента массива tags с _id === id
+		const index = arr.findIndex(param => param._id === params.id)
+		// присваиваем новое значение полю tag.nameTag
+		arr[index].nameTag = params.nameTag
+		// присваиваем новое значение полю tag.sectionID
+		arr[index].sectionID = params.sectionID
+
+		return arr
+	}
 }
 
-// удаление section
-const removingSection = (
+// удаление Item for sections, tags and notes
+const removingItem = (
 	state: IState,
+	nameItem: string,
 	id: string
-): Array<{
-	_id: string,
-	nameSection: string,
-	userID: string,
-}> => {
-	const arr = state.sections.slice()
-	// находим section с _id === idx
-	for (let i: number = 0; i < arr.length; i++) {
-		// вырезаем элемент
-		if (arr[i]._id === id) arr.splice(i, 1)
+): any => {
+	if (nameItem === "Section") {
+		const arr = state.sections.slice()
+		// находим section с _id === idx
+		for (let i: number = 0; i < arr.length; i++) {
+			// вырезаем элемент
+			if (arr[i]._id === id) arr.splice(i, 1)
+		}
+		return arr
+	} else if (nameItem === "Tag") {
+		const arr = state.tags.slice()
+		// находим tag с _id === idx
+		for (let i: number = 0; i < arr.length; i++) {
+			// вырезаем элемент
+			if (arr[i]._id === id) arr.splice(i, 1)
+		}
+		return arr
+	} else if (nameItem === "Note") {
+		const arr = state.notes.slice()
+		// находим note с _id === idx
+		for (let i: number = 0; i < arr.length; i++) {
+			// вырезаем элемент
+			if (arr[i]._id === id) arr.splice(i, 1)
+		}
+		return arr
 	}
-	return arr
 }
 
 export const Reducer = (state: IState = initialState, action: any) => {
 	switch (action.type) {
-		case "GET_ALL_NOTES_ACTION":
+		case "GET_DATA_BY_LOGIN_ACTION":
 			return {
 				...state,
 				loading: false,
 				loaded: true,
+				auth: !state.auth,
+				currentDetails: handlerCurrentDetails(state, "userData", action.user),
+			}
+
+		case "USER_LOGOUT_ACTION":
+			return {
+				...state,
+				auth: !state.auth,
+				loading: false,
+				loaded: true,
+				currentDetails: handlerCurrentDetails(state, "userLogOut"),
 			}
 
 		case "HANDLER_VALUE_INPUTS_ACTION":
 			// console.log(action.name, action.value)
 			return {
 				...state,
-				currentDetails: handlerValueInputs(state, action.name, action.value),
+				currentDetails: handlerCurrentDetails(
+					state,
+					action.name,
+					action.value
+				),
 			}
 
-		case "HANDLER_HEADER_POPUP":
+		case "HANDLER_HEADER_POPUP_ACTION":
 			return {
 				...state,
 				namePopup: action.header,
+			}
+
+		case "HANDLER_LANG_LOCAL_ACTION":
+			return {
+				...state,
+				currentDetails: handlerCurrentDetails(state, "userLang"),
+			}
+
+		case "HANDLER_USER_THEME_ACTION":
+			return {
+				...state,
+				currentDetails: handlerCurrentDetails(state, "userTheme"),
 			}
 
 		// ======= SECTIONS =======
 
 		case "ADD_NEW_SECTION_ACTION":
 			$("#modal-addSection").modal("hide")
+			const params = { valueSection: action.value }
 			return {
 				...state,
-				sections: addingSection(state, action.value),
+				sections: addingItem(state, "addSection", params),
 			}
 
 		case "EDIT_SECTION_ACTION":
 			$("#modal-editSection").modal("hide")
 			return {
 				...state,
-				sections: editingSection(state, action.id, action.value),
+				sections: editingItem(state, "editSection", action.editedSection),
 			}
 
-		case "REMOVE_SECTION_ACTION":
-			$("#modal-removeSection").modal("hide")
-			return {
-				...state,
-				sections: removingSection(state, action.id),
+		case "REMOVE_ANY_ITEM_ACTION":
+			$("#modal-removeItem").modal("hide")
+			if (action.name === "Section") {
+				return {
+					...state,
+					sections: removingItem(state, action.name, action.id),
+				}
+			} else if (action.name === "Tag") {
+				return {
+					...state,
+					tags: removingItem(state, action.name, action.id),
+				}
+			} else if (action.name === "Note") {
+				return {
+					...state,
+					notes: removingItem(state, action.name, action.id),
+				}
 			}
 
 		// ======= END SECTIONS =======
+
+		// ======= TAGS =======
+		// eslint-disable-next-line
+		case "ADD_NEW_TAG_ACTION":
+			$("#modal-addTag").modal("hide")
+			return {
+				...state,
+				tags: addingItem(state, "addTag", action.newTag),
+			}
+
+		case "EDIT_TAG_ACTION":
+			$("#modal-editTag").modal("hide")
+			return {
+				...state,
+				tags: editingItem(state, "editTag", action.editedTag),
+			}
+
+		// ======= END TAGS =======
+
+		// ======= NOTES =======
+		case "ADD_NEW_NOTE_ACTION":
+			$("#modal-addNote").modal("hide")
+			return {
+				...state,
+				notes: addingItem(state, "addNote", action.newNote),
+			}
+
+		case "EDIT_NOTE_ACTION":
+			$("#modal-editNote").modal("hide")
+			return {
+				...state,
+				notes: editingItem(state, "editNote", action.editedNote),
+			}
+
+		// ======= END NOTES =======
 
 		default:
 			return state

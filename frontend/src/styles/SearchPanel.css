@@ -1,6 +1,6 @@
 
 .app-search-panel{
-  height: 65px;
+  height: 60px;
   background-color:#2B3E50;
   border-bottom: 1px solid #4E5D6C;
   z-index: 1;
@@ -8,6 +8,6 @@
 
 .app-search-panel:first-child{
   position: sticky;
-  top: 42px
+  top: 80px
 }
 

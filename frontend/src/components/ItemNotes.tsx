@@ -3,10 +3,12 @@ import { ERROR_TEXT } from "../constants"
 import "../styles/ItemNotes.css"
 
 interface INoteItemProps {
-	notes: any;
+	notes: [];
+	handlerHeaderPopup: (name: string) => void;
+	handlerCurrentValue: (nameInput: string, value: string) => void;
 }
 
-let NotesList = <h3>{ERROR_TEXT}</h3>
+let NotesList: any = <h3>{ERROR_TEXT}</h3>
 
 const ItemNotes: React.FC<INoteItemProps> = ({ notes }) => {
 	if (notes && notes.length !== 0) {
@@ -20,7 +22,14 @@ const ItemNotes: React.FC<INoteItemProps> = ({ notes }) => {
 					<div className="note-text">{item.text}</div>
 					<div className="note-footer">
 						<div className="note-date">
-							<span onClick={() => {}}> Edit </span>
+							<span
+								onClick={() => {
+									alert(`in progress ${item._id}`)
+								}}
+							>
+								{" "}
+								Edit
+							</span>
 						</div>
 					</div>
 				</div>

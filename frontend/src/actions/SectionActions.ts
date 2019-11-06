@@ -7,20 +7,23 @@ const addNewSectionAction = (value: string) => {
 }
 
 // редактирование section
-const editSectionAction = (id: string, value: string) => {
+const editSectionAction = (editedSection: {
+	id: string,
+	nameSection: string,
+}) => {
 	return {
 		type: "EDIT_SECTION_ACTION",
-		id,
-		value,
+		editedSection,
 	}
 }
 
-// удаление section
-const removeSectionAction = (id: string) => {
+// удаление любого Item
+const removeItemAction = (name: string, id: string) => {
 	return {
-		type: "REMOVE_SECTION_ACTION",
+		type: "REMOVE_ANY_ITEM_ACTION",
+		name,
 		id,
 	}
 }
 
-export { addNewSectionAction, editSectionAction, removeSectionAction }
+export { addNewSectionAction, editSectionAction, removeItemAction }

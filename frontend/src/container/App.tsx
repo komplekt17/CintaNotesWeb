@@ -2,20 +2,26 @@ import React from "react"
 // import $ from "jquery"
 import { connect } from "react-redux"
 import {
+	UserPanel,
 	SectionsPanel,
-	SideTags,
+	SideBarTags,
 	SearchPanel,
 	ItemNotes,
 	AddNewSectionPopup,
+	AddNewTagPopup,
 	EditSectionPopup,
-	RemoveSectionPopup,
+	EditTagPopup,
+	RemoveItemPopup,
 } from "../components"
 import {
-	getAllNotesAction,
+	getDataByLoginAction,
+	getStatusLoginAction,
 	addNewSectionAction,
+	addNewTagAction,
 	editSectionAction,
-	removeSectionAction,
-	handlerInputsValueAction,
+	editTagAction,
+	removeItemAction,
+	handlerCurrentValueAction,
 	handlerHeaderPopupAction,
 } from "../actions"
 import { IAppProps } from "../types"
@@ -26,56 +32,101 @@ import "../styles/App.css"
 const App: React.FC<IAppProps> = props => {
 	const {
 		store,
-		getAllNotesToApp,
+		getDataByLoginToApp,
+		getStatusLoginToApp,
 		addNewSectionToApp,
+		addNewTagToApp,
 		editSectionToApp,
-		removeSectionToApp,
-		handlerInputsValueToApp,
+		editTagToApp,
+		removeItemToApp,
+		handlerCurrentValueToApp,
 		handlerHeaderPopupToApp,
 	} = props
 
-	const { sections, tags, notes, currentDetails, namePopup } = store
+	const { sections, tags, notes, currentDetails, namePopup, auth } = store
+
+	// функция получения значения id удаляемого Item
+	const getRemovableItemID = (namePopup: string): string => {
+		let removableItemID = ""
+		if (namePopup === "Section") {
+			removableItemID = currentDetails.section._id
+		} else if (namePopup === "Tag") {
+			removableItemID = currentDetails.tag._id
+		} else if (namePopup === "Note") {
+			removableItemID = currentDetails.note._id
+		}
+		return removableItemID
+	}
 
 	return (
 		<div className="App">
+			<div className="container-fluid app-user">
+				<div className="row">
+					<UserPanel
+						auth={auth}
+						login={currentDetails.userProfile.login}
+						getStatusLogin={getStatusLoginToApp}
+						getDataByLogin={getDataByLoginToApp}
+					/>
+				</div>
+			</div>
 			<div className="container-fluid app-header">
 				<div className="row">
 					<SectionsPanel
 						sections={sections}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
-						handlerInputsValue={handlerInputsValueToApp}
+						handlerCurrentValue={handlerCurrentValueToApp}
 					/>
 				</div>
 			</div>
 			<div className="container-fluid">
 				<div className="row">
-					<nav className="col-md-2 d-none d-md-block app-side-tags">
-						<SideTags tags={tags} getAllNotes={getAllNotesToApp} />
+					<nav className="col-md-3 col-lg-3 d-none d-md-block app-side-tags fixed-top">
+						<SideBarTags
+							tags={tags}
+							handlerHeaderPopup={handlerHeaderPopupToApp}
+							handlerCurrentValue={handlerCurrentValueToApp}
+						/>
 					</nav>
-					<main className="col-md-9 ml-sm-auto col-lg-10 px-4 app-content">
+					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
 						<SearchPanel />
-						<ItemNotes notes={notes} />
+						<ItemNotes
+							notes={notes}
+							handlerHeaderPopup={handlerHeaderPopupToApp}
+							handlerCurrentValue={handlerCurrentValueToApp}
+						/>
 					</main>
 				</div>
 			</div>
 			<AddNewSectionPopup
 				addNewSection={addNewSectionToApp}
-				handlerInputsValue={handlerInputsValueToApp}
+				handlerCurrentValue={handlerCurrentValueToApp}
 				inputValueSection={currentDetails.section.nameSection}
+				namePopup={namePopup}
+			/>
+			<AddNewTagPopup
+				sections={sections}
+				addNewTag={addNewTagToApp}
 				namePopup={namePopup}
 			/>
 			<EditSectionPopup
 				editSection={editSectionToApp}
-				handlerInputsValue={handlerInputsValueToApp}
-				inputValueSection={currentDetails.section.nameSection}
+				handlerCurrentValue={handlerCurrentValueToApp}
+				currentEditedSection={currentDetails.section}
 				namePopup={namePopup}
-				idEditedSection={currentDetails.section._id}
 			/>
-			<RemoveSectionPopup
-				removeSection={removeSectionToApp}
-				handlerInputsValue={handlerInputsValueToApp}
+			<EditTagPopup
+				sections={sections}
+				editTag={editTagToApp}
+				handlerCurrentValue={handlerCurrentValueToApp}
+				currentEditedTag={currentDetails.tag}
 				namePopup={namePopup}
-				idRemovedSection={currentDetails.section._id}
+			/>
+			<RemoveItemPopup
+				removeItem={removeItemToApp}
+				handlerCurrentValue={handlerCurrentValueToApp}
+				namePopup={namePopup}
+				removableItemID={getRemovableItemID(namePopup)}
 			/>
 		</div>
 	)
@@ -87,16 +138,27 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
 	return {
-		getAllNotesToApp: () => dispatch(getAllNotesAction()),
+		getDataByLoginToApp: (user: { login: any, pass: any }) =>
+			dispatch(getDataByLoginAction(user)),
+		getStatusLoginToApp: (token: string) =>
+			dispatch(getStatusLoginAction(token)),
 		handlerHeaderPopupToApp: (header: string) =>
 			dispatch(handlerHeaderPopupAction(header)),
-		handlerInputsValueToApp: (name: string, value: string) =>
-			dispatch(handlerInputsValueAction(name, value)),
+		handlerCurrentValueToApp: (name: string, value: string) =>
+			dispatch(handlerCurrentValueAction(name, value)),
 		addNewSectionToApp: (value: string) =>
 			dispatch(addNewSectionAction(value)),
-		editSectionToApp: (id: string, value: string) =>
-			dispatch(editSectionAction(id, value)),
-		removeSectionToApp: (id: string) => dispatch(removeSectionAction(id)),
+		addNewTagToApp: (newTag: { nameTag: any, sectionID: any }) =>
+			dispatch(addNewTagAction(newTag)),
+		editSectionToApp: (editedSection: { id: string, nameSection: string }) =>
+			dispatch(editSectionAction(editedSection)),
+		editTagToApp: (editedTag: {
+			id: string,
+			nameTag: string,
+			sectionID: string,
+		}) => dispatch(editTagAction(editedTag)),
+		removeItemToApp: (name: string, id: string) =>
+			dispatch(removeItemAction(name, id)),
 	}
 }
 

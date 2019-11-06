@@ -13,11 +13,8 @@ const SearchPanel: React.FC = () => {
 				/>
 				<div className="btn-toolbar mb-2 mb-md-0">
 					<div className="btn-group mr-2">
-						<button type="button" className="btn btn-sm btn-outline-secondary">
-							Share
-						</button>
-						<button type="button" className="btn btn-sm btn-outline-secondary">
-							Export
+						<button type="button" className="btn btn-sm btn-info">
+							Search
 						</button>
 					</div>
 				</div>

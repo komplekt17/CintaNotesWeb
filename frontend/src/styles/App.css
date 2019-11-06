@@ -12,18 +12,19 @@
   color: #ccc;
 }
 
+.app-user {
+  position: fixed;
+  background-color:#2B3E50;
+  z-index: 3;
+}
+
 .app-header {
   position: fixed;
+  margin-top: 45px;
   background-color:#2B3E50;
   z-index: 2;
 }
 
 .app-content{
-  margin-top: 40px;
+  margin-top: 80px;
 }
-
-.app-side-tags{
-  margin-top: 40px;
-  position: fixed;
-}
-

@@ -1,22 +1,21 @@
-const addNewNoteAction = (name: string) => {
+// добавление tag
+const addNewTagAction = (newTag: { nameTag: any, sectionID: any }) => {
 	return {
 		type: "ADD_NEW_TAG_ACTION",
-		name,
+		newTag,
 	}
 }
 
-const editNoteAction = (idx: string) => {
+// редактирование tag
+const editTagAction = (editedTag: {
+	id: string,
+	nameTag: string,
+	sectionID: string,
+}) => {
 	return {
 		type: "EDIT_TAG_ACTION",
-		idx,
+		editedTag,
 	}
 }
 
-const removeNoteAction = (idx: string) => {
-	return {
-		type: "REMOVE_TAG_ACTION",
-		idx,
-	}
-}
-
-export { addNewNoteAction, editNoteAction, removeNoteAction }
+export { addNewTagAction, editTagAction }

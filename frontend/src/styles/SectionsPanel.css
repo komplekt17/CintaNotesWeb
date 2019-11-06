@@ -1,7 +1,8 @@
-.section-panel{
+.top-panel{
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #4E5D6C;
+  border-top: 1px solid #4E5D6C;
 }
 
 .nav-tabs{
@@ -13,12 +14,12 @@
 }
 
 .section-tab .fa-edit, 
-.section-tab .fa-minus-circle{
+.section-tab .fa-trash-alt{
   opacity: 0;
   transition: ease-in-out opacity .5s;
 }
 
 .section-tab:hover .fa-edit, 
-.section-tab:hover .fa-minus-circle{
+.section-tab:hover .fa-trash-alt{
   opacity: 1;
 }
