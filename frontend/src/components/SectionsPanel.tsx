@@ -12,17 +12,32 @@ interface ISectionsPanelProps {
 	sections: [];
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
+	handlerValueFilters: (filter: string, id: string) => void;
+	resetHighlightItem: (elem: any) => void;
 }
 
 let listSections: any = <h3>{ERROR_TEXT}</h3>
 
 export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
-	const { sections, handlerHeaderPopup, handlerCurrentValue } = props
+	const {
+		sections,
+		handlerHeaderPopup,
+		handlerCurrentValue,
+		handlerValueFilters,
+		resetHighlightItem,
+	} = props
 
 	if (sections && sections.length !== 0) {
 		listSections = sections.map((item: any, index: any) => {
 			return (
-				<li key={index} className="nav-item section-tab">
+				<li
+					key={index}
+					className="nav-item section-tab"
+					onClick={ev => {
+						resetHighlightItem(ev.target)
+						handlerValueFilters("filterSection", item._id)
+					}}
+				>
 					<span className="nav-link">
 						{item.nameSection}{" "}
 						<i

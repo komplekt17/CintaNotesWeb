@@ -3,15 +3,19 @@
   position: sticky;
 }
 
-.tags-item:hover .name_tag-btns{
-  display: block;
-}
-
-.tags-item:hover{
+.tags-item-active{
   background-color: #282C34;
 }
 
-.tags-item:hover .name_tag-qwt{
+.app-side-tags .nav-item:hover .name_tag-btns{
+  display: block;
+}
+
+.app-side-tags .nav-item:hover{
+  background-color: #282C34;
+}
+
+.app-side-tags .nav-item:hover .name_tag-qwt{
   display: none;
 }
 

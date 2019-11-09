@@ -14,12 +14,20 @@ interface ISideBarTagsProps {
 	tags: [];
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
+	handlerValueFilters: (filter: string, id: string) => void;
+	resetHighlightItem: (elem: any) => void;
 }
 
 let listTags: any = <h3>{ERROR_TEXT}</h3>
 
 export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
-	const { tags, handlerHeaderPopup, handlerCurrentValue } = props
+	const {
+		tags,
+		handlerHeaderPopup,
+		handlerCurrentValue,
+		resetHighlightItem,
+		handlerValueFilters,
+	} = props
 	if (tags && tags.length !== 0) {
 		listTags = tags.map((item: any, index: number) => {
 			return (
@@ -27,7 +35,15 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					key={index}
 					className="nav-item d-flex tags-item justify-content-between"
 				>
-					<span className="nav-link name_tag">{item.nameTag}</span>
+					<span
+						className="nav-link name_tag"
+						onClick={ev => {
+							resetHighlightItem(ev.target)
+							handlerValueFilters("filterTag", item._id)
+						}}
+					>
+						{item.nameTag}
+					</span>
 					<span className="nav-link">
 						<span className="name_tag-qwt">{index}</span>
 						<span className="name_tag-btns">
@@ -71,7 +87,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					<button
 						onClick={() => {
 							handlerHeaderPopup(HEADER_ADD_NOTE)
-							$("modal-addNote").modal("show")
+							$("#modal-addNote").modal("show")
 						}}
 						className="btn btn-outline-info btn-sm rounded"
 					>
@@ -80,13 +96,25 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 				</span>
 			</li>
 			<li className="nav-item d-flex justify-content-between">
-				<span className="nav-link" onClick={() => {}}>
+				<span
+					className="nav-link"
+					onClick={ev => {
+						resetHighlightItem(ev.target)
+						handlerValueFilters("filterTag", "All")
+					}}
+				>
 					All
 				</span>
 				<span className="nav-link">8</span>
 			</li>
 			<li className="nav-item d-flex justify-content-between">
-				<span className="nav-link" onClick={() => {}}>
+				<span
+					className="nav-link"
+					onClick={ev => {
+						resetHighlightItem(ev.target)
+						handlerValueFilters("filterTag", "Untagged")
+					}}
+				>
 					Untagged
 				</span>
 				<span className="nav-link">7</span>

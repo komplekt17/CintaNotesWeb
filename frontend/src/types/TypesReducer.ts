@@ -34,10 +34,10 @@ export interface ICurrentDetails {
 export interface IState {
 	auth: boolean;
 	namePopup: string;
-	filter: string;
 	loading: boolean;
 	loaded: boolean;
 	error: null;
+	filters: { sections: string, tags: string };
 	currentDetails: ICurrentDetails;
 	sections: Array<{
 		_id: string,

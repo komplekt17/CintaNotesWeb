@@ -4,10 +4,10 @@ import { ICurrentDetails, IState } from "../types"
 export const initialState = {
 	auth: false,
 	namePopup: "",
-	filter: "all",
 	loading: false,
 	loaded: false,
 	error: null,
+	filters: { sections: "All", tags: "All" },
 	currentDetails: {
 		section: { _id: "", nameSection: "" },
 		tag: { _id: "", nameTag: "", userID: "", sectionID: "" },
@@ -131,6 +131,32 @@ const idRand = (): string => {
 	return id.toString()
 }
 
+// обработчик значений фильтров
+const handlerFiltersValue = (
+	state: IState,
+	filter: string,
+	id: string
+): {
+	sections: string,
+	tags: string,
+} => {
+	const obj = state.filters
+	if (filter === "filterSection") {
+		for (const key in obj) {
+			if (key === "sections") {
+				obj[key] = id
+			}
+		}
+	} else if (filter === "filterTag") {
+		for (const key in obj) {
+			if (key === "tags") {
+				obj[key] = id
+			}
+		}
+	}
+	return obj
+}
+
 // универсальный обработчик разных значений input'ов для currentDetails
 const handlerCurrentDetails = (
 	state: IState,
@@ -207,6 +233,77 @@ const handlerCurrentDetails = (
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.note -------
 
+	// сохраняем данные редактируемого note'а в currentDitails.note
+	else if (name === "saveIdEditedNote") {
+		// сохраняем _id редактируемой note'а
+		obj = getNewObjDetails(obj, "note", "_id", value)
+		// находим по _id данные редактируемой note'а
+		const arr = state.notes.slice()
+		// получаем index элемента массива notes с _id === value
+		const index = arr.findIndex(param => param._id === value)
+		// получаем значения свойства найденного note'а
+		const header = arr[index].header
+		const text = arr[index].text
+		const remarks = arr[index].remarks
+		const link = arr[index].link
+		const sectionID = arr[index].sectionID
+		const tagID = arr[index].tagID
+		// сохраняем значения полей найденного note'а в currentDitails.note
+		obj = getNewObjDetails(obj, "note", "header", header)
+		obj = getNewObjDetails(obj, "note", "text", text)
+		obj = getNewObjDetails(obj, "note", "remarks", remarks)
+		obj = getNewObjDetails(obj, "note", "link", link)
+		obj = getNewObjDetails(obj, "note", "sectionID", sectionID)
+		obj = getNewObjDetails(obj, "note", "tagID", tagID)
+	}
+
+	// сохраняем value input'a редактируемого поля header
+	else if (name === "editHeaderNote") {
+		obj = getNewObjDetails(obj, "note", "header", value)
+	}
+
+	// сохраняем value textarea редактируемого поля text
+	else if (name === "editTextNote") {
+		obj = getNewObjDetails(obj, "note", "text", value)
+	}
+
+	// сохраняем value input'a редактируемого поля remarks
+	else if (name === "editRemarksNote") {
+		obj = getNewObjDetails(obj, "note", "remarks", value)
+	}
+
+	// сохраняем value input'a редактируемого поля link
+	else if (name === "editLinkNote") {
+		obj = getNewObjDetails(obj, "note", "link", value)
+	}
+
+	// сохраняем value select'a редактируемого поля sectionID
+	else if (name === "editNoteSectionID") {
+		obj = getNewObjDetails(obj, "note", "sectionID", value)
+	}
+
+	// сохраняем value select'a редактируемого поля tagID
+	else if (name === "editNoteTagID") {
+		obj = getNewObjDetails(obj, "note", "tagID", value)
+	}
+
+	// сохраняем _id удаляемоой note
+	else if (name === "saveIdRemovedNote") {
+		obj = getNewObjDetails(obj, "note", "_id", value)
+	}
+
+	// очищаем поля note'а в currentDitails.note,
+	// когда note removed или edited
+	else if (name === "buttonEditNote" || name === "buttonRemoveNote") {
+		obj = getNewObjDetails(obj, "note", "_id", (value = ""))
+		obj = getNewObjDetails(obj, "note", "header", (value = ""))
+		obj = getNewObjDetails(obj, "note", "text", (value = ""))
+		obj = getNewObjDetails(obj, "note", "remarks", (value = ""))
+		obj = getNewObjDetails(obj, "note", "link", (value = ""))
+		obj = getNewObjDetails(obj, "note", "sectionID", (value = ""))
+		obj = getNewObjDetails(obj, "note", "tagID", (value = ""))
+	}
+
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.user -------
 
 	// сохраняем данные User'а
@@ -268,6 +365,8 @@ const addingItem = (
 		remarks?: any, // for notes
 		link?: any, // for notes
 		tagID?: any, // for notes
+		dateCreated?: string, // for notes
+		dateModified?: string, // for notes
 	}
 ): any => {
 	if (nameItem === "addSection") {
@@ -286,6 +385,22 @@ const addingItem = (
 			nameTag: params.nameTag,
 			userID: state.currentDetails.userProfile._id,
 			sectionID: params.sectionID,
+		}
+		arr.push(obj)
+		return arr
+	} else if (nameItem === "addNote") {
+		const arr = state.notes.slice()
+		const obj = {
+			_id: idRand(),
+			header: params.header,
+			text: params.text,
+			remarks: params.remarks,
+			link: params.link,
+			userID: state.currentDetails.userProfile._id,
+			sectionID: params.sectionID,
+			tagID: params.tagID,
+			dateCreated: "dateCreated",
+			dateModified: "dateModified",
 		}
 		arr.push(obj)
 		return arr
@@ -324,6 +439,24 @@ const editingItem = (
 		arr[index].nameTag = params.nameTag
 		// присваиваем новое значение полю tag.sectionID
 		arr[index].sectionID = params.sectionID
+
+		return arr
+	} else if (nameItem === "editNote") {
+		const arr = state.notes.slice()
+		// получаем index элемента массива notes с _id === id
+		const index = arr.findIndex(param => param._id === params.id)
+		// присваиваем новое значение полю note.header
+		arr[index].header = params.header
+		// присваиваем новое значение полю note.text
+		arr[index].text = params.text
+		// присваиваем новое значение полю note.remarks
+		arr[index].remarks = params.remarks
+		// присваиваем новое значение полю note.link
+		arr[index].link = params.link
+		// присваиваем новое значение полю note.sectionID
+		arr[index].sectionID = params.sectionID
+		// присваиваем новое значение полю note.tagID
+		arr[index].tagID = params.tagID
 
 		return arr
 	}
@@ -411,6 +544,12 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				currentDetails: handlerCurrentDetails(state, "userTheme"),
 			}
 
+		case "HANDLER_VALUE_FILTERS_ACTION":
+			return {
+				...state,
+				filters: handlerFiltersValue(state, action.filter, action.id),
+			}
+
 		// ======= SECTIONS =======
 
 		case "ADD_NEW_SECTION_ACTION":
@@ -434,16 +573,19 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				return {
 					...state,
 					sections: removingItem(state, action.name, action.id),
+					filters: { sections: "", tags: "" },
 				}
 			} else if (action.name === "Tag") {
 				return {
 					...state,
 					tags: removingItem(state, action.name, action.id),
+					filters: { sections: "", tags: "" },
 				}
 			} else if (action.name === "Note") {
 				return {
 					...state,
 					notes: removingItem(state, action.name, action.id),
+					filters: { sections: "", tags: "" },
 				}
 			}
 

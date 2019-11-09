@@ -30,6 +30,7 @@
 		"no-var-requires": false,
 		"no-empty": false, 
 		"no-empty-interface": false,
-		"curly": false
+		"curly": false,
+		"prefer-for-of": false
 	}
 }

@@ -31,9 +31,19 @@ const handlerThemaAction = (theme: string) => {
 	}
 }
 
+// обработчик значений фильтров
+const handlerValueFiltersAction = (filter: string, id: string) => {
+	return {
+		type: "HANDLER_VALUE_FILTERS_ACTION",
+		filter,
+		id,
+	}
+}
+
 export {
 	handlerCurrentValueAction,
 	handlerHeaderPopupAction,
 	handlerLangAction,
 	handlerThemaAction,
+	handlerValueFiltersAction,
 }

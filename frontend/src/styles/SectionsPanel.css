@@ -5,11 +5,11 @@
   border-top: 1px solid #4E5D6C;
 }
 
-.nav-tabs{
- border: none !important; 
+.section-tab:hover{
+  background-color: #282C34;
 }
 
-.section-tab:hover{
+.section-tab-active{
   background-color: #282C34;
 }
 

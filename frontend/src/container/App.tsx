@@ -1,16 +1,19 @@
 import React from "react"
-// import $ from "jquery"
+import $ from "jquery"
 import { connect } from "react-redux"
 import {
 	UserPanel,
 	SectionsPanel,
 	SideBarTags,
 	SearchPanel,
+	StatisticInfoPanel,
 	ItemNotes,
 	AddNewSectionPopup,
 	AddNewTagPopup,
+	AddNewNotePopup,
 	EditSectionPopup,
 	EditTagPopup,
+	EditNotePopup,
 	RemoveItemPopup,
 } from "../components"
 import {
@@ -18,11 +21,14 @@ import {
 	getStatusLoginAction,
 	addNewSectionAction,
 	addNewTagAction,
+	addNewNoteAction,
 	editSectionAction,
 	editTagAction,
+	editNoteAction,
 	removeItemAction,
 	handlerCurrentValueAction,
 	handlerHeaderPopupAction,
+	handlerValueFiltersAction,
 } from "../actions"
 import { IAppProps } from "../types"
 import "bootswatch/dist/superhero/bootstrap.min.css"
@@ -36,14 +42,39 @@ const App: React.FC<IAppProps> = props => {
 		getStatusLoginToApp,
 		addNewSectionToApp,
 		addNewTagToApp,
+		addNewNoteToApp,
 		editSectionToApp,
 		editTagToApp,
+		editNoteToApp,
 		removeItemToApp,
 		handlerCurrentValueToApp,
 		handlerHeaderPopupToApp,
+		handlerValueFiltersToApp,
 	} = props
 
-	const { sections, tags, notes, currentDetails, namePopup, auth } = store
+	const {
+		sections,
+		tags,
+		notes,
+		filters,
+		currentDetails,
+		namePopup,
+		auth,
+	} = store
+
+	// сброс подсветки у соседей и подсветка active section/tag
+	const resetHighlightItem = (elem: any): void => {
+		const elems = $(elem)
+			.parent()
+			.parent()
+			.children()
+		for (let i = 0; i < elems.length; i++) {
+			$(elems[i]).removeClass("section-tab-active")
+		}
+		$(elem)
+			.parent()
+			.addClass("section-tab-active")
+	}
 
 	// функция получения значения id удаляемого Item
 	const getRemovableItemID = (namePopup: string): string => {
@@ -76,6 +107,8 @@ const App: React.FC<IAppProps> = props => {
 						sections={sections}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
 						handlerCurrentValue={handlerCurrentValueToApp}
+						handlerValueFilters={handlerValueFiltersToApp}
+						resetHighlightItem={resetHighlightItem}
 					/>
 				</div>
 			</div>
@@ -86,10 +119,18 @@ const App: React.FC<IAppProps> = props => {
 							tags={tags}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
+							handlerValueFilters={handlerValueFiltersToApp}
+							resetHighlightItem={resetHighlightItem}
 						/>
 					</nav>
 					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
 						<SearchPanel />
+						<StatisticInfoPanel
+							sections={sections}
+							tags={tags}
+							notes={notes}
+							filters={filters}
+						/>
 						<ItemNotes
 							notes={notes}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
@@ -101,12 +142,17 @@ const App: React.FC<IAppProps> = props => {
 			<AddNewSectionPopup
 				addNewSection={addNewSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
-				inputValueSection={currentDetails.section.nameSection}
 				namePopup={namePopup}
 			/>
 			<AddNewTagPopup
 				sections={sections}
 				addNewTag={addNewTagToApp}
+				namePopup={namePopup}
+			/>
+			<AddNewNotePopup
+				tags={tags}
+				sections={sections}
+				addNewNote={addNewNoteToApp}
 				namePopup={namePopup}
 			/>
 			<EditSectionPopup
@@ -120,6 +166,14 @@ const App: React.FC<IAppProps> = props => {
 				editTag={editTagToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedTag={currentDetails.tag}
+				namePopup={namePopup}
+			/>
+			<EditNotePopup
+				sections={sections}
+				tags={tags}
+				editNote={editNoteToApp}
+				handlerCurrentValue={handlerCurrentValueToApp}
+				currentEditedNote={currentDetails.note}
 				namePopup={namePopup}
 			/>
 			<RemoveItemPopup
@@ -146,10 +200,20 @@ const mapDispatchToProps = (dispatch: any) => {
 			dispatch(handlerHeaderPopupAction(header)),
 		handlerCurrentValueToApp: (name: string, value: string) =>
 			dispatch(handlerCurrentValueAction(name, value)),
+		handlerValueFiltersToApp: (filter: string, id: string) =>
+			dispatch(handlerValueFiltersAction(filter, id)),
 		addNewSectionToApp: (value: string) =>
 			dispatch(addNewSectionAction(value)),
-		addNewTagToApp: (newTag: { nameTag: any, sectionID: any }) =>
+		addNewTagToApp: (newTag: { nameTag: string, sectionID: string }) =>
 			dispatch(addNewTagAction(newTag)),
+		addNewNoteToApp: (newNote: {
+			header: string,
+			text: string,
+			remarks: string,
+			link: string,
+			sectionID: string,
+			tagID: string,
+		}) => dispatch(addNewNoteAction(newNote)),
 		editSectionToApp: (editedSection: { id: string, nameSection: string }) =>
 			dispatch(editSectionAction(editedSection)),
 		editTagToApp: (editedTag: {
@@ -157,6 +221,15 @@ const mapDispatchToProps = (dispatch: any) => {
 			nameTag: string,
 			sectionID: string,
 		}) => dispatch(editTagAction(editedTag)),
+		editNoteToApp: (editedNote: {
+			id: string,
+			header: string,
+			text: string,
+			remarks: string,
+			link: string,
+			sectionID: string,
+			tagID: string,
+		}) => dispatch(editNoteAction(editedNote)),
 		removeItemToApp: (name: string, id: string) =>
 			dispatch(removeItemAction(name, id)),
 	}

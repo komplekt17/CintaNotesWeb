@@ -2,18 +2,12 @@ import * as React from "react"
 import $ from "jquery"
 
 interface IAddSectionProps {
-	addNewSection: (value: string) => void;
+	addNewSection: (value: any) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
-	inputValueSection: string;
 	namePopup: string;
 }
 export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
-	const {
-		addNewSection,
-		handlerCurrentValue,
-		inputValueSection,
-		namePopup,
-	} = props
+	const { addNewSection, handlerCurrentValue, namePopup } = props
 
 	return (
 		<div
@@ -39,7 +33,7 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 					</div>
 					<form
 						id="formAddSection"
-						onSubmit={event => event.preventDefault()}
+						onSubmit={ev => ev.preventDefault()}
 						className="needs-validation"
 						noValidate
 					>
@@ -52,9 +46,6 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 									className="form-control"
 									placeholder="enter Name Section"
 									aria-describedby="formAddSection"
-									onChange={ev => {
-										handlerCurrentValue(ev.target.id, ev.target.value)
-									}}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
@@ -62,8 +53,9 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 						<div className="modal-footer">
 							<button
 								onClick={() => {
-									if (inputValueSection !== "") {
-										addNewSection(inputValueSection)
+									const nameSection = $("#addNameSection").val()
+									if (nameSection !== "") {
+										addNewSection(nameSection)
 										// очищаем поле addNameSection,
 										// action.name === buttonAddSection
 										handlerCurrentValue("buttonAddSection", "")
