@@ -3,7 +3,12 @@ import { ERROR_TEXT } from "../../constants"
 
 interface IEditNoteProps {
 	sections: [];
-	tags: [];
+	tags: Array<{
+		_id: string,
+		nameTag: string,
+		sectionID: string,
+		userID: string
+	}>;
 	editNote: (editedNote: {
     id: string,
     header: string,

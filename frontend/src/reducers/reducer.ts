@@ -48,7 +48,6 @@ export const initialState = {
 			header: "aud-1",
 			text:
 				"txt-aud-1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
-
 			remarks: "",
 			link: "",
 			sectionID: "1",
@@ -77,7 +76,7 @@ export const initialState = {
 				"txt-web-1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
 			remarks: "",
 			link: "",
-			sectionID: "1",
+			sectionID: "2",
 			tagID: "2",
 			userID: "1",
 			dateCreated: "23.10.2019, 10:34",
@@ -90,7 +89,7 @@ export const initialState = {
 				"txt-web-2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
 			remarks: "",
 			link: "",
-			sectionID: "1",
+			sectionID: "2",
 			tagID: "2",
 			userID: "1",
 			dateCreated: "22.10.2019, 10:34",
@@ -103,7 +102,7 @@ export const initialState = {
 				"txt-pro-1. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
 			remarks: "",
 			link: "",
-			sectionID: "1",
+			sectionID: "3",
 			tagID: "3",
 			userID: "1",
 			dateCreated: "20.10.2019, 11:34",
@@ -116,7 +115,7 @@ export const initialState = {
 				"txt-pro-2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
 			remarks: "",
 			link: "",
-			sectionID: "1",
+			sectionID: "3",
 			tagID: "3",
 			userID: "1",
 			dateCreated: "23.10.2019, 10:31",
@@ -143,9 +142,8 @@ const handlerFiltersValue = (
 	const obj = state.filters
 	if (filter === "filterSection") {
 		for (const key in obj) {
-			if (key === "sections") {
-				obj[key] = id
-			}
+			if (key === "sections") obj[key] = id
+			else if (key === "tags") obj[key] = "All"
 		}
 	} else if (filter === "filterTag") {
 		for (const key in obj) {

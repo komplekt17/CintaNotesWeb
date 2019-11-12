@@ -11,11 +11,27 @@ import $ from "jquery"
 import "../styles/SideBarTag.css"
 
 interface ISideBarTagsProps {
-	tags: [];
+	tags: Array<{
+		_id: string,
+		nameTag: string,
+		sectionID: string,
+		userID: string,
+	}>;
+	notes: Array<{
+		_id: string,
+		header: string,
+		text: string,
+		remarks: string,
+		link: string,
+		sectionID: string,
+		tagID: string,
+		userID: string,
+	}>;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
-	resetHighlightItem: (elem: any) => void;
+	resetHighlightItem: (elem: any, nameElem: string) => void;
+	countQualityItems: (nameArray: string, nameFilter: string) => number;
 }
 
 let listTags: any = <h3>{ERROR_TEXT}</h3>
@@ -27,6 +43,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 		handlerCurrentValue,
 		resetHighlightItem,
 		handlerValueFilters,
+		countQualityItems,
 	} = props
 	if (tags && tags.length !== 0) {
 		listTags = tags.map((item: any, index: number) => {
@@ -38,14 +55,16 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					<span
 						className="nav-link name_tag"
 						onClick={ev => {
-							resetHighlightItem(ev.target)
+							resetHighlightItem(ev.target, "")
 							handlerValueFilters("filterTag", item._id)
 						}}
 					>
 						{item.nameTag}
 					</span>
 					<span className="nav-link">
-						<span className="name_tag-qwt">{index}</span>
+						<span className="name_tag-qwt">
+							{countQualityItems("tagBarNotes", item._id)}
+						</span>
 						<span className="name_tag-btns">
 							<i
 								className="fas fa-edit text-success"
@@ -80,7 +99,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 							handlerHeaderPopup(HEADER_ADD_TAG)
 							$("#modal-addTag").modal("show")
 						}}
-						className="btn btn-outline-success btn-sm rounded"
+						className="btn btn-outline-success btn-sm"
 					>
 						Add Tag
 					</button>
@@ -95,29 +114,33 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					</button>
 				</span>
 			</li>
-			<li className="nav-item d-flex justify-content-between">
+			<li className="nav-item d-flex justify-content-between item-active">
 				<span
 					className="nav-link"
 					onClick={ev => {
-						resetHighlightItem(ev.target)
+						resetHighlightItem(ev.target, "")
 						handlerValueFilters("filterTag", "All")
 					}}
 				>
 					All
 				</span>
-				<span className="nav-link">8</span>
+				<span className="nav-link">
+					{countQualityItems("tagBarNotes", "All")}
+				</span>
 			</li>
 			<li className="nav-item d-flex justify-content-between">
 				<span
 					className="nav-link"
 					onClick={ev => {
-						resetHighlightItem(ev.target)
+						resetHighlightItem(ev.target, "")
 						handlerValueFilters("filterTag", "Untagged")
 					}}
 				>
 					Untagged
 				</span>
-				<span className="nav-link">7</span>
+				<span className="nav-link">
+					{countQualityItems("tagBarNotes", "Untagged")}
+				</span>
 			</li>
 			{listTags}
 		</ul>

@@ -62,18 +62,144 @@ const App: React.FC<IAppProps> = props => {
 		auth,
 	} = store
 
-	// сброс подсветки у соседей и подсветка active section/tag
-	const resetHighlightItem = (elem: any): void => {
-		const elems = $(elem)
-			.parent()
-			.parent()
-			.children()
-		for (let i = 0; i < elems.length; i++) {
-			$(elems[i]).removeClass("section-tab-active")
+	// получение количества тегов или записей активной секции
+	const countQualityItems = (
+		nameArray: string,
+		nameFilter: string
+	): number => {
+		let count = 0
+		if (nameArray === "statTags") {
+			if (nameFilter === "All") {
+				count = tags.length
+			} else {
+				// filterSection !== "All"
+				for (let i = 0; i < tags.length; i++) {
+					for (const key in tags[i]) {
+						if (key === "sectionID" && tags[i][key] === nameFilter) {
+							count += 1
+						}
+					}
+				}
+			}
+		} else if (nameArray === "statNotes") {
+			if (nameFilter === "All") {
+				count = notes.length
+			} else {
+				// filterSection !== "All"
+				for (let i = 0; i < notes.length; i++) {
+					for (const key in notes[i]) {
+						if (key === "sectionID" && notes[i][key] === nameFilter) {
+							count += 1
+						}
+					}
+				}
+			}
+		} else if (nameArray === "tagBarNotes") {
+			if (nameFilter === "All") {
+				// если фильтр секции "All"
+				if (filters.sections === "All") {
+					count = notes.length
+				}
+				// если фильтр секции !== "All"
+				else {
+					const filteredNotes = getFiltredArray("notesArr", notes, filters)
+					count = filteredNotes.length
+				}
+			}
+			// else if (nameFilter === "Untagged") {
+			// 	count = notes.length
+			// }
+			// // nameFilter !== "All" && !== "Untagged"
+			else {
+				for (let i = 0; i < notes.length; i++) {
+					for (const key in notes[i]) {
+						if (key === "tagID" && notes[i][key] === nameFilter) {
+							count += 1
+						}
+					}
+				}
+			}
 		}
-		$(elem)
-			.parent()
-			.addClass("section-tab-active")
+		return count
+	}
+
+	// получение отфильтрованных массивов notes[]/tags[]
+	const getFiltredArray = (
+		typeArray: string,
+		arr: Array<{
+			_id: string,
+			sectionID: string,
+			tagID?: string,
+			userID: string,
+		}>,
+		filters: { sections: string, tags: string }
+	): any => {
+		// фильтрация массива notes[]
+		if (typeArray === "notesArr") {
+			// 1. получаем массив notes[] отфильтрованный по Section
+			const notesFilterdBySection = arr.filter(item => {
+				let qqq
+				if (filters.sections === "All") qqq = arr
+				else if (filters.sections === item.sectionID) {
+					qqq = item.sectionID
+				}
+				return qqq
+			})
+			// 2. получаем массив notes[]
+			// отфильтрованный и по Section, и по Tag
+			const notesFilterdByTag = notesFilterdBySection.filter(item => {
+				let qqq
+				if (filters.tags === "All") {
+					qqq = notesFilterdBySection
+				} else if (filters.tags === "Untagged") {
+					qqq = notesFilterdBySection
+				} else if (filters.tags === item.tagID) {
+					qqq = item.tagID
+				}
+				return qqq
+			})
+			return notesFilterdByTag
+		}
+		// фильтрация массива tags[]
+		else if (typeArray === "tagsArr") {
+			// console.log(typeArray, arr)
+			const tagesFilterdBySection = arr.filter(item => {
+				let qqq
+				if (filters.sections === "All") qqq = arr
+				else if (filters.sections === item.sectionID) {
+					qqq = item.sectionID
+				}
+				return qqq
+			})
+			return tagesFilterdBySection
+		}
+	}
+
+	// сброс подсветки у соседей и подсветка active section/tag
+	const resetHighlightItem = (elem: any, nameElem: string): void => {
+		// подсветка active section/tag
+		if (nameElem === "") {
+			const elems = $(elem)
+				.parent()
+				.parent()
+				.children()
+			for (let i = 0; i < elems.length; i++) {
+				// удаляем все подсветки тегов
+				$(elems[i]).removeClass("item-active")
+			}
+			$(elem)
+				.parent()
+				.addClass("item-active")
+		}
+		// подсветка тега "All" при переключении section
+		else if (nameElem === "clearItems") {
+			const elems = elem.children()
+			for (let i = 0; i < elems.length; i++) {
+				// удаляем все подсветки тегов
+				$(elems[i]).removeClass("item-active")
+			}
+			$(elems[1]).addClass("item-active")
+		}
 	}
 
 	// функция получения значения id удаляемого Item
@@ -116,23 +242,24 @@ const App: React.FC<IAppProps> = props => {
 				<div className="row">
 					<nav className="col-md-3 col-lg-3 d-none d-md-block app-side-tags fixed-top">
 						<SideBarTags
-							tags={tags}
+							tags={getFiltredArray("tagsArr", tags, filters)}
+							notes={getFiltredArray("notesArr", notes, filters)}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
 							handlerValueFilters={handlerValueFiltersToApp}
 							resetHighlightItem={resetHighlightItem}
+							countQualityItems={countQualityItems}
 						/>
 					</nav>
 					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
 						<SearchPanel />
 						<StatisticInfoPanel
 							sections={sections}
-							tags={tags}
-							notes={notes}
 							filters={filters}
+							countQualityItems={countQualityItems}
 						/>
 						<ItemNotes
-							notes={notes}
+							notes={getFiltredArray("notesArr", notes, filters)}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
 						/>

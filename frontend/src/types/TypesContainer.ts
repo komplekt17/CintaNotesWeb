@@ -7,8 +7,22 @@ export interface IAppProps {
 		filters: { sections:string, tags:string }
 		currentDetails: ICurrentDetails,
 		sections: [],
-		tags: [],
-		notes: [],
+		tags: Array<{
+			_id: string,
+			nameTag: string,
+			sectionID: string,
+			userID: string
+		}>,
+		notes: Array<{
+			_id: string,
+			header: string,
+			text: string,
+			remarks: string,
+			link: string,
+			sectionID: string,
+			tagID: string,
+			userID: string
+		}>,
 	};
 	getDataByLoginToApp: (user: { login: any, pass: any }) => void;
 	getStatusLoginToApp: (token: string) => void;

@@ -13,7 +13,7 @@ interface ISectionsPanelProps {
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
-	resetHighlightItem: (elem: any) => void;
+	resetHighlightItem: (elem: any, nameElem: string) => void;
 }
 
 let listSections: any = <h3>{ERROR_TEXT}</h3>
@@ -34,7 +34,8 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 					key={index}
 					className="nav-item section-tab"
 					onClick={ev => {
-						resetHighlightItem(ev.target)
+						resetHighlightItem(ev.target, "")
+						resetHighlightItem($(".app-side-tags ul"), "clearItems")
 						handlerValueFilters("filterSection", item._id)
 					}}
 				>
@@ -70,6 +71,18 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 		<div className="col-12 top-panel">
 			<div className="section-panel">
 				<ul className="nav nav-tabs">
+					<li className="nav-item section-tab item-active">
+						<span
+							className="nav-link"
+							onClick={ev => {
+								resetHighlightItem(ev.target, "")
+								resetHighlightItem($(".app-side-tags ul"), "clearItems")
+								handlerValueFilters("filterSection", "All")
+							}}
+						>
+							All
+						</span>
+					</li>
 					{listSections}
 					<li className="nav-item section-tab">
 						<span

@@ -4,7 +4,12 @@ import $ from "jquery"
 
 interface IAddNewTagPopup {
 	sections: [];
-	tags: [];
+	tags: Array<{
+		_id: string,
+		nameTag: string,
+		sectionID: string,
+		userID: string,
+	}>;
 	addNewNote: (newNote: {
 		header: any,
 		text: any,

@@ -8,7 +8,16 @@ import {
 import "../styles/ItemNotes.css"
 
 interface INoteItemProps {
-	notes: [];
+	notes: Array<{
+		_id: string,
+		header: string,
+		text: string,
+		remarks: string,
+		link: string,
+		sectionID: string,
+		tagID: string,
+		userID: string,
+	}>;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 }
