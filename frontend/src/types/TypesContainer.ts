@@ -1,4 +1,4 @@
-import { ICurrentDetails } from "./TypesReducer"
+import { ICurrentDetails,ISections,ITags,INotes } from "./TypesReducer"
 
 export interface IAppProps {
 	store: {
@@ -7,22 +7,8 @@ export interface IAppProps {
 		filters: { sections:string, tags:string }
 		currentDetails: ICurrentDetails,
 		sections: [],
-		tags: Array<{
-			_id: string,
-			nameTag: string,
-			sectionID: string,
-			userID: string
-		}>,
-		notes: Array<{
-			_id: string,
-			header: string,
-			text: string,
-			remarks: string,
-			link: string,
-			sectionID: string,
-			tagID: string,
-			userID: string
-		}>,
+		tags: ITags[],
+		notes: INotes[],
 	};
 	getDataByLoginToApp: (user: { login: any, pass: any }) => void;
 	getStatusLoginToApp: (token: string) => void;

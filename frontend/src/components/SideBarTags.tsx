@@ -17,16 +17,6 @@ interface ISideBarTagsProps {
 		sectionID: string,
 		userID: string,
 	}>;
-	notes: Array<{
-		_id: string,
-		header: string,
-		text: string,
-		remarks: string,
-		link: string,
-		sectionID: string,
-		tagID: string,
-		userID: string,
-	}>;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;

@@ -1,8 +1,10 @@
 import * as React from "react"
+import $ from "jquery"
 
 interface IRemoveItemProps {
 	removeItem: (namePopup: string, id: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
+	resetHighlightItem: (elem: any, nameElem: string) => void;
 	namePopup: string;
 	removableItemID: string;
 }
@@ -13,6 +15,7 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 		namePopup,
 		removableItemID,
 		handlerCurrentValue,
+		resetHighlightItem,
 	} = props
 
 	return (
@@ -44,6 +47,8 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 						<button
 							onClick={() => {
 								removeItem(namePopup, removableItemID)
+
+								resetHighlightItem($(".app-side-tags ul"), "clearItems")
 								if (namePopup === "Section") {
 									// очищаем поле _id в currentDetails.section,
 									// action.name === buttonRemoveSection

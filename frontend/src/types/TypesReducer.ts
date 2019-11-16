@@ -1,26 +1,33 @@
+export interface ISections {
+	_id: string;
+	nameSection: string;
+	userID: string;
+}
+
+export interface ITags {
+	_id: string;
+	nameTag: string;
+	userID: string;
+	sectionID: string;
+}
+
+export interface INotes {
+	_id: string;
+	header: string;
+	text: string;
+	remarks: string;
+	link: string;
+	userID: string;
+	sectionID: string;
+	tagID: string;
+	dateCreated: string;
+	dateModified: string;
+}
+
 export interface ICurrentDetails {
-	section: {
-		_id: string,
-		nameSection: string,
-	};
-	tag: {
-		_id: string,
-		nameTag: string,
-		userID: string,
-		sectionID: string,
-	};
-	note: {
-		_id: string,
-		header: string,
-		text: string,
-		remarks: string,
-		link: string,
-		userID: string,
-		sectionID: string,
-		tagID: string,
-		dateCreated: string,
-		dateModified: string,
-	};
+	section: ISections;
+	tag: ITags;
+	note: INotes;
 	userProfile: {
 		_id: string,
 		login: string,
@@ -39,27 +46,7 @@ export interface IState {
 	error: null;
 	filters: { sections: string, tags: string };
 	currentDetails: ICurrentDetails;
-	sections: Array<{
-		_id: string,
-		nameSection: string,
-		userID: string,
-	}>;
-	tags: Array<{
-		_id: string,
-		nameTag: string,
-		userID: string,
-		sectionID: string,
-	}>;
-	notes: Array<{
-		_id: string,
-		header: string,
-		text: string,
-		remarks: string,
-		link: string,
-		userID: string,
-		sectionID: string,
-		tagID: string,
-		dateCreated: string,
-		dateModified: string,
-	}>;
+	sections: ISections[];
+	tags: ITags[];
+	notes: INotes[];
 }

@@ -102,13 +102,42 @@ const App: React.FC<IAppProps> = props => {
 				}
 				// если фильтр секции !== "All"
 				else {
-					const filteredNotes = getFiltredArray("notesArr", notes, filters)
+					const filteredNotes = notes.filter(item => {
+						let qqq
+						if (filters.sections === item.sectionID) {
+							qqq = item.sectionID
+						}
+						return qqq
+					})
+					// console.log(filteredNotes)
+					count = filteredNotes.length
+				}
+			} else if (nameFilter === "Untagged") {
+				if (filters.sections === "All") {
+					const filteredNotes = notes.filter(item => {
+						let qqq
+						if (item.tagID === "Untagged") {
+							qqq = item.tagID
+						}
+						return qqq
+					})
+					console.log(filteredNotes)
+					count = filteredNotes.length
+				} else {
+					const filteredNotes = notes.filter(item => {
+						let qqq
+						if (
+							filters.sections === item.sectionID &&
+							item.tagID === "Untagged"
+						) {
+							qqq = item.tagID
+						}
+						return qqq
+					})
+					console.log(filteredNotes)
 					count = filteredNotes.length
 				}
 			}
-			// else if (nameFilter === "Untagged") {
-			// 	count = notes.length
-			// }
 			// // nameFilter !== "All" && !== "Untagged"
 			else {
 				for (let i = 0; i < notes.length; i++) {
@@ -151,9 +180,11 @@ const App: React.FC<IAppProps> = props => {
 				let qqq
 				if (filters.tags === "All") {
 					qqq = notesFilterdBySection
-				} else if (filters.tags === "Untagged") {
-					qqq = notesFilterdBySection
-				} else if (filters.tags === item.tagID) {
+				}
+				// else if (filters.tags === "Untagged") {
+				// 	qqq = notesFilterdBySection
+				// }
+				else if (filters.tags === item.tagID) {
 					qqq = item.tagID
 				}
 				return qqq
@@ -243,7 +274,6 @@ const App: React.FC<IAppProps> = props => {
 					<nav className="col-md-3 col-lg-3 d-none d-md-block app-side-tags fixed-top">
 						<SideBarTags
 							tags={getFiltredArray("tagsArr", tags, filters)}
-							notes={getFiltredArray("notesArr", notes, filters)}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
 							handlerValueFilters={handlerValueFiltersToApp}
@@ -308,6 +338,7 @@ const App: React.FC<IAppProps> = props => {
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				removableItemID={getRemovableItemID(namePopup)}
+				resetHighlightItem={resetHighlightItem}
 			/>
 		</div>
 	)

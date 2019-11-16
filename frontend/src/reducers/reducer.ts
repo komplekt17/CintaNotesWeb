@@ -1,5 +1,11 @@
 import $ from "jquery"
-import { ICurrentDetails, IState } from "../types"
+import {
+	ICurrentDetails,
+	IState,
+	ISections,
+	ITags,
+	INotes,
+} from "../types"
 
 export const initialState = {
 	auth: false,
@@ -9,8 +15,8 @@ export const initialState = {
 	error: null,
 	filters: { sections: "All", tags: "All" },
 	currentDetails: {
-		section: { _id: "", nameSection: "" },
-		tag: { _id: "", nameTag: "", userID: "", sectionID: "" },
+		section: { _id: "", nameSection: "", userID: "" },
+		tag: { _id: "", nameTag: "", sectionID: "", userID: "" },
 		note: {
 			_id: "",
 			header: "",
@@ -117,6 +123,32 @@ export const initialState = {
 			link: "",
 			sectionID: "3",
 			tagID: "3",
+			userID: "1",
+			dateCreated: "23.10.2019, 10:31",
+			dateModified: "25.10.2019, 15:33",
+		},
+		{
+			_id: "7",
+			header: "Untagged-2",
+			text:
+				"Untagged-2. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
+			remarks: "",
+			link: "",
+			sectionID: "All",
+			tagID: "Untagged",
+			userID: "1",
+			dateCreated: "23.10.2019, 10:31",
+			dateModified: "25.10.2019, 15:33",
+		},
+		{
+			_id: "8",
+			header: "Untagged-3",
+			text:
+				"Untagged-3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
+			remarks: "",
+			link: "",
+			sectionID: "3",
+			tagID: "Untagged",
 			userID: "1",
 			dateCreated: "23.10.2019, 10:31",
 			dateModified: "25.10.2019, 15:33",
@@ -332,7 +364,7 @@ const getNewObjDetails = (
 	keyName: string,
 	innerKeyName: string,
 	value: string
-): any => {
+): ICurrentDetails => {
 	// перебираем свойства-объекты currentDetails и при совпадении имён полей
 	// присваиваем полю новое значение value
 	// перебор полей объкта currentDetails
@@ -465,7 +497,7 @@ const removingItem = (
 	state: IState,
 	nameItem: string,
 	id: string
-): any => {
+): ISections[] | ITags[] | INotes[] | undefined => {
 	if (nameItem === "Section") {
 		const arr = state.sections.slice()
 		// находим section с _id === idx
@@ -491,6 +523,39 @@ const removingItem = (
 		}
 		return arr
 	}
+}
+
+// перемещение notes в Untagged,
+// если удаляется родительский tag/section
+const transUntaggedNotes = (
+	state: IState,
+	nameItem: string,
+	idRemovedItem: string
+): INotes[] => {
+	const arr = state.notes.slice()
+	// при удалении tag
+	if (nameItem === "Tag") {
+		for (let i = 0; i < arr.length; i++) {
+			// если note относится к удаляемому tag
+			if (arr[i].tagID === idRemovedItem) {
+				// тогда переносим эту note в Untagged
+				arr[i].tagID = "Untagged"
+			}
+		}
+	}
+	// при удалении section
+	if (nameItem === "Section") {
+		for (let i = 0; i < arr.length; i++) {
+			// если note относится к удаляемой section
+			if (arr[i].sectionID === idRemovedItem) {
+				// тогда переносим эту note в Untagged
+				arr[i].tagID = "Untagged"
+				// и переносим эту note в All sections
+				arr[i].sectionID = "All"
+			}
+		}
+	}
+	return arr
 }
 
 export const Reducer = (state: IState = initialState, action: any) => {
@@ -571,19 +636,20 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				return {
 					...state,
 					sections: removingItem(state, action.name, action.id),
-					filters: { sections: "", tags: "" },
+					notes: transUntaggedNotes(state, action.name, action.id),
+					filters: { sections: "All", tags: "All" },
 				}
 			} else if (action.name === "Tag") {
 				return {
 					...state,
 					tags: removingItem(state, action.name, action.id),
-					filters: { sections: "", tags: "" },
+					notes: transUntaggedNotes(state, action.name, action.id),
+					filters: { sections: state.filters.sections, tags: "All" },
 				}
 			} else if (action.name === "Note") {
 				return {
 					...state,
 					notes: removingItem(state, action.name, action.id),
-					filters: { sections: "", tags: "" },
 				}
 			}
 

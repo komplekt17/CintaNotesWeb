@@ -1,5 +1,6 @@
 import * as React from "react"
 import $ from "jquery"
+import { INotes } from "../types"
 import {
 	ERROR_TEXT,
 	HEADER_EDIT_NOTE,
@@ -8,16 +9,7 @@ import {
 import "../styles/ItemNotes.css"
 
 interface INoteItemProps {
-	notes: Array<{
-		_id: string,
-		header: string,
-		text: string,
-		remarks: string,
-		link: string,
-		sectionID: string,
-		tagID: string,
-		userID: string,
-	}>;
+	notes: INotes[];
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 }
@@ -42,6 +34,9 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 							{"   "}
 							{item.dateCreated}
 						</div>
+					</div>
+					<div className="note-tag">
+						<span className="text-primary border-primary">{item.tagID}</span>
 					</div>
 					<div className="note-text">{item.text}</div>
 					<div className="note-footer">
