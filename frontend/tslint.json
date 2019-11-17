@@ -31,6 +31,7 @@
 		"no-empty": false, 
 		"no-empty-interface": false,
 		"curly": false,
-		"prefer-for-of": false
+		"prefer-for-of": false,
+		"no-string-literal": false
 	}
 }

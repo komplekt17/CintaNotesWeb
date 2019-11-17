@@ -104,7 +104,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					</button>
 				</span>
 			</li>
-			<li className="nav-item d-flex justify-content-between item-active">
+			<li className="nav-item d-flex tags-item justify-content-between item-active">
 				<span
 					className="nav-link"
 					onClick={ev => {
@@ -118,7 +118,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					{countQualityItems("tagBarNotes", "All")}
 				</span>
 			</li>
-			<li className="nav-item d-flex justify-content-between">
+			<li className="nav-item d-flex tags-item justify-content-between">
 				<span
 					className="nav-link"
 					onClick={ev => {

@@ -121,7 +121,7 @@ const App: React.FC<IAppProps> = props => {
 						}
 						return qqq
 					})
-					console.log(filteredNotes)
+					// console.log(filteredNotes)
 					count = filteredNotes.length
 				} else {
 					const filteredNotes = notes.filter(item => {
@@ -134,7 +134,7 @@ const App: React.FC<IAppProps> = props => {
 						}
 						return qqq
 					})
-					console.log(filteredNotes)
+					// console.log(filteredNotes)
 					count = filteredNotes.length
 				}
 			}
@@ -233,7 +233,7 @@ const App: React.FC<IAppProps> = props => {
 		}
 	}
 
-	// функция получения значения id удаляемого Item
+	// функция получения значения id удаляемого Item (section/tag/note)
 	const getRemovableItemID = (namePopup: string): string => {
 		let removableItemID = ""
 		if (namePopup === "Section") {
@@ -289,6 +289,7 @@ const App: React.FC<IAppProps> = props => {
 							countQualityItems={countQualityItems}
 						/>
 						<ItemNotes
+							tags={tags}
 							notes={getFiltredArray("notesArr", notes, filters)}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}

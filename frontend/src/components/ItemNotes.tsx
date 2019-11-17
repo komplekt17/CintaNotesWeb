@@ -1,6 +1,6 @@
 import * as React from "react"
 import $ from "jquery"
-import { INotes } from "../types"
+import { INotes, ITags } from "../types"
 import {
 	ERROR_TEXT,
 	HEADER_EDIT_NOTE,
@@ -9,6 +9,7 @@ import {
 import "../styles/ItemNotes.css"
 
 interface INoteItemProps {
+	tags: ITags[];
 	notes: INotes[];
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
@@ -17,7 +18,19 @@ interface INoteItemProps {
 let NotesList: any = <h3>{ERROR_TEXT}</h3>
 
 const ItemNotes: React.FC<INoteItemProps> = props => {
-	const { notes, handlerHeaderPopup, handlerCurrentValue } = props
+	const { tags, notes, handlerHeaderPopup, handlerCurrentValue } = props
+
+	// получение nameTag из tags[]
+	const getNameTag = (tagIDfromNotes: string): string => {
+		let nameTag = "Untagged"
+		for (let i = 0; i < tags.length; i++) {
+			if (tags[i]._id === tagIDfromNotes) {
+				nameTag = tags[i].nameTag
+			}
+		}
+
+		return nameTag
+	}
 
 	if (notes && notes.length !== 0) {
 		NotesList = notes.map((item: any, index: number) => {
@@ -36,7 +49,9 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 						</div>
 					</div>
 					<div className="note-tag">
-						<span className="text-primary border-primary">{item.tagID}</span>
+						<span className="text-primary border-primary">
+							{getNameTag(item.tagID)}
+						</span>
 					</div>
 					<div className="note-text">{item.text}</div>
 					<div className="note-footer">

@@ -21,9 +21,12 @@
 .note-tag {
   position: relative;
   left: 50px;
+  width: 100px;
 }
 .note-tag span {
   border: 1px solid;
+  border-bottom: none;
+  border-top: none;
   padding: 0px 5px;
 }
 
