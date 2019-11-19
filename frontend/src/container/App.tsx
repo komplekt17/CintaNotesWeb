@@ -214,6 +214,7 @@ const App: React.FC<IAppProps> = props => {
 				.parent()
 				.parent()
 				.children()
+			// console.log(elem)
 			for (let i = 0; i < elems.length; i++) {
 				// удаляем все подсветки тегов
 				$(elems[i]).removeClass("item-active")
@@ -222,14 +223,27 @@ const App: React.FC<IAppProps> = props => {
 				.parent()
 				.addClass("item-active")
 		}
-		// подсветка тега "All" при переключении section
+		// сброс подсветки item "All" при remove/edit sections/tags
 		else if (nameElem === "clearItems") {
 			const elems = elem.children()
 			for (let i = 0; i < elems.length; i++) {
-				// удаляем все подсветки тегов
+				// удаляем все подсветки тегов/секций
 				$(elems[i]).removeClass("item-active")
 			}
-			$(elems[1]).addClass("item-active")
+			// если родитель elems содержит .nav-tabs
+			if (
+				$(elems)
+					.parent()
+					.hasClass("nav-tabs")
+			) {
+				// подсвечиваем первый элемент списка sections - item All
+				$(elems[0]).addClass("item-active")
+			}
+			// если родитель elems НЕ содержит .nav-tabs
+			else {
+				// подсвечиваем второй элемент списка tags - item All
+				$(elems[1]).addClass("item-active")
+			}
 		}
 	}
 

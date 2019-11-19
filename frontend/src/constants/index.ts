@@ -1,6 +1,6 @@
 // import { initialState } from "../reducers"
 
-const ERROR_TEXT = "no data for render"
+const ERROR_TEXT = "no items to render"
 
 const HEADER_ADD_SECTION = "Adding New Section"
 const HEADER_EDIT_SECTION = "Editing Section"

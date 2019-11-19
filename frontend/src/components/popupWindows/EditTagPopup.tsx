@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ERROR_TEXT } from "../../constants"
+// import { ERROR_TEXT } from "../../constants"
 // import $ from "jquery"
 
 interface IEditTagProps {
@@ -18,18 +18,19 @@ interface IEditTagProps {
 	}
 	namePopup: string;
 }
+
 export const EditTagPopup: React.FC<IEditTagProps> = props => {
 	const {
 		editTag,
 		handlerCurrentValue,
 		currentEditedTag,
 		namePopup,
-		sections,
+		sections
 	} = props
 
 	const {_id, nameTag, sectionID} = currentEditedTag
 
-	let sectionsList: any = <h3>{ERROR_TEXT}</h3>
+	let sectionsList: any = ""
 
 	if (sections && sections.length !== 0) {
 		sectionsList = sections.map((item: any, index: number) => {
@@ -98,6 +99,7 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 									aria-describedby="formEditTag"
 								>
 									{sectionsList}
+									<option value="All">All</option>
 								</select>
 								<div className="invalid-feedback">
 									Please select a page categorie

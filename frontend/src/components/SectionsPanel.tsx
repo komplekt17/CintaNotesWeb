@@ -1,7 +1,6 @@
 import * as React from "react"
 import $ from "jquery"
 import {
-	ERROR_TEXT,
 	HEADER_ADD_SECTION,
 	HEADER_EDIT_SECTION,
 	HEADER_REMOVE_SECTION,
@@ -16,8 +15,6 @@ interface ISectionsPanelProps {
 	resetHighlightItem: (elem: any, nameElem: string) => void;
 }
 
-let listSections: any = <h3>{ERROR_TEXT}</h3>
-
 export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 	const {
 		sections,
@@ -27,6 +24,8 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 		resetHighlightItem,
 	} = props
 
+	let listSections: any = ""
+
 	if (sections && sections.length !== 0) {
 		listSections = sections.map((item: any, index: any) => {
 			return (
@@ -34,7 +33,9 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 					key={index}
 					className="nav-item section-tab"
 					onClick={ev => {
-						resetHighlightItem(ev.target, "")
+						let elem = $(ev.target)
+						if ($(elem).hasClass("fas")) elem = $(elem).parent()
+						resetHighlightItem(elem, "")
 						resetHighlightItem($(".app-side-tags ul"), "clearItems")
 						handlerValueFilters("filterSection", item._id)
 					}}

@@ -527,32 +527,56 @@ const removingItem = (
 
 // перемещение notes в Untagged,
 // если удаляется родительский tag/section
-const transUntaggedNotes = (
+const transplaceNotes = (
 	state: IState,
 	nameItem: string,
-	idRemovedItem: string
+	idItem: any
 ): INotes[] => {
+	// для массива notes[]
 	const arr = state.notes.slice()
 	// при удалении tag
 	if (nameItem === "Tag") {
 		for (let i = 0; i < arr.length; i++) {
-			// если note относится к удаляемому tag
-			if (arr[i].tagID === idRemovedItem) {
+			// если note относится к id удаляемому tag
+			if (arr[i].tagID === idItem) {
 				// тогда переносим эту note в Untagged
 				arr[i].tagID = "Untagged"
 			}
 		}
 	}
 	// при удалении section
-	if (nameItem === "Section") {
+	else if (nameItem === "Section") {
 		for (let i = 0; i < arr.length; i++) {
-			// если note относится к удаляемой section
-			if (arr[i].sectionID === idRemovedItem) {
+			// если note относится к id удаляемой section
+			if (arr[i].sectionID === idItem) {
 				// тогда переносим эту note в Untagged
 				arr[i].tagID = "Untagged"
 				// и переносим эту note в All sections
 				arr[i].sectionID = "All"
 			}
+		}
+	}
+	// при перемещении tag в другую section
+	else if (nameItem === "editTag") {
+		for (let i = 0; i < arr.length; i++) {
+			// если note относится к id редактируемого tag
+			if (arr[i].tagID === idItem.id) {
+				// перемещаем notes в секцию тега
+				arr[i].sectionID = idItem.sectionID
+			}
+		}
+	}
+	return arr
+}
+
+// перемещение tags в All
+const transplaceTags = (state: IState, idItem: string): ITags[] => {
+	const arr = state.tags.slice()
+	for (let i = 0; i < arr.length; i++) {
+		// если tag относится к id удаляемой section
+		if (arr[i].sectionID === idItem) {
+			// переносим этот tag в All sections
+			arr[i].sectionID = "All"
 		}
 	}
 	return arr
@@ -636,14 +660,15 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				return {
 					...state,
 					sections: removingItem(state, action.name, action.id),
-					notes: transUntaggedNotes(state, action.name, action.id),
+					tags: transplaceTags(state, action.id),
+					notes: transplaceNotes(state, action.name, action.id),
 					filters: { sections: "All", tags: "All" },
 				}
 			} else if (action.name === "Tag") {
 				return {
 					...state,
 					tags: removingItem(state, action.name, action.id),
-					notes: transUntaggedNotes(state, action.name, action.id),
+					notes: transplaceNotes(state, action.name, action.id),
 					filters: { sections: state.filters.sections, tags: "All" },
 				}
 			} else if (action.name === "Note") {
@@ -669,6 +694,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				tags: editingItem(state, "editTag", action.editedTag),
+				notes: transplaceNotes(state, "editTag", action.editedTag),
 			}
 
 		// ======= END TAGS =======

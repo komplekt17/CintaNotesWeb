@@ -15,10 +15,10 @@ interface INoteItemProps {
 	handlerCurrentValue: (name: string, value: string) => void;
 }
 
-let NotesList: any = <h3>{ERROR_TEXT}</h3>
-
 const ItemNotes: React.FC<INoteItemProps> = props => {
 	const { tags, notes, handlerHeaderPopup, handlerCurrentValue } = props
+
+	let NotesList: any = <div className="col-12">{ERROR_TEXT}</div>
 
 	// получение nameTag из tags[]
 	const getNameTag = (tagIDfromNotes: string): string => {

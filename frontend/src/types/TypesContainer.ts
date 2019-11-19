@@ -1,4 +1,4 @@
-import { ICurrentDetails,ISections,ITags,INotes } from "./TypesReducer"
+import { ICurrentDetails, ISections, ITags, INotes } from "./TypesReducer"
 
 export interface IAppProps {
 	store: {

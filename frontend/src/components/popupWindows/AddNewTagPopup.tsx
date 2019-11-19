@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ERROR_TEXT } from "../../constants"
+// import { ERROR_TEXT } from "../../constants"
 import $ from "jquery"
 
 interface IAddNewTagPopup {
@@ -11,7 +11,7 @@ interface IAddNewTagPopup {
 export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 	const { sections, addNewTag, namePopup } = props
 
-	let sectionsList: any = <h3>{ERROR_TEXT}</h3>
+	let sectionsList: any = ""
 
 	if (sections && sections.length !== 0) {
 		sectionsList = sections.map((item: any, index: number) => {
@@ -71,6 +71,7 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 									aria-describedby="formAddTag"
 								>
 									{sectionsList}
+									<option value="All">All</option>
 								</select>
 								<div className="invalid-feedback">Please select a section</div>
 							</div>

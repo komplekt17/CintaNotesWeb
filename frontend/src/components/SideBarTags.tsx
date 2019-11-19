@@ -24,8 +24,6 @@ interface ISideBarTagsProps {
 	countQualityItems: (nameArray: string, nameFilter: string) => number;
 }
 
-let listTags: any = <h3>{ERROR_TEXT}</h3>
-
 export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 	const {
 		tags,
@@ -35,6 +33,13 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 		handlerValueFilters,
 		countQualityItems,
 	} = props
+
+	let listTags: any = (
+		<li className="nav-item d-flex">
+			<span className="nav-link">{ERROR_TEXT}</span>
+		</li>
+	)
+
 	if (tags && tags.length !== 0) {
 		listTags = tags.map((item: any, index: number) => {
 			return (

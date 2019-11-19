@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ERROR_TEXT } from "../../constants"
+// import { ERROR_TEXT } from "../../constants"
 
 interface IEditNoteProps {
 	sections: [];
@@ -47,9 +47,9 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
     remarks,
     link, 
     sectionID, 
-    tagID} = currentEditedNote
+    tagID } = currentEditedNote
 
-	let sectionsList: any = <h3>{ERROR_TEXT}</h3>
+	let sectionsList: any = ""
 
 	if (sections && sections.length !== 0) {
 		sectionsList = sections.map((item: any, index: number) => {
@@ -61,7 +61,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 		})
 	}
 
-	let tagsList: any = <h3>{ERROR_TEXT}</h3>
+	let tagsList: any = ""
 
 	if (tags && tags.length !== 0) {
 		tagsList = tags.map((item: any, index: number) => {
@@ -145,6 +145,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 									aria-describedby="formEditNote"
 								>
 									{sectionsList}
+									<option value="All">All</option>
 								</select>
 								<div className="invalid-feedback">
 									Please select a tag Note
@@ -163,6 +164,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 									aria-describedby="formEditNote"
 								>
 									{tagsList}
+									<option value="Untagged">Untagged</option>
 								</select>
 								<div className="invalid-feedback">
 									Please select a tag Note
