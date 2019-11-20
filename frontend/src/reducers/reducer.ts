@@ -336,7 +336,7 @@ const handlerCurrentDetails = (
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.user -------
 
-	// сохраняем данные User'а
+	// сохраняем данные User'а при входе в профиль
 	else if (name === "userData") {
 		// деструктурируем value, т.к. в данном случае
 		// value = user{login, pass}
@@ -347,7 +347,7 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "userProfile", "pass", pass)
 	}
 
-	// удаляем данные User'а
+	// удаляем данные User'а при входе из профиля
 	else if (name === "userLogOut") {
 		// обновляем поле login
 		obj = getNewObjDetails(obj, "userProfile", "login", (value = ""))
@@ -591,6 +591,20 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				loaded: true,
 				auth: !state.auth,
 				currentDetails: handlerCurrentDetails(state, "userData", action.user),
+			}
+
+		case "CREATE_NEW_USER_ACTION":
+			$("#modal-createUser").modal("hide")
+			return {
+				...state,
+				loading: false,
+				loaded: true,
+				auth: !state.auth,
+				currentDetails: handlerCurrentDetails(
+					state,
+					"userData",
+					action.newUser
+				),
 			}
 
 		case "USER_LOGOUT_ACTION":

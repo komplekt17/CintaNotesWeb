@@ -8,6 +8,7 @@ import {
 	SearchPanel,
 	StatisticInfoPanel,
 	ItemNotes,
+	AddNewUserPopup,
 	AddNewSectionPopup,
 	AddNewTagPopup,
 	AddNewNotePopup,
@@ -15,10 +16,13 @@ import {
 	EditTagPopup,
 	EditNotePopup,
 	RemoveItemPopup,
+	UserPassResetPopup,
+	UserPassChangePopup,
 } from "../components"
 import {
 	getDataByLoginAction,
 	getStatusLoginAction,
+	createNewUserAction,
 	addNewSectionAction,
 	addNewTagAction,
 	addNewNoteAction,
@@ -40,6 +44,7 @@ const App: React.FC<IAppProps> = props => {
 		store,
 		getDataByLoginToApp,
 		getStatusLoginToApp,
+		createNewUserToApp,
 		addNewSectionToApp,
 		addNewTagToApp,
 		addNewNoteToApp,
@@ -180,11 +185,7 @@ const App: React.FC<IAppProps> = props => {
 				let qqq
 				if (filters.tags === "All") {
 					qqq = notesFilterdBySection
-				}
-				// else if (filters.tags === "Untagged") {
-				// 	qqq = notesFilterdBySection
-				// }
-				else if (filters.tags === item.tagID) {
+				} else if (filters.tags === item.tagID) {
 					qqq = item.tagID
 				}
 				return qqq
@@ -269,6 +270,7 @@ const App: React.FC<IAppProps> = props => {
 						login={currentDetails.userProfile.login}
 						getStatusLogin={getStatusLoginToApp}
 						getDataByLogin={getDataByLoginToApp}
+						handlerHeaderPopup={handlerHeaderPopupToApp}
 					/>
 				</div>
 			</div>
@@ -311,6 +313,10 @@ const App: React.FC<IAppProps> = props => {
 					</main>
 				</div>
 			</div>
+			<AddNewUserPopup
+				createNewUser={createNewUserToApp}
+				namePopup={namePopup}
+			/>
 			<AddNewSectionPopup
 				addNewSection={addNewSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
@@ -355,6 +361,8 @@ const App: React.FC<IAppProps> = props => {
 				removableItemID={getRemovableItemID(namePopup)}
 				resetHighlightItem={resetHighlightItem}
 			/>
+			<UserPassResetPopup namePopup={namePopup} />
+			<UserPassChangePopup namePopup={namePopup} />
 		</div>
 	)
 }
@@ -375,6 +383,8 @@ const mapDispatchToProps = (dispatch: any) => {
 			dispatch(handlerCurrentValueAction(name, value)),
 		handlerValueFiltersToApp: (filter: string, id: string) =>
 			dispatch(handlerValueFiltersAction(filter, id)),
+		createNewUserToApp: (objUser: { login: any, pass: any }) =>
+			dispatch(createNewUserAction(objUser)),
 		addNewSectionToApp: (value: string) =>
 			dispatch(addNewSectionAction(value)),
 		addNewTagToApp: (newTag: { nameTag: string, sectionID: string }) =>

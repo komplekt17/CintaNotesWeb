@@ -1,5 +1,10 @@
 import * as React from "react"
 import $ from "jquery"
+import {
+	HEADER_CREATE_USER,
+	HEADER_CHANGE_PASS,
+	HEADER_RESET_PASS,
+} from "../constants"
 
 import "../styles/UserPanel.css"
 
@@ -8,10 +13,17 @@ interface IUserPanelProps {
 	login: string;
 	getStatusLogin: (token: string) => void;
 	getDataByLogin: (user: { login: any, pass: any }) => void;
+	handlerHeaderPopup: (name: string) => void;
 }
 
 export const UserPanel: React.FC<IUserPanelProps> = props => {
-	const { auth, login, getStatusLogin, getDataByLogin } = props
+	const {
+		auth,
+		login,
+		getStatusLogin,
+		getDataByLogin,
+		handlerHeaderPopup,
+	} = props
 
 	return (
 		<nav className="navbar navbar-expand col-12">
@@ -21,30 +33,34 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 						<ul className="navbar-nav">
 							<li className="nav-item">
 								<span
-									className="nav-link item-menu d-none"
-									onClick={() => {
-										$(".item-menu").toggleClass("d-none")
-									}}
+									className="nav-link item-theme d-none"
+									onClick={() => $(".item-theme").toggleClass("d-none")}
 								>
-									<i className="fas fa-home" /> Home
+									<i className="fas fa-sun" />
+								</span>
+								<span
+									className="nav-link item-theme"
+									onClick={() => $(".item-theme").toggleClass("d-none")}
+								>
+									<i className="far fa-moon" />
 								</span>
 							</li>
 							<li className="nav-item">
 								<span
-									className="nav-link item-menu"
-									onClick={() => $(".item-menu").toggleClass("d-none")}
+									className="nav-link item-lang d-none"
+									onClick={() => {
+										$(".item-lang").toggleClass("d-none")
+									}}
 								>
-									<i className="fas fa-cogs" /> Settings
+									RU
 								</span>
-							</li>
-							<li
-								className="nav-item"
-								onClick={() => {
-									$("#modal-createpage").modal("show")
-								}}
-							>
-								<span className="nav-link">
-									<i className="fas fa-plus-square" /> Create Page
+								<span
+									className="nav-link item-lang"
+									onClick={() => {
+										$(".item-lang").toggleClass("d-none")
+									}}
+								>
+									EN
 								</span>
 							</li>
 						</ul>
@@ -63,14 +79,17 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 									<span
 										className="dropdown-item"
 										onClick={() => {
-											$("#modal-edituser").modal("show")
+											$("#modal-changePass").modal("show")
+											handlerHeaderPopup(HEADER_CHANGE_PASS)
 										}}
 									>
 										Change pass
 									</span>
 									<span
 										className="dropdown-item"
-										onClick={() => getStatusLogin("token")}
+										onClick={() => {
+											getStatusLogin("token")
+										}}
 									>
 										LogOut
 									</span>
@@ -92,7 +111,10 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 							<li className="nav-item">
 								<span
 									className="nav-link"
-									onClick={() => $("#modal-createUser").modal("show")}
+									onClick={() => {
+										$("#modal-createUser").modal("show")
+										handlerHeaderPopup(HEADER_CREATE_USER)
+									}}
 								>
 									<i
 										data-toggle="tooltip"
@@ -106,7 +128,10 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 							<li className="nav-item">
 								<span
 									className="nav-link"
-									onClick={() => $("#modal-resetPass").modal("show")}
+									onClick={() => {
+										$("#modal-resetPass").modal("show")
+										handlerHeaderPopup(HEADER_RESET_PASS)
+									}}
 								>
 									<i
 										data-toggle="tooltip"
