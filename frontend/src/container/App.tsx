@@ -33,6 +33,8 @@ import {
 	handlerCurrentValueAction,
 	handlerHeaderPopupAction,
 	handlerValueFiltersAction,
+	handlerLangAction,
+	handlerThemeAction,
 } from "../actions"
 import { IAppProps } from "../types"
 import "bootswatch/dist/superhero/bootstrap.min.css"
@@ -55,6 +57,8 @@ const App: React.FC<IAppProps> = props => {
 		handlerCurrentValueToApp,
 		handlerHeaderPopupToApp,
 		handlerValueFiltersToApp,
+		handlerLangToApp,
+		handlerThemeToApp,
 	} = props
 
 	const {
@@ -268,9 +272,12 @@ const App: React.FC<IAppProps> = props => {
 					<UserPanel
 						auth={auth}
 						login={currentDetails.userProfile.login}
+						lang={currentDetails.userProfile.lang}
 						getStatusLogin={getStatusLoginToApp}
 						getDataByLogin={getDataByLoginToApp}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
+						handlerLang={handlerLangToApp}
+						handlerTheme={handlerThemeToApp}
 					/>
 				</div>
 			</div>
@@ -278,6 +285,7 @@ const App: React.FC<IAppProps> = props => {
 				<div className="row">
 					<SectionsPanel
 						sections={sections}
+						lang={currentDetails.userProfile.lang}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
 						handlerCurrentValue={handlerCurrentValueToApp}
 						handlerValueFilters={handlerValueFiltersToApp}
@@ -290,6 +298,7 @@ const App: React.FC<IAppProps> = props => {
 					<nav className="col-md-3 col-lg-3 d-none d-md-block app-side-tags fixed-top">
 						<SideBarTags
 							tags={getFiltredArray("tagsArr", tags, filters)}
+							lang={currentDetails.userProfile.lang}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
 							handlerValueFilters={handlerValueFiltersToApp}
@@ -298,14 +307,17 @@ const App: React.FC<IAppProps> = props => {
 						/>
 					</nav>
 					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
-						<SearchPanel />
+						<SearchPanel
+							lang={currentDetails.userProfile.lang} />
 						<StatisticInfoPanel
 							sections={sections}
 							filters={filters}
 							countQualityItems={countQualityItems}
+							lang={currentDetails.userProfile.lang}
 						/>
 						<ItemNotes
 							tags={tags}
+							lang={currentDetails.userProfile.lang}
 							notes={getFiltredArray("notesArr", notes, filters)}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
@@ -316,28 +328,33 @@ const App: React.FC<IAppProps> = props => {
 			<AddNewUserPopup
 				createNewUser={createNewUserToApp}
 				namePopup={namePopup}
+				lang={currentDetails.userProfile.lang}
 			/>
 			<AddNewSectionPopup
 				addNewSection={addNewSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
+				lang={currentDetails.userProfile.lang}
 			/>
 			<AddNewTagPopup
 				sections={sections}
 				addNewTag={addNewTagToApp}
 				namePopup={namePopup}
+				lang={currentDetails.userProfile.lang}
 			/>
 			<AddNewNotePopup
 				tags={tags}
 				sections={sections}
 				addNewNote={addNewNoteToApp}
 				namePopup={namePopup}
+				lang={currentDetails.userProfile.lang}
 			/>
 			<EditSectionPopup
 				editSection={editSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedSection={currentDetails.section}
 				namePopup={namePopup}
+				lang={currentDetails.userProfile.lang}
 			/>
 			<EditTagPopup
 				sections={sections}
@@ -345,6 +362,7 @@ const App: React.FC<IAppProps> = props => {
 				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedTag={currentDetails.tag}
 				namePopup={namePopup}
+							lang={currentDetails.userProfile.lang}
 			/>
 			<EditNotePopup
 				sections={sections}
@@ -353,6 +371,7 @@ const App: React.FC<IAppProps> = props => {
 				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedNote={currentDetails.note}
 				namePopup={namePopup}
+							lang={currentDetails.userProfile.lang}
 			/>
 			<RemoveItemPopup
 				removeItem={removeItemToApp}
@@ -360,9 +379,12 @@ const App: React.FC<IAppProps> = props => {
 				namePopup={namePopup}
 				removableItemID={getRemovableItemID(namePopup)}
 				resetHighlightItem={resetHighlightItem}
+							lang={currentDetails.userProfile.lang}
 			/>
-			<UserPassResetPopup namePopup={namePopup} />
-			<UserPassChangePopup namePopup={namePopup} />
+			<UserPassResetPopup namePopup={namePopup}
+							lang={currentDetails.userProfile.lang} />
+			<UserPassChangePopup namePopup={namePopup}
+							lang={currentDetails.userProfile.lang} />
 		</div>
 	)
 }
@@ -383,6 +405,9 @@ const mapDispatchToProps = (dispatch: any) => {
 			dispatch(handlerCurrentValueAction(name, value)),
 		handlerValueFiltersToApp: (filter: string, id: string) =>
 			dispatch(handlerValueFiltersAction(filter, id)),
+		handlerLangToApp: (lang: string) => dispatch(handlerLangAction(lang)),
+		handlerThemeToApp: (theme: string) =>
+			dispatch(handlerThemeAction(theme)),
 		createNewUserToApp: (objUser: { login: any, pass: any }) =>
 			dispatch(createNewUserAction(objUser)),
 		addNewSectionToApp: (value: string) =>

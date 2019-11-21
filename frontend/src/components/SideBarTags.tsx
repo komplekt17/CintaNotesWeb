@@ -1,11 +1,5 @@
 import * as React from "react"
-import {
-	ERROR_TEXT,
-	HEADER_ADD_TAG,
-	HEADER_EDIT_TAG,
-	HEADER_REMOVE_TAG,
-	HEADER_ADD_NOTE,
-} from "../constants"
+import { CONSTANTS } from "../constants"
 import $ from "jquery"
 
 import "../styles/SideBarTag.css"
@@ -17,6 +11,7 @@ interface ISideBarTagsProps {
 		sectionID: string,
 		userID: string,
 	}>;
+	lang: string;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
@@ -27,6 +22,7 @@ interface ISideBarTagsProps {
 export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 	const {
 		tags,
+		lang,
 		handlerHeaderPopup,
 		handlerCurrentValue,
 		resetHighlightItem,
@@ -36,7 +32,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 
 	let listTags: any = (
 		<li className="nav-item d-flex">
-			<span className="nav-link">{ERROR_TEXT}</span>
+			<span className="nav-link">{CONSTANTS[lang].ERROR_TEXT}</span>
 		</li>
 	)
 
@@ -64,7 +60,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 							<i
 								className="fas fa-edit text-success"
 								onClick={() => {
-									handlerHeaderPopup(HEADER_EDIT_TAG)
+									handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_TAG)
 									// сохраняем _id удаляемой Tag
 									handlerCurrentValue("saveIdEditedTag", item._id)
 									$("#modal-editTag").modal("show")
@@ -73,7 +69,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 							<i
 								className="fas fa-trash-alt text-danger"
 								onClick={() => {
-									handlerHeaderPopup(HEADER_REMOVE_TAG)
+									handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_TAG)
 									// сохраняем _id удаляемой Tag
 									handlerCurrentValue("saveIdRemovedTag", item._id)
 									$("#modal-removeItem").modal("show")
@@ -91,21 +87,21 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 				<span className="nav-link">
 					<button
 						onClick={() => {
-							handlerHeaderPopup(HEADER_ADD_TAG)
+							handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_TAG)
 							$("#modal-addTag").modal("show")
 						}}
 						className="btn btn-outline-success btn-sm"
 					>
-						Add Tag
+						{CONSTANTS[lang].BUTTON_ADD_TAG}
 					</button>
 					<button
 						onClick={() => {
-							handlerHeaderPopup(HEADER_ADD_NOTE)
+							handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_NOTE)
 							$("#modal-addNote").modal("show")
 						}}
 						className="btn btn-outline-info btn-sm rounded"
 					>
-						Add Note
+						{CONSTANTS[lang].BUTTON_ADD_NOTE}
 					</button>
 				</span>
 			</li>
@@ -117,7 +113,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 						handlerValueFilters("filterTag", "All")
 					}}
 				>
-					All
+					{CONSTANTS[lang].ITEMS_ALL}
 				</span>
 				<span className="nav-link">
 					{countQualityItems("tagBarNotes", "All")}
@@ -131,7 +127,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 						handlerValueFilters("filterTag", "Untagged")
 					}}
 				>
-					Untagged
+					{CONSTANTS[lang].ITEMS_NOTAG}
 				</span>
 				<span className="nav-link">
 					{countQualityItems("tagBarNotes", "Untagged")}

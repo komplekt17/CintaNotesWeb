@@ -1,5 +1,5 @@
 import * as React from "react"
-// import { ERROR_TEXT } from "../../constants"
+import { CONSTANTS } from "../../constants"
 import $ from "jquery"
 
 interface IAddNewTagPopup {
@@ -19,10 +19,11 @@ interface IAddNewTagPopup {
 		tagID: any,
 	}) => void;
 	namePopup: string;
+	lang: string;
 }
 
 export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
-	const { sections, tags, addNewNote, namePopup } = props
+	const { sections, tags, addNewNote, namePopup, lang } = props
 
 	let sectionsList: any = ""
 
@@ -175,9 +176,9 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									}
 								}}
 								type="button"
-								className="btn btn-info"
+								className="btn btn-info btn-block mt-3"
 							>
-								Add Tag
+								{CONSTANTS[lang].BUTTON_CREATE}
 							</button>
 						</div>
 					</form>

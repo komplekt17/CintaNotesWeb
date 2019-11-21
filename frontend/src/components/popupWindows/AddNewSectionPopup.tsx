@@ -1,13 +1,15 @@
 import * as React from "react"
+import { CONSTANTS } from "../../constants"
 import $ from "jquery"
 
 interface IAddSectionProps {
 	addNewSection: (value: any) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	namePopup: string;
+	lang: string;
 }
 export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
-	const { addNewSection, handlerCurrentValue, namePopup } = props
+	const { addNewSection, handlerCurrentValue, namePopup, lang } = props
 
 	return (
 		<div
@@ -63,9 +65,9 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 									}
 								}}
 								type="button"
-								className="btn btn-info"
+								className="btn btn-info btn-block mt-3"
 							>
-								Add Section
+								{CONSTANTS[lang].BUTTON_CREATE}
 							</button>
 						</div>
 					</form>

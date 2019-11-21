@@ -1,11 +1,12 @@
 import * as React from "react"
-// import $ from "jquery"
+import { CONSTANTS } from "../../constants"
 
 interface IEditSectionProps {
 	editSection: (editedSection: { id: string, nameSection: string }) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
-	namePopup: string;
 	currentEditedSection: { _id: string, nameSection: string };
+	namePopup: string;
+	lang: string;
 }
 export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 	const {
@@ -13,6 +14,7 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 		handlerCurrentValue,
 		currentEditedSection,
 		namePopup,
+		lang,
 	} = props
 	const { _id, nameSection } = currentEditedSection
 	return (
@@ -72,9 +74,9 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 									}
 								}}
 								type="button"
-								className="btn btn-success"
+								className="btn btn-success btn-block mt-3"
 							>
-								Save Section
+								{CONSTANTS[lang].BUTTON_SAVE}
 							</button>
 						</div>
 					</form>

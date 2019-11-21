@@ -1,24 +1,29 @@
 import * as React from "react"
 import $ from "jquery"
 import { INotes, ITags } from "../types"
-import {
-	ERROR_TEXT,
-	HEADER_EDIT_NOTE,
-	HEADER_REMOVE_NOTE,
-} from "../constants"
+import { CONSTANTS } from "../constants"
 import "../styles/ItemNotes.css"
 
 interface INoteItemProps {
 	tags: ITags[];
 	notes: INotes[];
+	lang: string;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 }
 
 const ItemNotes: React.FC<INoteItemProps> = props => {
-	const { tags, notes, handlerHeaderPopup, handlerCurrentValue } = props
+	const {
+		tags,
+		notes,
+		lang,
+		handlerHeaderPopup,
+		handlerCurrentValue,
+	} = props
 
-	let NotesList: any = <div className="col-12">{ERROR_TEXT}</div>
+	let NotesList: any = (
+		<div className="col-12">{CONSTANTS[lang].ERROR_TEXT}</div>
+	)
 
 	// получение nameTag из tags[]
 	const getNameTag = (tagIDfromNotes: string): string => {
@@ -59,7 +64,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 							<span
 								className="text-success"
 								onClick={() => {
-									handlerHeaderPopup(HEADER_EDIT_NOTE)
+									handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_NOTE)
 									// сохраняем _id удаляемой Note
 									handlerCurrentValue("saveIdEditedNote", item._id)
 									$("#modal-editNote").modal("show")
@@ -71,7 +76,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 							<span
 								className="text-danger"
 								onClick={() => {
-									handlerHeaderPopup(HEADER_REMOVE_NOTE)
+									handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_NOTE)
 									// сохраняем _id удаляемой Note
 									handlerCurrentValue("saveIdRemovedNote", item._id)
 									$("#modal-removeItem").modal("show")

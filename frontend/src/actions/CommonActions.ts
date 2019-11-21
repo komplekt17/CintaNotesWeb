@@ -24,7 +24,7 @@ const handlerLangAction = (lang: string) => {
 }
 
 // обработчик темы день/ночь
-const handlerThemaAction = (theme: string) => {
+const handlerThemeAction = (theme: string) => {
 	return {
 		type: "HANDLER_USER_THEME_ACTION",
 		theme,
@@ -44,6 +44,6 @@ export {
 	handlerCurrentValueAction,
 	handlerHeaderPopupAction,
 	handlerLangAction,
-	handlerThemaAction,
+	handlerThemeAction,
 	handlerValueFiltersAction,
 }

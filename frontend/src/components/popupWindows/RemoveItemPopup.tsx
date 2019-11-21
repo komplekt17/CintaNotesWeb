@@ -1,4 +1,5 @@
 import * as React from "react"
+import { CONSTANTS } from "../../constants"
 import $ from "jquery"
 
 interface IRemoveItemProps {
@@ -6,6 +7,7 @@ interface IRemoveItemProps {
 	handlerCurrentValue: (name: string, value: string) => void;
 	resetHighlightItem: (elem: any, nameElem: string) => void;
 	namePopup: string;
+	lang: string;
 	removableItemID: string;
 }
 
@@ -16,7 +18,25 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 		removableItemID,
 		handlerCurrentValue,
 		resetHighlightItem,
+		lang,
 	} = props
+
+	let header = namePopup
+	let text = namePopup
+
+	// for ru-localisation
+	if (lang === "ru") {
+		if (namePopup === "Section") {
+			header = "Секции"
+			text = "эту Секцию"
+		} else if (namePopup === "Tag") {
+			header = "Тега"
+			text = "этот Тег"
+		} else if (namePopup === "Note") {
+			header = "Записи"
+			text = "эту Запись"
+		}
+	}
 
 	return (
 		<div
@@ -30,7 +50,9 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 			<div className="modal-dialog modal-dialog-centered" role="document">
 				<div className="modal-content">
 					<div className="modal-header">
-						<h5 className="modal-title">Removing {namePopup}</h5>
+						<h5 className="modal-title">
+							{CONSTANTS[lang].FEEDBACK_HEADER_REMOVE} {header}
+						</h5>
 						<button
 							type="button"
 							className="close"
@@ -41,7 +63,9 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 						</button>
 					</div>
 					<div className="modal-body">
-						<p>Are you sure to delete this {namePopup}?</p>
+						<p>
+							{CONSTANTS[lang].FEEDBACK_TEXT_REMOVE} {text}?
+						</p>
 					</div>
 					<div className="modal-footer">
 						<button
@@ -69,9 +93,9 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 								}
 							}}
 							type="button"
-							className="btn btn-danger"
+							className="btn btn-danger btn-block mt-3"
 						>
-							Remove {namePopup}
+							{CONSTANTS[lang].BUTTON_REMOVE}
 						</button>
 					</div>
 				</div>

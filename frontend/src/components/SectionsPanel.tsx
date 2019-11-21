@@ -1,14 +1,11 @@
 import * as React from "react"
 import $ from "jquery"
-import {
-	HEADER_ADD_SECTION,
-	HEADER_EDIT_SECTION,
-	HEADER_REMOVE_SECTION,
-} from "../constants"
+import { CONSTANTS } from "../constants"
 import "../styles/SectionsPanel.css"
 
 interface ISectionsPanelProps {
 	sections: [];
+	lang: string;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
@@ -18,6 +15,7 @@ interface ISectionsPanelProps {
 export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 	const {
 		sections,
+		lang,
 		handlerHeaderPopup,
 		handlerCurrentValue,
 		handlerValueFilters,
@@ -45,7 +43,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						<i
 							className="fas fa-edit text-success"
 							onClick={() => {
-								handlerHeaderPopup(HEADER_EDIT_SECTION)
+								handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_SECTION)
 								// сохраняем value input редактируемой section
 								handlerCurrentValue("editNameSection", item.nameSection)
 								// сохраняем _id редактируемой section
@@ -56,7 +54,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						<i
 							className="fas fa-trash-alt text-danger"
 							onClick={() => {
-								handlerHeaderPopup(HEADER_REMOVE_SECTION)
+								handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_SECTION)
 								// сохраняем _id удаляемой section
 								handlerCurrentValue("saveIdRemovedSection", item._id)
 								$("#modal-removeItem").modal("show")
@@ -81,7 +79,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 								handlerValueFilters("filterSection", "All")
 							}}
 						>
-							All
+							{CONSTANTS[lang].BUTTON_ALL}
 						</span>
 					</li>
 					{listSections}
@@ -89,7 +87,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						<span
 							className="nav-link"
 							onClick={() => {
-								handlerHeaderPopup(HEADER_ADD_SECTION)
+								handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_SECTION)
 								$("#modal-addSection").modal("show")
 							}}
 						>

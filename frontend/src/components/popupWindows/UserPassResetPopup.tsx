@@ -1,13 +1,14 @@
 import * as React from "react"
 import $ from "jquery"
-import { FEEDBACK_EMAIL } from "../../constants"
+import { CONSTANTS } from "../../constants"
 
 interface IUserPassResetProps {
 	namePopup: string;
+	lang: string;
 }
 
 export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
-	const { namePopup } = props
+	const { namePopup, lang } = props
 
 	return (
 		<div
@@ -48,7 +49,9 @@ export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
 									required
 									autoFocus
 								/>
-								<div className="invalid-feedback">{FEEDBACK_EMAIL}</div>
+								<div className="invalid-feedback">
+									{CONSTANTS[lang].FEEDBACK_EMAIL}
+								</div>
 							</div>
 
 							<button
@@ -64,7 +67,7 @@ export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
 								className="btn btn-info btn-block mt-3"
 								type="button"
 							>
-								Reset Password
+								{CONSTANTS[lang].BUTTON_RESET}
 							</button>
 						</form>
 					</div>

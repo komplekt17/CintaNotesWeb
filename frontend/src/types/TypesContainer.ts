@@ -45,4 +45,6 @@ export interface IAppProps {
 	handlerCurrentValueToApp: (name: string, value: string) => void;
 	handlerHeaderPopupToApp: (header: string) => void;
 	handlerValueFiltersToApp: (filter: string, id: string) => void;
+	handlerLangToApp: (lang: string) => void;
+	handlerThemeToApp: (lang: string) => void;
 }

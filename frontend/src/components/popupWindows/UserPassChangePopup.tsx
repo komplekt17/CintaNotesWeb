@@ -1,13 +1,14 @@
 import * as React from "react"
 import $ from "jquery"
-import { FEEDBACK_PASS } from "../../constants"
+import { CONSTANTS } from "../../constants"
 
 interface IUserPassChangeProps {
 	namePopup: string;
+	lang: string;
 }
 
 export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
-	const { namePopup } = props
+	const { namePopup, lang } = props
 
 	return (
 		<div
@@ -48,7 +49,9 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 									required
 									autoFocus
 								/>
-								<div className="invalid-feedback">{FEEDBACK_PASS}</div>
+								<div className="invalid-feedback">
+									{CONSTANTS[lang].FEEDBACK_PASS}
+								</div>
 							</div>
 
 							<div className="form-label-group">
@@ -60,7 +63,9 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 									placeholder="enter New Password"
 									required
 								/>
-								<div className="invalid-feedback">{FEEDBACK_PASS}</div>
+								<div className="invalid-feedback">
+									{CONSTANTS[lang].FEEDBACK_PASS}
+								</div>
 							</div>
 
 							<div className="form-label-group">
@@ -72,7 +77,9 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 									placeholder="repeat New Password"
 									required
 								/>
-								<div className="invalid-feedback">{FEEDBACK_PASS}</div>
+								<div className="invalid-feedback">
+									{CONSTANTS[lang].FEEDBACK_PASS}
+								</div>
 							</div>
 
 							<button
@@ -93,7 +100,7 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 								className="btn btn-info btn-block mt-3"
 								type="button"
 							>
-								Save Changes
+								{CONSTANTS[lang].BUTTON_SAVE}
 							</button>
 						</form>
 					</div>

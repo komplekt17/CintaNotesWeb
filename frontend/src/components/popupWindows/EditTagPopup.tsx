@@ -1,6 +1,5 @@
 import * as React from "react"
-// import { ERROR_TEXT } from "../../constants"
-// import $ from "jquery"
+import { CONSTANTS } from "../../constants"
 
 interface IEditTagProps {
 	sections: [];
@@ -17,6 +16,7 @@ interface IEditTagProps {
 		sectionID: string;
 	}
 	namePopup: string;
+	lang: string;
 }
 
 export const EditTagPopup: React.FC<IEditTagProps> = props => {
@@ -24,7 +24,7 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 		editTag,
 		handlerCurrentValue,
 		currentEditedTag,
-		namePopup,
+		namePopup,lang,
 		sections
 	} = props
 
@@ -118,9 +118,9 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 									}
 								}}
 								type="button"
-								className="btn btn-success"
+								className="btn btn-success btn-block mt-3"
 							>
-								Save Tag
+								{CONSTANTS[lang].BUTTON_SAVE}
 							</button>
 						</div>
 					</form>

@@ -34,8 +34,8 @@ export const initialState = {
 			login: "",
 			pass: "",
 			status: "",
-			lang: "EN",
-			theme: "night",
+			lang: "en",
+			theme: "night", // or light
 		},
 	},
 	sections: [
@@ -355,6 +355,18 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "userProfile", "pass", (value = ""))
 	}
 
+	// смена языковой локализации User'а при клике EN/RU
+	else if (name === "userLang") {
+		// обновляем поле lang
+		obj = getNewObjDetails(obj, "userProfile", "lang", value)
+	}
+
+	// смена интерфейса темы User'а при клике moon/sun
+	else if (name === "userTheme") {
+		// обновляем поле theme
+		obj = getNewObjDetails(obj, "userProfile", "theme", value)
+	}
+
 	return obj
 }
 
@@ -636,13 +648,17 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		case "HANDLER_LANG_LOCAL_ACTION":
 			return {
 				...state,
-				currentDetails: handlerCurrentDetails(state, "userLang"),
+				currentDetails: handlerCurrentDetails(state, "userLang", action.lang),
 			}
 
 		case "HANDLER_USER_THEME_ACTION":
 			return {
 				...state,
-				currentDetails: handlerCurrentDetails(state, "userTheme"),
+				currentDetails: handlerCurrentDetails(
+					state,
+					"userTheme",
+					action.theme
+				),
 			}
 
 		case "HANDLER_VALUE_FILTERS_ACTION":

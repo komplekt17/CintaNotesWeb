@@ -1,5 +1,5 @@
 import * as React from "react"
-// import { ERROR_TEXT } from "../../constants"
+import { CONSTANTS } from "../../constants"
 
 interface IEditNoteProps {
 	sections: [];
@@ -29,6 +29,7 @@ interface IEditNoteProps {
     tagID: string;
 	}
 	namePopup: string;
+	lang: string;
 }
 export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 	const {
@@ -37,7 +38,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 		currentEditedNote,
 		namePopup,
     sections,
-    tags
+    tags,lang
 	} = props
 
 	const {
@@ -218,9 +219,9 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 									}
 								}}
 								type="button"
-								className="btn btn-success"
+								className="btn btn-success btn-block mt-3"
 							>
-								Save Note
+								{CONSTANTS[lang].BUTTON_SAVE}
 							</button>
 						</div>
 					</form>

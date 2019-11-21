@@ -1,13 +1,14 @@
 import * as React from "react"
-import { FEEDBACK_EMAIL, FEEDBACK_PASS } from "../../constants"
+import { CONSTANTS } from "../../constants"
 import $ from "jquery"
 
 interface IAddUserProps {
 	createNewUser: (objUser: { login: any, pass: any }) => void;
 	namePopup: string;
+	lang: string;
 }
 export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
-	const { createNewUser, namePopup } = props
+	const { createNewUser, namePopup, lang } = props
 
 	return (
 		<div
@@ -48,7 +49,9 @@ export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
 									required
 									autoFocus
 								/>
-								<div className="invalid-feedback">{FEEDBACK_EMAIL}</div>
+								<div className="invalid-feedback">
+									{CONSTANTS[lang].FEEDBACK_EMAIL}
+								</div>
 							</div>
 
 							<div className="form-label-group">
@@ -60,7 +63,9 @@ export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
 									placeholder="enter Password"
 									required
 								/>
-								<div className="invalid-feedback">{FEEDBACK_PASS}</div>
+								<div className="invalid-feedback">
+									{CONSTANTS[lang].FEEDBACK_PASS}
+								</div>
 							</div>
 
 							<div className="form-label-group">
@@ -72,7 +77,9 @@ export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
 									placeholder="repeat Password"
 									required
 								/>
-								<div className="invalid-feedback">{FEEDBACK_PASS}</div>
+								<div className="invalid-feedback">
+									{CONSTANTS[lang].FEEDBACK_PASS}
+								</div>
 							</div>
 
 							<button
@@ -91,7 +98,7 @@ export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
 								className="btn btn-info btn-block mt-3"
 								type="button"
 							>
-								Create User
+								{CONSTANTS[lang].BUTTON_CREATE}
 							</button>
 						</form>
 					</div>
