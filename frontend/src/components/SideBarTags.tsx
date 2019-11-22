@@ -12,6 +12,7 @@ interface ISideBarTagsProps {
 		userID: string,
 	}>;
 	lang: string;
+	filters: { sections: string, tags: string };
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
@@ -23,6 +24,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 	const {
 		tags,
 		lang,
+		filters,
 		handlerHeaderPopup,
 		handlerCurrentValue,
 		resetHighlightItem,
@@ -119,7 +121,8 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					{countQualityItems("tagBarNotes", "All")}
 				</span>
 			</li>
-			<li className="nav-item d-flex tags-item justify-content-between">
+			{filters.sections === "All" ? 
+			(<li className="nav-item d-flex tags-item justify-content-between">
 				<span
 					className="nav-link"
 					onClick={ev => {
@@ -132,7 +135,8 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 				<span className="nav-link">
 					{countQualityItems("tagBarNotes", "Untagged")}
 				</span>
-			</li>
+			</li>)
+			: ""}
 			{listTags}
 		</ul>
 	)

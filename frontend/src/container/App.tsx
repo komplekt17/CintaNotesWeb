@@ -299,6 +299,7 @@ const App: React.FC<IAppProps> = props => {
 						<SideBarTags
 							tags={getFiltredArray("tagsArr", tags, filters)}
 							lang={currentDetails.userProfile.lang}
+							filters={filters}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
 							handlerValueFilters={handlerValueFiltersToApp}
@@ -307,8 +308,7 @@ const App: React.FC<IAppProps> = props => {
 						/>
 					</nav>
 					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
-						<SearchPanel
-							lang={currentDetails.userProfile.lang} />
+						<SearchPanel lang={currentDetails.userProfile.lang} />
 						<StatisticInfoPanel
 							sections={sections}
 							filters={filters}
@@ -362,7 +362,7 @@ const App: React.FC<IAppProps> = props => {
 				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedTag={currentDetails.tag}
 				namePopup={namePopup}
-							lang={currentDetails.userProfile.lang}
+				lang={currentDetails.userProfile.lang}
 			/>
 			<EditNotePopup
 				sections={sections}
@@ -371,7 +371,7 @@ const App: React.FC<IAppProps> = props => {
 				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedNote={currentDetails.note}
 				namePopup={namePopup}
-							lang={currentDetails.userProfile.lang}
+				lang={currentDetails.userProfile.lang}
 			/>
 			<RemoveItemPopup
 				removeItem={removeItemToApp}
@@ -379,12 +379,16 @@ const App: React.FC<IAppProps> = props => {
 				namePopup={namePopup}
 				removableItemID={getRemovableItemID(namePopup)}
 				resetHighlightItem={resetHighlightItem}
-							lang={currentDetails.userProfile.lang}
+				lang={currentDetails.userProfile.lang}
 			/>
-			<UserPassResetPopup namePopup={namePopup}
-							lang={currentDetails.userProfile.lang} />
-			<UserPassChangePopup namePopup={namePopup}
-							lang={currentDetails.userProfile.lang} />
+			<UserPassResetPopup
+				namePopup={namePopup}
+				lang={currentDetails.userProfile.lang}
+			/>
+			<UserPassChangePopup
+				namePopup={namePopup}
+				lang={currentDetails.userProfile.lang}
+			/>
 		</div>
 	)
 }

@@ -23,18 +23,32 @@ interface IAddNewTagPopup {
 }
 
 export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
-	const { sections, tags, addNewNote, namePopup, lang } = props
+	const { tags, addNewNote, namePopup, lang } = props
 
-	let sectionsList: any = ""
+	// let sectionsList: any = ""
 
-	if (sections && sections.length !== 0) {
-		sectionsList = sections.map((item: any, index: number) => {
-			return (
-				<option key={index} className={item.sectionID} value={item._id}>
-					{item.nameSection}
-				</option>
-			)
-		})
+	// if (sections && sections.length !== 0) {
+	// 	sectionsList = sections.map((item: any, index: number) => {
+	// 		return (
+	// 			<option key={index} className={item.sectionID} value={item._id}>
+	// 				{item.nameSection}
+	// 			</option>
+	// 		)
+	// 	})
+	// }
+
+	// получаем SectionID из tags[] по tagID из notes[]
+	const getSectionIDtag = (tagID: any): string => {
+		let noteTagSectionID = ""
+		// Если note "Untagged"
+		if (tagID === "Untagged") noteTagSectionID = "All"
+		else {
+			for (let i = 0; i < tags.length; i++) {
+				if (tags[i]._id === tagID) noteTagSectionID = tags[i].sectionID
+			}
+		}
+
+		return noteTagSectionID
 	}
 
 	let tagsList: any = ""
@@ -100,7 +114,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 
-							<div className="form-label-group">
+							{/* <div className="form-label-group">
 								<label htmlFor="addNoteSectionID">Select Section</label>
 								<select
 									id="addNoteSectionID"
@@ -111,7 +125,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									<option value="All">All</option>
 								</select>
 								<div className="invalid-feedback">Please select a section</div>
-							</div>
+							</div> */}
 
 							<div className="form-label-group">
 								<label htmlFor="addNoteTagID">Select Tag</label>
@@ -154,8 +168,8 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							<button
 								onClick={() => {
 									const header = $("#addHeaderNote").val()
-									const text = $("#addHeaderNote").val()
-									const sectionID = $("#addNoteSectionID").val()
+									const text = $("#addTextNote").val()
+									// const sectionID = $("#addNoteSectionID").val()
 									const tagID = $("#addNoteTagID").val()
 									const remarks = $("#addRemarksNote").val()
 									const link = $("#addLinkNote").val()
@@ -164,13 +178,13 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 											header,
 											text,
 											tagID,
-											sectionID,
+											sectionID: getSectionIDtag(tagID),
 											remarks,
 											link,
 										}
 										addNewNote(newNote)
-										$("#addNameNote").val("")
 										$("#addHeaderNote").val("")
+										$("#addTextNote").val("")
 										$("#addRemarksNote").val("")
 										$("#addLinkNote").val("")
 									}

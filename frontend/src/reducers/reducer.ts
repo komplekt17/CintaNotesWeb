@@ -147,7 +147,7 @@ export const initialState = {
 				"Untagged-3. Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!",
 			remarks: "",
 			link: "",
-			sectionID: "3",
+			sectionID: "All",
 			tagID: "Untagged",
 			userID: "1",
 			dateCreated: "23.10.2019, 10:31",

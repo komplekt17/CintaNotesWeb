@@ -24,6 +24,9 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 	let NotesList: any = (
 		<div className="col-12">{CONSTANTS[lang].ERROR_TEXT}</div>
 	)
+	// react editors examples
+	// https://reactjsexample.com/tag/editor/
+	// https://www.draftail.org/docs/importing-and-exporting-html
 
 	// получение nameTag из tags[]
 	const getNameTag = (tagIDfromNotes: string): string => {

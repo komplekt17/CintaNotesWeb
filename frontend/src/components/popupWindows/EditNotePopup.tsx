@@ -37,7 +37,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 		handlerCurrentValue,
 		currentEditedNote,
 		namePopup,
-    sections,
+    // sections,
     tags,lang
 	} = props
 
@@ -47,20 +47,34 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
     text,
     remarks,
     link, 
-    sectionID, 
-    tagID } = currentEditedNote
+    // sectionID, 
+		tagID } = currentEditedNote
+		
+		// получаем SectionID из tags[] по tagID из notes[] 
+		const getSectionIDtag = (tagID:string): string =>{
+			let noteTagSectionID = ""
+			// Если note "Untagged"
+			if(tagID === "Untagged") noteTagSectionID = "All"
+			else{
+				for(let i=0;i<tags.length;i++){
+					if(tags[i]._id === tagID ) noteTagSectionID = tags[i].sectionID
+				}
+			}
+			
+			return noteTagSectionID
+		}
 
-	let sectionsList: any = ""
+	// let sectionsList: any = ""
 
-	if (sections && sections.length !== 0) {
-		sectionsList = sections.map((item: any, index: number) => {
-			return (
-				<option key={index} className={item.sectionID} value={item._id}>
-					{item.nameSection}
-				</option>
-			)
-		})
-	}
+	// if (sections && sections.length !== 0) {
+	// 	sectionsList = sections.map((item: any, index: number) => {
+	// 		return (
+	// 			<option key={index} className={item.sectionID} value={item._id}>
+	// 				{item.nameSection}
+	// 			</option>
+	// 		)
+	// 	})
+	// }
 
 	let tagsList: any = ""
 
@@ -134,7 +148,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 
-							<div className="form-label-group">
+							{/* <div className="form-label-group">
 								<label htmlFor="editNoteSectionID">Select Section</label>
 								<select
 									value={sectionID == null ? "" : sectionID}
@@ -151,7 +165,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 								<div className="invalid-feedback">
 									Please select a tag Note
 								</div>
-							</div>
+							</div> */}
 
 							<div className="form-label-group">
 								<label htmlFor="editNoteTagID">Select Tag</label>
@@ -211,7 +225,9 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 									if (header !== "") {
 										const editedNote = {
                       id: _id, 
-                      header, text, remarks, link, sectionID, tagID }
+											header, text, remarks, link, 
+											sectionID: getSectionIDtag(tagID), 
+											tagID }
 										editNote(editedNote)
 										// очищаем поля currentDetails.note,
 										// action.name === buttonEditNote
