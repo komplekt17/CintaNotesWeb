@@ -1,5 +1,6 @@
 import * as React from "react"
 import { CONSTANTS } from "../../constants"
+import { NoteTextEditor } from "../notesEditor"
 
 interface IEditNoteProps {
 	sections: [];
@@ -136,6 +137,15 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 
 							<div className="form-label-group">
 								<label htmlFor="editTextNote">Text Note</label>
+								<NoteTextEditor
+									handlerCurrentValue={handlerCurrentValue}
+									typeEditor="editNoteText"
+									textEditedNote={text}
+								/>
+							</div>
+							{/*
+							<div className="form-label-group">
+								<label htmlFor="editTextNote">Text Note</label>
 								<textarea
 									id="editTextNote"
 									value={text}
@@ -148,7 +158,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 
-							{/* <div className="form-label-group">
+						 <div className="form-label-group">
 								<label htmlFor="editNoteSectionID">Select Section</label>
 								<select
 									value={sectionID == null ? "" : sectionID}

@@ -25,6 +25,8 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		<div className="col-12">{CONSTANTS[lang].ERROR_TEXT}</div>
 	)
 	// react editors examples
+	// https://github.com/thibaudcolas/draftail-playground
+	// https://draftjs.org/docs/getting-started
 	// https://reactjsexample.com/tag/editor/
 	// https://www.draftail.org/docs/importing-and-exporting-html
 

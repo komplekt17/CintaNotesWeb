@@ -3,6 +3,8 @@ import { ICurrentDetails, ISections, ITags, INotes } from "./TypesReducer"
 export interface IAppProps {
 	store: {
 		auth: boolean,
+		loading: boolean,
+		loaded: boolean,
 		namePopup: string,
 		filters: { sections:string, tags:string }
 		currentDetails: ICurrentDetails,

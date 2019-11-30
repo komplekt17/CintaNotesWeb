@@ -40,6 +40,20 @@ import { IAppProps } from "../types"
 import "bootswatch/dist/superhero/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
 import "../styles/App.css"
+import { css } from "@emotion/core"
+import { ScaleLoader } from "react-spinners"
+
+// for ScaleLoader from "react-spinners"
+const override = css`
+	width: 50px;
+	height: 50px;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+`
 
 const App: React.FC<IAppProps> = props => {
 	const {
@@ -69,6 +83,7 @@ const App: React.FC<IAppProps> = props => {
 		currentDetails,
 		namePopup,
 		auth,
+		loading,
 	} = store
 
 	// получение количества тегов или записей активной секции
@@ -348,6 +363,8 @@ const App: React.FC<IAppProps> = props => {
 				addNewNote={addNewNoteToApp}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
+				currentEditedNote={currentDetails.note}
+				handlerCurrentValue={handlerCurrentValueToApp}
 			/>
 			<EditSectionPopup
 				editSection={editSectionToApp}
@@ -389,6 +406,24 @@ const App: React.FC<IAppProps> = props => {
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
 			/>
+			{/*
+				https://www.npmjs.com/package/react-spinners
+				https://www.react-spinners.com/
+			*/}
+			{loading ? (
+				<div className="parent-loader">
+					<ScaleLoader
+						css={override}
+						height={150}
+						width={5}
+						radius={25}
+						color={"tomato"}
+						loading={loading}
+					/>
+				</div>
+			) : (
+				""
+			)}
 		</div>
 	)
 }

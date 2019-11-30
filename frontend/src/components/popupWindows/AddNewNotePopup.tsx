@@ -1,5 +1,6 @@
 import * as React from "react"
 import { CONSTANTS } from "../../constants"
+import { NoteTextEditor } from "../notesEditor"
 import $ from "jquery"
 
 interface IAddNewTagPopup {
@@ -10,6 +11,10 @@ interface IAddNewTagPopup {
 		sectionID: string,
 		userID: string,
 	}>;
+	handlerCurrentValue: (name: string, value: string) => void;
+	currentEditedNote: {
+		text: string,
+	};
 	addNewNote: (newNote: {
 		header: any,
 		text: any,
@@ -23,7 +28,14 @@ interface IAddNewTagPopup {
 }
 
 export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
-	const { tags, addNewNote, namePopup, lang } = props
+	const {
+		tags,
+		addNewNote,
+		namePopup,
+		lang,
+		currentEditedNote,
+		handlerCurrentValue,
+	} = props
 
 	// let sectionsList: any = ""
 
@@ -106,6 +118,14 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 
 							<div className="form-label-group">
 								<label htmlFor="addTextNote">Text Note</label>
+								<NoteTextEditor
+									handlerCurrentValue={handlerCurrentValue}
+									typeEditor="addNoteText"
+								/>
+							</div>
+							{/*
+							<div className="form-label-group">
+								<label htmlFor="addTextNote">Text Note</label>
 								<textarea
 									id="addTextNote"
 									className="form-control"
@@ -114,7 +134,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 
-							{/* <div className="form-label-group">
+							 <div className="form-label-group">
 								<label htmlFor="addNoteSectionID">Select Section</label>
 								<select
 									id="addNoteSectionID"
@@ -125,7 +145,8 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									<option value="All">All</option>
 								</select>
 								<div className="invalid-feedback">Please select a section</div>
-							</div> */}
+							</div> 
+							*/}
 
 							<div className="form-label-group">
 								<label htmlFor="addNoteTagID">Select Tag</label>
@@ -168,7 +189,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							<button
 								onClick={() => {
 									const header = $("#addHeaderNote").val()
-									const text = $("#addTextNote").val()
+									// const text = $("#addTextNote").val()
 									// const sectionID = $("#addNoteSectionID").val()
 									const tagID = $("#addNoteTagID").val()
 									const remarks = $("#addRemarksNote").val()
@@ -176,7 +197,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									if (header !== "") {
 										const newNote = {
 											header,
-											text,
+											text: currentEditedNote.text,
 											tagID,
 											sectionID: getSectionIDtag(tagID),
 											remarks,
@@ -184,9 +205,10 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 										}
 										addNewNote(newNote)
 										$("#addHeaderNote").val("")
-										$("#addTextNote").val("")
+										// $("#addTextNote").val("")
 										$("#addRemarksNote").val("")
 										$("#addLinkNote").val("")
+										handlerCurrentValue("buttonEditNote", "")
 									}
 								}}
 								type="button"

@@ -121,22 +121,24 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					{countQualityItems("tagBarNotes", "All")}
 				</span>
 			</li>
-			{filters.sections === "All" ? 
-			(<li className="nav-item d-flex tags-item justify-content-between">
-				<span
-					className="nav-link"
-					onClick={ev => {
-						resetHighlightItem(ev.target, "")
-						handlerValueFilters("filterTag", "Untagged")
-					}}
-				>
-					{CONSTANTS[lang].ITEMS_NOTAG}
-				</span>
-				<span className="nav-link">
-					{countQualityItems("tagBarNotes", "Untagged")}
-				</span>
-			</li>)
-			: ""}
+			{filters.sections === "All" ? (
+				<li className="nav-item d-flex tags-item justify-content-between">
+					<span
+						className="nav-link"
+						onClick={ev => {
+							resetHighlightItem(ev.target, "")
+							handlerValueFilters("filterTag", "Untagged")
+						}}
+					>
+						{CONSTANTS[lang].ITEMS_NOTAG}
+					</span>
+					<span className="nav-link">
+						{countQualityItems("tagBarNotes", "Untagged")}
+					</span>
+				</li>
+			) : (
+				""
+			)}
 			{listTags}
 		</ul>
 	)
