@@ -1,6 +1,6 @@
 import * as React from "react"
 import { CONSTANTS } from "../../constants"
-import { NoteTextEditor } from "../notesEditor"
+import { EditNoteTextEditor } from "../notesEditor"
 
 interface IEditNoteProps {
 	sections: [];
@@ -137,9 +137,8 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 
 							<div className="form-label-group">
 								<label htmlFor="editTextNote">Text Note</label>
-								<NoteTextEditor
+								<EditNoteTextEditor
 									handlerCurrentValue={handlerCurrentValue}
-									typeEditor="editNoteText"
 									textEditedNote={text}
 								/>
 							</div>

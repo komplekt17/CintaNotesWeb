@@ -1,6 +1,6 @@
 import * as React from "react"
 import { CONSTANTS } from "../../constants"
-import { NoteTextEditor } from "../notesEditor"
+import { AddNoteTextEditor } from "../notesEditor"
 import $ from "jquery"
 
 interface IAddNewTagPopup {
@@ -118,10 +118,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 
 							<div className="form-label-group">
 								<label htmlFor="addTextNote">Text Note</label>
-								<NoteTextEditor
-									handlerCurrentValue={handlerCurrentValue}
-									typeEditor="addNoteText"
-								/>
+								<AddNoteTextEditor handlerCurrentValue={handlerCurrentValue} />
 							</div>
 							{/*
 							<div className="form-label-group">
