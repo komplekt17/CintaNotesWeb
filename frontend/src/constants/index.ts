@@ -1,11 +1,9 @@
-// import { initialState } from "../reducers"
-
 interface IConstants {
 	[key: string]: {
 		[key: string]: string,
 	};
 }
-
+const SERVER_URI = "http://localhost:5000"
 const CONSTANTS: IConstants = {
 	ru: {
 		ERROR_TEXT: "Нет элементов для отображения",
@@ -105,4 +103,4 @@ const CONSTANTS: IConstants = {
 	},
 }
 
-export { CONSTANTS }
+export { CONSTANTS, SERVER_URI }

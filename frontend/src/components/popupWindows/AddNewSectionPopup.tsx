@@ -7,9 +7,16 @@ interface IAddSectionProps {
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	namePopup: string;
 	lang: string;
+	currentUserID: string;
 }
 export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
-	const { addNewSection, handlerCurrentValue, namePopup, lang } = props
+	const {
+		addNewSection,
+		handlerCurrentValue,
+		namePopup,
+		lang,
+		currentUserID,
+	} = props
 
 	return (
 		<div
@@ -57,7 +64,11 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 								onClick={() => {
 									const nameSection = $("#addNameSection").val()
 									if (nameSection !== "") {
-										addNewSection(nameSection)
+										const newSection = {
+											nameSection,
+											userId: +currentUserID,
+										}
+										addNewSection(newSection)
 										// очищаем поле addNameSection,
 										// action.name === buttonAddSection
 										handlerCurrentValue("buttonAddSection", "")

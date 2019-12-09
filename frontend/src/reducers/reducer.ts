@@ -596,6 +596,24 @@ const transplaceTags = (state: IState, idItem: string): ITags[] => {
 
 export const Reducer = (state: IState = initialState, action: any) => {
 	switch (action.type) {
+		case "LOAD_REQUESTED_DATA_ACTION":
+			return {
+				...state,
+				loading: true,
+				loaded: false,
+			}
+
+		case "LOAD_FAILURE_DATA_ACTION":
+			// $("#modal-alert").modal("show");
+			console.log(action.error)
+			return {
+				...state,
+				loading: false,
+				loaded: true,
+				error: action.error,
+				namePopup: action.message,
+			}
+
 		case "GET_DATA_BY_LOGIN_ACTION":
 			return {
 				...state,
@@ -670,11 +688,11 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= SECTIONS =======
 
 		case "ADD_NEW_SECTION_ACTION":
-			$("#modal-addSection").modal("hide")
-			const params = { valueSection: action.value }
+			// const params = { valueSection: action.value }
+			console.log(action.result)
 			return {
 				...state,
-				sections: addingItem(state, "addSection", params),
+				// sections: addingItem(state, "addSection", params),
 			}
 
 		case "EDIT_SECTION_ACTION":

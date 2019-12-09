@@ -352,6 +352,7 @@ const App: React.FC<IAppProps> = props => {
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
+				currentUserID={currentDetails.userProfile._id}
 			/>
 			<AddNewTagPopup
 				sections={sections}
@@ -451,8 +452,10 @@ const mapDispatchToProps = (dispatch: any) => {
 			dispatch(handlerThemeAction(theme)),
 		createNewUserToApp: (objUser: { login: any, pass: any }) =>
 			dispatch(createNewUserAction(objUser)),
-		addNewSectionToApp: (value: string) =>
-			dispatch(addNewSectionAction(value)),
+		addNewSectionToApp: (newSection: {
+			nameSection: string,
+			userId: number,
+		}) => dispatch(addNewSectionAction(newSection)),
 		addNewTagToApp: (newTag: { nameTag: string, sectionID: string }) =>
 			dispatch(addNewTagAction(newTag)),
 		addNewNoteToApp: (newNote: {
