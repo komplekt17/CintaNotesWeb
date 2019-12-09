@@ -26,8 +26,8 @@ export const initialState = {
 			sectionID: "",
 			tagID: "",
 			userID: "",
-			dateCreated: "",
-			dateModified: "",
+			createdAt: "",
+			updatedAt: "",
 		},
 		userProfile: {
 			_id: "1",
@@ -59,8 +59,8 @@ export const initialState = {
 			sectionID: "1",
 			tagID: "1",
 			userID: "1",
-			dateCreated: "20.10.2019, 11:34",
-			dateModified: "21.10.2019, 12:31",
+			createdAt: "20.10.2019, 11:34",
+			updatedAt: "21.10.2019, 12:31",
 		},
 		{
 			_id: "2",
@@ -72,8 +72,8 @@ export const initialState = {
 			sectionID: "1",
 			tagID: "1",
 			userID: "1",
-			dateCreated: "21.10.2019, 11:31",
-			dateModified: "22.10.2019, 13:31",
+			createdAt: "21.10.2019, 11:31",
+			updatedAt: "22.10.2019, 13:31",
 		},
 		{
 			_id: "3",
@@ -85,8 +85,8 @@ export const initialState = {
 			sectionID: "2",
 			tagID: "2",
 			userID: "1",
-			dateCreated: "23.10.2019, 10:34",
-			dateModified: "24.10.2019, 12:11",
+			createdAt: "23.10.2019, 10:34",
+			updatedAt: "24.10.2019, 12:11",
 		},
 		{
 			_id: "4",
@@ -98,8 +98,8 @@ export const initialState = {
 			sectionID: "2",
 			tagID: "2",
 			userID: "1",
-			dateCreated: "22.10.2019, 10:34",
-			dateModified: "23.10.2019, 10:36",
+			createdAt: "22.10.2019, 10:34",
+			updatedAt: "23.10.2019, 10:36",
 		},
 		{
 			_id: "5",
@@ -111,8 +111,8 @@ export const initialState = {
 			sectionID: "3",
 			tagID: "3",
 			userID: "1",
-			dateCreated: "20.10.2019, 11:34",
-			dateModified: "21.10.2019, 12:31",
+			createdAt: "20.10.2019, 11:34",
+			updatedAt: "21.10.2019, 12:31",
 		},
 		{
 			_id: "6",
@@ -124,8 +124,8 @@ export const initialState = {
 			sectionID: "3",
 			tagID: "3",
 			userID: "1",
-			dateCreated: "23.10.2019, 10:31",
-			dateModified: "25.10.2019, 15:33",
+			createdAt: "23.10.2019, 10:31",
+			updatedAt: "25.10.2019, 15:33",
 		},
 		{
 			_id: "7",
@@ -134,11 +134,11 @@ export const initialState = {
 				"<h4>Untagged-2.</h4> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "All",
-			tagID: "Untagged",
+			sectionID: "0",
+			tagID: "0",
 			userID: "1",
-			dateCreated: "23.10.2019, 10:31",
-			dateModified: "25.10.2019, 15:33",
+			createdAt: "23.10.2019, 10:31",
+			updatedAt: "25.10.2019, 15:33",
 		},
 		{
 			_id: "8",
@@ -147,11 +147,11 @@ export const initialState = {
 				"<h4>Untagged-3.</h4> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "All",
-			tagID: "Untagged",
+			sectionID: "0",
+			tagID: "0",
 			userID: "1",
-			dateCreated: "23.10.2019, 10:31",
-			dateModified: "25.10.2019, 15:33",
+			createdAt: "23.10.2019, 10:31",
+			updatedAt: "25.10.2019, 15:33",
 		},
 	],
 }
@@ -407,8 +407,8 @@ const addingItem = (
 		remarks?: any, // for notes
 		link?: any, // for notes
 		tagID?: any, // for notes
-		dateCreated?: string, // for notes
-		dateModified?: string, // for notes
+		createdAt?: string, // for notes
+		updatedAt?: string, // for notes
 	}
 ): any => {
 	if (nameItem === "addSection") {
@@ -441,8 +441,8 @@ const addingItem = (
 			userID: state.currentDetails.userProfile._id,
 			sectionID: params.sectionID,
 			tagID: params.tagID,
-			dateCreated: "dateCreated",
-			dateModified: "dateModified",
+			createdAt: "dateCreated",
+			updatedAt: "dateModified",
 		}
 		arr.push(obj)
 		return arr
@@ -552,7 +552,7 @@ const transplaceNotes = (
 			// если note относится к id удаляемому tag
 			if (arr[i].tagID === idItem) {
 				// тогда переносим эту note в Untagged
-				arr[i].tagID = "Untagged"
+				arr[i].tagID = "0"
 			}
 		}
 	}
@@ -562,9 +562,9 @@ const transplaceNotes = (
 			// если note относится к id удаляемой section
 			if (arr[i].sectionID === idItem) {
 				// тогда переносим эту note в Untagged
-				arr[i].tagID = "Untagged"
+				arr[i].tagID = "0"
 				// и переносим эту note в All sections
-				arr[i].sectionID = "All"
+				arr[i].sectionID = "0"
 			}
 		}
 	}
@@ -588,7 +588,7 @@ const transplaceTags = (state: IState, idItem: string): ITags[] => {
 		// если tag относится к id удаляемой section
 		if (arr[i].sectionID === idItem) {
 			// переносим этот tag в All sections
-			arr[i].sectionID = "All"
+			arr[i].sectionID = "0"
 		}
 	}
 	return arr

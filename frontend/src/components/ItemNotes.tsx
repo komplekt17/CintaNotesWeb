@@ -51,11 +51,11 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 						<div className="note-date">
 							<i className="far fa-calendar-alt text-primary" />
 							{"   "}
-							{item.dateModified}
+							{item.updatedAt}
 							{"   "}|{"   "}
 							<i className="fas fa-calendar-alt text-info" />
 							{"   "}
-							{item.dateCreated}
+							{item.createdAt}
 						</div>
 					</div>
 					<div className="note-tag">

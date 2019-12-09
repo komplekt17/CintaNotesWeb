@@ -20,8 +20,8 @@ export interface INotes {
 	userID: string;
 	sectionID: string;
 	tagID: string;
-	dateCreated: string;
-	dateModified: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface ICurrentDetails {

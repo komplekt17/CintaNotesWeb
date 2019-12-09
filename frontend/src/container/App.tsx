@@ -86,7 +86,7 @@ const App: React.FC<IAppProps> = props => {
 		loading,
 	} = store
 
-	// получение количества тегов или записей активной секции
+	// подсчёт количества тегов или записей активной секции
 	const countQualityItems = (
 		nameArray: string,
 		nameFilter: string
@@ -140,29 +140,29 @@ const App: React.FC<IAppProps> = props => {
 				if (filters.sections === "All") {
 					const filteredNotes = notes.filter(item => {
 						let qqq
-						if (item.tagID === "Untagged") {
+						if (item.tagID === "0") {
+							// Untagged
 							qqq = item.tagID
 						}
 						return qqq
 					})
-					// console.log(filteredNotes)
 					count = filteredNotes.length
 				} else {
 					const filteredNotes = notes.filter(item => {
 						let qqq
 						if (
 							filters.sections === item.sectionID &&
-							item.tagID === "Untagged"
+							item.tagID === "0" // Untagged
 						) {
 							qqq = item.tagID
 						}
 						return qqq
 					})
-					// console.log(filteredNotes)
+
 					count = filteredNotes.length
 				}
 			}
-			// // nameFilter !== "All" && !== "Untagged"
+			// nameFilter !== "All" && !== "Untagged"
 			else {
 				for (let i = 0; i < notes.length; i++) {
 					for (const key in notes[i]) {
@@ -204,6 +204,8 @@ const App: React.FC<IAppProps> = props => {
 				let qqq
 				if (filters.tags === "All") {
 					qqq = notesFilterdBySection
+				} else if (filters.tags === "Untagged" && item.tagID === "0") {
+					qqq = item.tagID
 				} else if (filters.tags === item.tagID) {
 					qqq = item.tagID
 				}
