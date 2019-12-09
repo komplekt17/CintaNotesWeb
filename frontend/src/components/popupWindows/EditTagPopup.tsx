@@ -99,7 +99,7 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 									aria-describedby="formEditTag"
 								>
 									{sectionsList}
-									<option value="All">All</option>
+									<option value="0">All</option>
 								</select>
 								<div className="invalid-feedback">
 									Please select a page categorie

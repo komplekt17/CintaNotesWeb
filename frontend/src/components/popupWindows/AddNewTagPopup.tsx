@@ -72,7 +72,7 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 									aria-describedby="formAddTag"
 								>
 									{sectionsList}
-									<option value="All">All</option>
+									<option value="0">All</option>
 								</select>
 								<div className="invalid-feedback">Please select a section</div>
 							</div>

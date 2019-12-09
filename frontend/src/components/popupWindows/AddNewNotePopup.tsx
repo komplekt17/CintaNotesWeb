@@ -51,13 +51,9 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 
 	// получаем SectionID из tags[] по tagID из notes[]
 	const getSectionIDtag = (tagID: any): string => {
-		let noteTagSectionID = ""
-		// Если note "Untagged"
-		if (tagID === "Untagged") noteTagSectionID = "All"
-		else {
-			for (let i = 0; i < tags.length; i++) {
-				if (tags[i]._id === tagID) noteTagSectionID = tags[i].sectionID
-			}
+		let noteTagSectionID = "0"
+		for (let i = 0; i < tags.length; i++) {
+			if (tags[i]._id === tagID) noteTagSectionID = tags[i].sectionID
 		}
 
 		return noteTagSectionID
@@ -139,7 +135,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									aria-describedby="formAddNote"
 								>
 									{sectionsList}
-									<option value="All">All</option>
+									<option value="0">All</option>
 								</select>
 								<div className="invalid-feedback">Please select a section</div>
 							</div> 
@@ -153,7 +149,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									aria-describedby="formAddNote"
 								>
 									{tagsList}
-									<option value="Untagged">Untagged</option>
+									<option value="0">Untagged</option>
 								</select>
 								<div className="invalid-feedback">Please select a tag Note</div>
 							</div>
