@@ -10,6 +10,7 @@ import {
 export const initialState = {
 	auth: false,
 	namePopup: "",
+	textMessage: "",
 	loading: false,
 	loaded: false,
 	error: null,
@@ -30,7 +31,7 @@ export const initialState = {
 			updatedAt: "",
 		},
 		userProfile: {
-			_id: "0",
+			_id: "1",
 			login: "",
 			pass: "",
 			status: "",
@@ -39,14 +40,14 @@ export const initialState = {
 		},
 	},
 	sections: [
-		{ _id: "1", nameSection: "Tab-1", userID: "0" },
-		{ _id: "2", nameSection: "Tab-2", userID: "0" },
-		{ _id: "3", nameSection: "Tab-3", userID: "0" },
+		{ _id: "1", nameSection: "Tab-1", userID: "1" },
+		{ _id: "2", nameSection: "Tab-2", userID: "1" },
+		{ _id: "3", nameSection: "Tab-3", userID: "1" },
 	],
 	tags: [
-		{ _id: "1", nameTag: "audiobooks", userID: "0", sectionID: "1" },
-		{ _id: "2", nameTag: "webgames", userID: "0", sectionID: "2" },
-		{ _id: "3", nameTag: "programs", userID: "0", sectionID: "3" },
+		{ _id: "1", nameTag: "audiobooks", userID: "1", sectionID: "1" },
+		{ _id: "2", nameTag: "webgames", userID: "1", sectionID: "2" },
+		{ _id: "3", nameTag: "programs", userID: "1", sectionID: "3" },
 	],
 	notes: [
 		{
@@ -58,7 +59,7 @@ export const initialState = {
 			link: "",
 			sectionID: "1",
 			tagID: "1",
-			userID: "0",
+			userID: "1",
 			createdAt: "20.10.2019, 11:34",
 			updatedAt: "21.10.2019, 12:31",
 		},
@@ -71,7 +72,7 @@ export const initialState = {
 			link: "",
 			sectionID: "1",
 			tagID: "1",
-			userID: "0",
+			userID: "1",
 			createdAt: "21.10.2019, 11:31",
 			updatedAt: "22.10.2019, 13:31",
 		},
@@ -84,7 +85,7 @@ export const initialState = {
 			link: "",
 			sectionID: "2",
 			tagID: "2",
-			userID: "0",
+			userID: "1",
 			createdAt: "23.10.2019, 10:34",
 			updatedAt: "24.10.2019, 12:11",
 		},
@@ -97,7 +98,7 @@ export const initialState = {
 			link: "",
 			sectionID: "2",
 			tagID: "2",
-			userID: "0",
+			userID: "1",
 			createdAt: "22.10.2019, 10:34",
 			updatedAt: "23.10.2019, 10:36",
 		},
@@ -110,7 +111,7 @@ export const initialState = {
 			link: "",
 			sectionID: "3",
 			tagID: "3",
-			userID: "0",
+			userID: "1",
 			createdAt: "20.10.2019, 11:34",
 			updatedAt: "21.10.2019, 12:31",
 		},
@@ -123,7 +124,7 @@ export const initialState = {
 			link: "",
 			sectionID: "3",
 			tagID: "3",
-			userID: "0",
+			userID: "1",
 			createdAt: "23.10.2019, 10:31",
 			updatedAt: "25.10.2019, 15:33",
 		},
@@ -136,7 +137,7 @@ export const initialState = {
 			link: "",
 			sectionID: "0",
 			tagID: "0",
-			userID: "0",
+			userID: "1",
 			createdAt: "23.10.2019, 10:31",
 			updatedAt: "25.10.2019, 15:33",
 		},
@@ -149,7 +150,7 @@ export const initialState = {
 			link: "",
 			sectionID: "0",
 			tagID: "0",
-			userID: "0",
+			userID: "1",
 			createdAt: "23.10.2019, 10:31",
 			updatedAt: "25.10.2019, 15:33",
 		},
@@ -399,7 +400,8 @@ const addingItem = (
 	state: IState,
 	nameItem: string,
 	params: {
-		valueSection?: any, // for sections
+		id?: any,
+		nameSection?: any, // for sections
 		nameTag?: any, // for tags
 		sectionID?: any, // for tags and notes
 		header?: any, // for notes
@@ -407,16 +409,17 @@ const addingItem = (
 		remarks?: any, // for notes
 		link?: any, // for notes
 		tagID?: any, // for notes
-		createdAt?: string, // for notes
-		updatedAt?: string, // for notes
+		userID?: any, // for sections, tags and notes
+		createdAt?: any, // for sections, tags and notes
+		updatedAt?: any, // for sections, tags and notes
 	}
 ): any => {
 	if (nameItem === "addSection") {
 		const arr = state.sections.slice()
 		const obj = {
-			_id: idRand(),
-			nameSection: params.valueSection,
-			userID: state.currentDetails.userProfile._id,
+			_id: params.id,
+			nameSection: params.nameSection,
+			userID: params.userID,
 		}
 		arr.push(obj)
 		return arr
@@ -441,8 +444,8 @@ const addingItem = (
 			userID: state.currentDetails.userProfile._id,
 			sectionID: params.sectionID,
 			tagID: params.tagID,
-			createdAt: "dateCreated",
-			updatedAt: "dateModified",
+			createdAt: "2019-12-10T12:13:40.124Z",
+			updatedAt: "2019-12-10T12:13:40.124Z",
 		}
 		arr.push(obj)
 		return arr
@@ -463,6 +466,7 @@ const editingItem = (
 		remarks?: any, // for notes
 		link?: any, // for notes
 		tagID?: any, // for notes
+		userID?: any, // for notes
 	}
 ): any => {
 	if (nameItem === "editSection") {
@@ -688,11 +692,19 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= SECTIONS =======
 
 		case "ADD_NEW_SECTION_ACTION":
-			// const params = { valueSection: action.value }
-			console.log(action.result)
+			const params = {
+				id: action.result.data.id,
+				nameSection: action.result.data.nameSection,
+				userID: action.result.data.userId,
+				createdAt: action.result.data.createdAt,
+				updatedAt: action.result.data.updatedAt,
+			}
 			return {
 				...state,
-				// sections: addingItem(state, "addSection", params),
+				sections: addingItem(state, "addSection", params),
+				textMessage: action.result.message,
+				loading: false,
+				loaded: true,
 			}
 
 		case "EDIT_SECTION_ACTION":

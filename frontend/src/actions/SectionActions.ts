@@ -2,20 +2,11 @@ import axios from "axios"
 import { SERVER_URI } from "../constants"
 import $ from "jquery"
 
-// добавление section
-// const addNewSectionAction = (value: string) => {
-// 	return {
-// 		type: "ADD_NEW_SECTION_ACTION",
-// 		value,
-// 	}
-// }
-
 const addNewSectionAction = (objSection: {
 	nameSection: string,
-	userId: number,
+	userId: string,
 }) => {
 	$("#modal-addSection").modal("hide")
-	console.log(objSection)
 	return (dispatch: {
 		(arg0: { type: string }): void,
 		(arg0: { type: string, result: any }): void,
@@ -46,6 +37,7 @@ const addNewSectionAction = (objSection: {
 const editSectionAction = (editedSection: {
 	id: string,
 	nameSection: string,
+	userId: string,
 }) => {
 	return {
 		type: "EDIT_SECTION_ACTION",

@@ -66,7 +66,7 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 									if (nameSection !== "") {
 										const newSection = {
 											nameSection,
-											userId: +currentUserID,
+											userId: currentUserID,
 										}
 										addNewSection(newSection)
 										// очищаем поле addNameSection,

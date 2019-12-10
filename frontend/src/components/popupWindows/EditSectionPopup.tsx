@@ -2,11 +2,19 @@ import * as React from "react"
 import { CONSTANTS } from "../../constants"
 
 interface IEditSectionProps {
-	editSection: (editedSection: { id: string, nameSection: string }) => void;
+	editSection: (editedSection: {
+		id: string,
+		nameSection: string,
+		userId: string,
+	}) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
-	currentEditedSection: { _id: string, nameSection: string };
+	currentEditedSection: {
+		_id: string,
+		nameSection: string,
+	};
 	namePopup: string;
 	lang: string;
+	currentUserID: string;
 }
 export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 	const {
@@ -15,7 +23,9 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 		currentEditedSection,
 		namePopup,
 		lang,
+		currentUserID,
 	} = props
+
 	const { _id, nameSection } = currentEditedSection
 	return (
 		<div
@@ -66,7 +76,11 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 							<button
 								onClick={() => {
 									if (nameSection !== "") {
-										const editedSection = { id: _id, nameSection }
+										const editedSection = {
+											id: _id,
+											nameSection,
+											userId: currentUserID,
+										}
 										editSection(editedSection)
 										// очищаем поля currentDetails.section,
 										// action.name === buttonEditSection

@@ -6,6 +6,7 @@ export interface IAppProps {
 		loading: boolean,
 		loaded: boolean,
 		namePopup: string,
+		textMessage: string,
 		filters: { sections:string, tags:string }
 		currentDetails: ICurrentDetails,
 		sections: [],
@@ -15,7 +16,7 @@ export interface IAppProps {
 	getDataByLoginToApp: (user: { login: any, pass: any }) => void;
 	getStatusLoginToApp: (token: string) => void;
 	createNewUserToApp: (objUser: { login: any, pass: any }) => void;
-	addNewSectionToApp: (objSection: {nameSection: string, userId: number}) => void;
+	addNewSectionToApp: (objSection: {nameSection: string, userId: string}) => void;
 	addNewTagToApp: (newTag: { nameTag: any, sectionID: any }) => void;
 	addNewNoteToApp: (newNote: {
 		header: string,
@@ -27,7 +28,7 @@ export interface IAppProps {
 	}) => void;
 	editSectionToApp: (editedSection: {
 		id: string,
-		nameSection: string,
+		nameSection: string, userId: string
 	}) => void;
 	editTagToApp: (editedTag: {
 		id: string,

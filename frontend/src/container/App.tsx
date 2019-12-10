@@ -375,6 +375,7 @@ const App: React.FC<IAppProps> = props => {
 				currentEditedSection={currentDetails.section}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
+				currentUserID={currentDetails.userProfile._id}
 			/>
 			<EditTagPopup
 				sections={sections}
@@ -454,7 +455,7 @@ const mapDispatchToProps = (dispatch: any) => {
 			dispatch(createNewUserAction(objUser)),
 		addNewSectionToApp: (newSection: {
 			nameSection: string,
-			userId: number,
+			userId: string,
 		}) => dispatch(addNewSectionAction(newSection)),
 		addNewTagToApp: (newTag: { nameTag: string, sectionID: string }) =>
 			dispatch(addNewTagAction(newTag)),
@@ -466,8 +467,11 @@ const mapDispatchToProps = (dispatch: any) => {
 			sectionID: string,
 			tagID: string,
 		}) => dispatch(addNewNoteAction(newNote)),
-		editSectionToApp: (editedSection: { id: string, nameSection: string }) =>
-			dispatch(editSectionAction(editedSection)),
+		editSectionToApp: (editedSection: {
+			id: string,
+			nameSection: string,
+			userId: string,
+		}) => dispatch(editSectionAction(editedSection)),
 		editTagToApp: (editedTag: {
 			id: string,
 			nameTag: string,
