@@ -32,8 +32,8 @@ router.route('/add').post((req, res) => {
 // обновление section
 router.route('/update/:id').put((req, res) => {
 	//console.log(req.body)
-	Section.findOne({ id: req.params._id }, (error, section) => {
-		if (error) {
+	Section.findByPk(req.params.id).then(section => {
+		if (!section) {
 			return res.status(404).json({
 				error,
 				message: 'Section not found!'
