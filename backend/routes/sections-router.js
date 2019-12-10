@@ -10,7 +10,7 @@ router.route('/add').post((req, res) => {
 		nameSection,
 		userId
 	});
-	//console.log('string 14: ', newSection)
+	console.log('string 14: ', newSection);
 
 	newSection
 		.save()

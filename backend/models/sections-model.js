@@ -15,7 +15,13 @@ const Section = sequelize.define('section', {
 	nameSection: {
 		type: Sequelize.STRING,
 		allowNull: false
-	}
+	},
+	createdAt: {
+		type: Sequelize.DATE,
+		allowNull: false
+	},
+	updatedAt: { type: Sequelize.DATE },
+	deletedAt: { type: Sequelize.DATE }
 });
 
 // привязка внешнего ключа sectionId для tags, notes

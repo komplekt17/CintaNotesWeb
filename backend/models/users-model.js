@@ -23,15 +23,18 @@ const User = sequelize.define('user', {
 		allowNull: false
 	},
 	status: {
-		type: Sequelize.STRING,
+		type: Sequelize.ENUM,
+		values: ['user', 'admin'],
 		allowNull: false
 	},
 	lang: {
-		type: Sequelize.STRING,
+		type: Sequelize.ENUM,
+		values: ['ru', 'en'],
 		allowNull: false
 	},
 	theme: {
-		type: Sequelize.STRING,
+		type: Sequelize.ENUM,
+		values: ['night', 'light'],
 		allowNull: false
 	}
 });

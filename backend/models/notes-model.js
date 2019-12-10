@@ -14,7 +14,7 @@ const Note = sequelize.define('note', {
 		allowNull: true
 	},
 	text: {
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT,
 		allowNull: true
 	},
 	remarks: {
