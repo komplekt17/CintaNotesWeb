@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const sequelize = require('./db_connect');
 
 const sectionsRouter = require('./routes/sections-router');
@@ -10,6 +11,9 @@ require('dotenv').config();
 
 const app = express();
 const port = process.env.SERVER_PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
 	// Exprees will serve up production assets
