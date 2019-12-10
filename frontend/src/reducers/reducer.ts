@@ -467,6 +467,8 @@ const editingItem = (
 		link?: any, // for notes
 		tagID?: any, // for notes
 		userID?: any, // for notes
+		createdAt?: any, // for sections, tags and notes
+		updatedAt?: any, // for sections, tags and notes
 	}
 ): any => {
 	if (nameItem === "editSection") {
@@ -475,6 +477,8 @@ const editingItem = (
 		const index = arr.findIndex(param => param._id === params.id)
 		// присваиваем новое значение полю section.nameSection
 		arr[index].nameSection = params.nameSection
+		// присваиваем новое значение полю section.userID
+		arr[index].userID = params.userID
 
 		return arr
 	} else if (nameItem === "editTag") {
@@ -692,8 +696,8 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= SECTIONS =======
 
 		case "ADD_NEW_SECTION_ACTION":
-			const params = {
-				id: action.result.data.id,
+			const addSectionParams = {
+				id: action.result.data.id.toString(),
 				nameSection: action.result.data.nameSection,
 				userID: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
@@ -701,17 +705,26 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			return {
 				...state,
-				sections: addingItem(state, "addSection", params),
+				sections: addingItem(state, "addSection", addSectionParams),
 				textMessage: action.result.message,
 				loading: false,
 				loaded: true,
 			}
 
 		case "EDIT_SECTION_ACTION":
-			$("#modal-editSection").modal("hide")
+			const editSectionParams = {
+				id: action.result.data.id.toString(),
+				nameSection: action.result.data.nameSection,
+				userID: action.result.data.userId,
+				createdAt: action.result.data.createdAt,
+				updatedAt: action.result.data.updatedAt,
+			}
 			return {
 				...state,
-				sections: editingItem(state, "editSection", action.editedSection),
+				sections: editingItem(state, "editSection", editSectionParams),
+				// textMessage: action.result.message,
+				loading: false,
+				loaded: true,
 			}
 
 		case "REMOVE_ANY_ITEM_ACTION":

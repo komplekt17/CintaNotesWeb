@@ -39,9 +39,30 @@ const editSectionAction = (editedSection: {
 	nameSection: string,
 	userId: string,
 }) => {
-	return {
-		type: "EDIT_SECTION_ACTION",
-		editedSection,
+	$("#modal-editSection").modal("hide")
+	return (dispatch: {
+		(arg0: { type: string }): void,
+		(arg0: { type: string, result: any }): void,
+		(arg0: { type: string, error: any }): void,
+	}) => {
+		dispatch({
+			type: "LOAD_REQUESTED_DATA_ACTION",
+		})
+		axios
+			.put(`${SERVER_URI}/sections/update/${editedSection.id}`, editedSection)
+			.then(response => {
+				dispatch({
+					type: "EDIT_SECTION_ACTION",
+					result: response.data,
+				})
+			})
+			.catch(error => {
+				dispatch({
+					type: "LOAD_FAILURE_DATA_ACTION",
+					error,
+				})
+				console.log(error)
+			})
 	}
 }
 
