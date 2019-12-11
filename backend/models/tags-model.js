@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../db_connect');
 
-const Note = require('../models/notes-model');
-
 // Создание таблицы tags
 const Tag = sequelize.define('tag', {
 	id: {
@@ -14,10 +12,11 @@ const Tag = sequelize.define('tag', {
 	nameTag: {
 		type: Sequelize.STRING,
 		allowNull: false
+	},
+	sectionId: {
+		type: Sequelize.INTEGER,
+		allowNull: false
 	}
 });
-
-// привязка внешнего ключа tagId для notes
-Tag.hasMany(Note);
 
 module.exports = Tag;

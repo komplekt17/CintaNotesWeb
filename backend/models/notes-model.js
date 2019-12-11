@@ -24,6 +24,14 @@ const Note = sequelize.define('note', {
 	link: {
 		type: Sequelize.STRING,
 		allowNull: true
+	},
+	sectionId: {
+		type: Sequelize.INTEGER,
+		allowNull: false
+	},
+	tagId: {
+		type: Sequelize.INTEGER,
+		allowNull: false
 	}
 });
 
