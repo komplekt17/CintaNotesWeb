@@ -337,15 +337,18 @@ const handlerCurrentDetails = (
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.user -------
 
-	// сохраняем данные User'а при входе в профиль
+	// сохраняем данные User'а при входе/регистрации в профиль
 	else if (name === "userData") {
 		// деструктурируем value, т.к. в данном случае
 		// value = user{login, pass}
-		const { login, pass } = value
-		// обновляем поле login
+		const { id, login, pass, status, lang, theme } = value
+		// обновляем значения полей
+		obj = getNewObjDetails(obj, "userProfile", "_id", id)
 		obj = getNewObjDetails(obj, "userProfile", "login", login)
-		// обновляем поле pass
 		obj = getNewObjDetails(obj, "userProfile", "pass", pass)
+		obj = getNewObjDetails(obj, "userProfile", "status", status)
+		obj = getNewObjDetails(obj, "userProfile", "lang", lang)
+		obj = getNewObjDetails(obj, "userProfile", "theme", theme)
 	}
 
 	// удаляем данные User'а при входе из профиля
