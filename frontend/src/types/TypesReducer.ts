@@ -1,14 +1,14 @@
 export interface ISections {
 	id: string;
 	nameSection: string;
-	userID: string;
+	userId: string;
 }
 
 export interface ITags {
 	id: string;
 	nameTag: string;
-	userID: string;
-	sectionID: string;
+	userId: string;
+	sectionId: string;
 }
 
 export interface INotes {
@@ -17,9 +17,9 @@ export interface INotes {
 	text: string;
 	remarks: string;
 	link: string;
-	userID: string;
-	sectionID: string;
-	tagID: string;
+	userId: string;
+	sectionId: string;
+	tagId: string;
 	createdAt: string;
 	updatedAt: string;
 }

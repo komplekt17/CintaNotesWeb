@@ -8,8 +8,8 @@ interface ISideBarTagsProps {
 	tags: Array<{
 		id: string,
 		nameTag: string,
-		sectionID: string,
-		userID: string,
+		sectionId: string,
+		userId: string,
 	}>;
 	lang: string;
 	filters: { sections: string, tags: string };

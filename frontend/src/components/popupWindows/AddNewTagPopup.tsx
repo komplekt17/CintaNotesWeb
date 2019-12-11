@@ -11,18 +11,18 @@ interface IAddNewTagPopup {
 	}) => void;
 	namePopup: string;
 	lang: string;
-	currentUserID: string;
+	currentUserId: string;
 }
 
 export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
-	const { sections, addNewTag, namePopup, lang, currentUserID } = props
+	const { sections, addNewTag, namePopup, lang, currentUserId } = props
 
 	let sectionsList: any = ""
 
 	if (sections && sections.length !== 0) {
 		sectionsList = sections.map((item: any, index: number) => {
 			return (
-				<option key={index} className={item.sectionID} value={item.id}>
+				<option key={index} className={item.sectionId} value={item.id}>
 					{item.nameSection}
 				</option>
 			)
@@ -70,9 +70,9 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 							<div className="form-label-group">
-								<label htmlFor="addTagSectionID">Select Section</label>
+								<label htmlFor="addTagSectionId">Select Section</label>
 								<select
-									id="addTagSectionID"
+									id="addTagSectionId"
 									className="form-control"
 									aria-describedby="formAddTag"
 								>
@@ -86,16 +86,16 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 							<button
 								onClick={() => {
 									const nameTag = $("#addNameTag").val()
-									const sectionID = $("#addTagSectionID").val()
-									if (nameTag !== "" && sectionID !== "") {
+									const sectionId = $("#addTagSectionId").val()
+									if (nameTag !== "" && sectionId !== "") {
 										const newTag = {
 											nameTag,
-											sectionId: sectionID,
-											userId: currentUserID,
+											sectionId: sectionId,
+											userId: currentUserId,
 										}
 										addNewTag(newTag)
 										$("#addNameTag").val("")
-										$("#addTagSectionID").val("")
+										$("#addTagSectionId").val("")
 									}
 								}}
 								type="button"

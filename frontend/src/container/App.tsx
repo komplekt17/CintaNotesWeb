@@ -99,7 +99,7 @@ const App: React.FC<IAppProps> = props => {
 				// filterSection !== "All"
 				for (let i = 0; i < tags.length; i++) {
 					for (const key in tags[i]) {
-						if (key === "sectionID" && tags[i][key] === nameFilter) {
+						if (key === "sectionId" && tags[i][key] === nameFilter) {
 							count += 1
 						}
 					}
@@ -112,7 +112,7 @@ const App: React.FC<IAppProps> = props => {
 				// filterSection !== "All"
 				for (let i = 0; i < notes.length; i++) {
 					for (const key in notes[i]) {
-						if (key === "sectionID" && notes[i][key] === nameFilter) {
+						if (key === "sectionId" && notes[i][key] === nameFilter) {
 							count += 1
 						}
 					}
@@ -128,8 +128,8 @@ const App: React.FC<IAppProps> = props => {
 				else {
 					const filteredNotes = notes.filter(item => {
 						let qqq
-						if (filters.sections === item.sectionID) {
-							qqq = item.sectionID
+						if (filters.sections === item.sectionId) {
+							qqq = item.sectionId
 						}
 						return qqq
 					})
@@ -140,9 +140,9 @@ const App: React.FC<IAppProps> = props => {
 				if (filters.sections === "All") {
 					const filteredNotes = notes.filter(item => {
 						let qqq
-						if (item.tagID === "0") {
+						if (item.tagId === "0") {
 							// Untagged
-							qqq = item.tagID
+							qqq = item.tagId
 						}
 						return qqq
 					})
@@ -151,10 +151,10 @@ const App: React.FC<IAppProps> = props => {
 					const filteredNotes = notes.filter(item => {
 						let qqq
 						if (
-							filters.sections === item.sectionID &&
-							item.tagID === "0" // Untagged
+							filters.sections === item.sectionId &&
+							item.tagId === "0" // Untagged
 						) {
-							qqq = item.tagID
+							qqq = item.tagId
 						}
 						return qqq
 					})
@@ -166,7 +166,7 @@ const App: React.FC<IAppProps> = props => {
 			else {
 				for (let i = 0; i < notes.length; i++) {
 					for (const key in notes[i]) {
-						if (key === "tagID" && notes[i][key] === nameFilter) {
+						if (key === "tagId" && notes[i][key] === nameFilter) {
 							count += 1
 						}
 					}
@@ -181,9 +181,9 @@ const App: React.FC<IAppProps> = props => {
 		typeArray: string,
 		arr: Array<{
 			id: string,
-			sectionID: string,
-			tagID?: string,
-			userID: string,
+			sectionId: string,
+			tagId?: string,
+			userId: string,
 		}>,
 		filters: { sections: string, tags: string }
 	): any => {
@@ -193,8 +193,8 @@ const App: React.FC<IAppProps> = props => {
 			const notesFilterdBySection = arr.filter(item => {
 				let qqq
 				if (filters.sections === "All") qqq = arr
-				else if (filters.sections === item.sectionID) {
-					qqq = item.sectionID
+				else if (filters.sections === item.sectionId) {
+					qqq = item.sectionId
 				}
 				return qqq
 			})
@@ -204,10 +204,10 @@ const App: React.FC<IAppProps> = props => {
 				let qqq
 				if (filters.tags === "All") {
 					qqq = notesFilterdBySection
-				} else if (filters.tags === "Untagged" && item.tagID === "0") {
-					qqq = item.tagID
-				} else if (filters.tags === item.tagID) {
-					qqq = item.tagID
+				} else if (filters.tags === "Untagged" && item.tagId === "0") {
+					qqq = item.tagId
+				} else if (filters.tags === item.tagId) {
+					qqq = item.tagId
 				}
 				return qqq
 			})
@@ -219,8 +219,8 @@ const App: React.FC<IAppProps> = props => {
 			const tagesFilterdBySection = arr.filter(item => {
 				let qqq
 				if (filters.sections === "All") qqq = arr
-				else if (filters.sections === item.sectionID) {
-					qqq = item.sectionID
+				else if (filters.sections === item.sectionId) {
+					qqq = item.sectionId
 				}
 				return qqq
 			})
@@ -270,16 +270,16 @@ const App: React.FC<IAppProps> = props => {
 	}
 
 	// функция получения значения id удаляемого Item (section/tag/note)
-	const getRemovableItemID = (namePopup: string): string => {
-		let removableItemID = ""
+	const getRemovableItemId = (namePopup: string): string => {
+		let removableItemId = ""
 		if (namePopup === "Section") {
-			removableItemID = currentDetails.section.id
+			removableItemId = currentDetails.section.id
 		} else if (namePopup === "Tag") {
-			removableItemID = currentDetails.tag.id
+			removableItemId = currentDetails.tag.id
 		} else if (namePopup === "Note") {
-			removableItemID = currentDetails.note.id
+			removableItemId = currentDetails.note.id
 		}
-		return removableItemID
+		return removableItemId
 	}
 
 	return (
@@ -352,14 +352,14 @@ const App: React.FC<IAppProps> = props => {
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
-				currentUserID={currentDetails.userProfile.id}
+				currentUserId={currentDetails.userProfile.id}
 			/>
 			<AddNewTagPopup
 				sections={sections}
 				addNewTag={addNewTagToApp}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
-				currentUserID={currentDetails.userProfile.id}
+				currentUserId={currentDetails.userProfile.id}
 			/>
 			<AddNewNotePopup
 				tags={tags}
@@ -376,7 +376,7 @@ const App: React.FC<IAppProps> = props => {
 				currentEditedSection={currentDetails.section}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
-				currentUserID={currentDetails.userProfile.id}
+				currentUserId={currentDetails.userProfile.id}
 			/>
 			<EditTagPopup
 				sections={sections}
@@ -399,7 +399,7 @@ const App: React.FC<IAppProps> = props => {
 				removeItem={removeItemToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
-				removableItemID={getRemovableItemID(namePopup)}
+				removableItemId={getRemovableItemId(namePopup)}
 				resetHighlightItem={resetHighlightItem}
 				lang={currentDetails.userProfile.lang}
 			/>
@@ -468,8 +468,8 @@ const mapDispatchToProps = (dispatch: any) => {
 			text: string,
 			remarks: string,
 			link: string,
-			sectionID: string,
-			tagID: string,
+			sectionId: string,
+			tagId: string,
 		}) => dispatch(addNewNoteAction(newNote)),
 		editSectionToApp: (editedSection: {
 			id: string,
@@ -488,8 +488,8 @@ const mapDispatchToProps = (dispatch: any) => {
 			text: string,
 			remarks: string,
 			link: string,
-			sectionID: string,
-			tagID: string,
+			sectionId: string,
+			tagId: string,
 		}) => dispatch(editNoteAction(editedNote)),
 		removeItemToApp: (name: string, id: string) =>
 			dispatch(removeItemAction(name, id)),

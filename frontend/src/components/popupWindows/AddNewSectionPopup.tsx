@@ -7,7 +7,7 @@ interface IAddSectionProps {
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	namePopup: string;
 	lang: string;
-	currentUserID: string;
+	currentUserId: string;
 }
 export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 	const {
@@ -15,7 +15,7 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 		handlerCurrentValue,
 		namePopup,
 		lang,
-		currentUserID,
+		currentUserId,
 	} = props
 
 	return (
@@ -66,7 +66,7 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 									if (nameSection !== "") {
 										const newSection = {
 											nameSection,
-											userId: currentUserID,
+											userId: currentUserId,
 										}
 										addNewSection(newSection)
 										// очищаем поле addNameSection,

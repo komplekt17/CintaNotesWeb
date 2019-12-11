@@ -31,10 +31,10 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 	// https://www.draftail.org/docs/importing-and-exporting-html
 
 	// получение nameTag из tags[]
-	const getNameTag = (tagIDfromNotes: string): string => {
+	const getNameTag = (tagIdfromNotes: string): string => {
 		let nameTag = "Untagged"
 		for (let i = 0; i < tags.length; i++) {
-			if (tags[i].id === tagIDfromNotes) {
+			if (tags[i].id === tagIdfromNotes) {
 				nameTag = tags[i].nameTag
 			}
 		}
@@ -60,7 +60,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 					</div>
 					<div className="note-tag">
 						<span className="text-primary border-primary">
-							{getNameTag(item.tagID)}
+							{getNameTag(item.tagId)}
 						</span>
 					</div>
 					<div className="note-text">{item.text}</div>

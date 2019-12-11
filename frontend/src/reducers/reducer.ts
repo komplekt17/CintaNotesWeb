@@ -16,17 +16,17 @@ export const initialState = {
 	error: null,
 	filters: { sections: "All", tags: "All" },
 	currentDetails: {
-		section: { id: "", nameSection: "", userID: "" },
-		tag: { id: "", nameTag: "", sectionID: "", userID: "" },
+		section: { id: "", nameSection: "", userId: "" },
+		tag: { id: "", nameTag: "", sectionId: "", userId: "" },
 		note: {
 			id: "",
 			header: "",
 			text: "",
 			remarks: "",
 			link: "",
-			sectionID: "",
-			tagID: "",
-			userID: "",
+			sectionId: "",
+			tagId: "",
+			userId: "",
 			createdAt: "",
 			updatedAt: "",
 		},
@@ -40,14 +40,14 @@ export const initialState = {
 		},
 	},
 	sections: [
-		{ id: "1", nameSection: "Tab-1", userID: "1" },
-		{ id: "2", nameSection: "Tab-2", userID: "1" },
-		{ id: "3", nameSection: "Tab-3", userID: "1" },
+		{ id: "1", nameSection: "Tab-1", userId: "1" },
+		{ id: "2", nameSection: "Tab-2", userId: "1" },
+		{ id: "3", nameSection: "Tab-3", userId: "1" },
 	],
 	tags: [
-		{ id: "1", nameTag: "audiobooks", userID: "1", sectionID: "1" },
-		{ id: "2", nameTag: "webgames", userID: "1", sectionID: "2" },
-		{ id: "3", nameTag: "programs", userID: "1", sectionID: "3" },
+		{ id: "1", nameTag: "audiobooks", userId: "1", sectionId: "1" },
+		{ id: "2", nameTag: "webgames", userId: "1", sectionId: "2" },
+		{ id: "3", nameTag: "programs", userId: "1", sectionId: "3" },
 	],
 	notes: [
 		{
@@ -57,9 +57,9 @@ export const initialState = {
 				"<h3>txt-aud-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "1",
-			tagID: "1",
-			userID: "1",
+			sectionId: "1",
+			tagId: "1",
+			userId: "1",
 			createdAt: "20.10.2019, 11:34",
 			updatedAt: "21.10.2019, 12:31",
 		},
@@ -70,9 +70,9 @@ export const initialState = {
 				"<h3>txt-aud-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "1",
-			tagID: "1",
-			userID: "1",
+			sectionId: "1",
+			tagId: "1",
+			userId: "1",
 			createdAt: "21.10.2019, 11:31",
 			updatedAt: "22.10.2019, 13:31",
 		},
@@ -83,9 +83,9 @@ export const initialState = {
 				"<h3>txt-web-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "2",
-			tagID: "2",
-			userID: "1",
+			sectionId: "2",
+			tagId: "2",
+			userId: "1",
 			createdAt: "23.10.2019, 10:34",
 			updatedAt: "24.10.2019, 12:11",
 		},
@@ -96,9 +96,9 @@ export const initialState = {
 				"<h3>txt-web-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "2",
-			tagID: "2",
-			userID: "1",
+			sectionId: "2",
+			tagId: "2",
+			userId: "1",
 			createdAt: "22.10.2019, 10:34",
 			updatedAt: "23.10.2019, 10:36",
 		},
@@ -109,9 +109,9 @@ export const initialState = {
 				"<h3>txt-pro-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "3",
-			tagID: "3",
-			userID: "1",
+			sectionId: "3",
+			tagId: "3",
+			userId: "1",
 			createdAt: "20.10.2019, 11:34",
 			updatedAt: "21.10.2019, 12:31",
 		},
@@ -122,9 +122,9 @@ export const initialState = {
 				"<h3>txt-pro-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "3",
-			tagID: "3",
-			userID: "1",
+			sectionId: "3",
+			tagId: "3",
+			userId: "1",
 			createdAt: "23.10.2019, 10:31",
 			updatedAt: "25.10.2019, 15:33",
 		},
@@ -135,9 +135,9 @@ export const initialState = {
 				"<h4>Untagged-2.</h4> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "0",
-			tagID: "0",
-			userID: "1",
+			sectionId: "0",
+			tagId: "0",
+			userId: "1",
 			createdAt: "23.10.2019, 10:31",
 			updatedAt: "25.10.2019, 15:33",
 		},
@@ -148,16 +148,16 @@ export const initialState = {
 				"<h4>Untagged-3.</h4> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
 			remarks: "",
 			link: "",
-			sectionID: "0",
-			tagID: "0",
-			userID: "1",
+			sectionId: "0",
+			tagId: "0",
+			userId: "1",
 			createdAt: "23.10.2019, 10:31",
 			updatedAt: "25.10.2019, 15:33",
 		},
 	],
 }
 
-// генератор случайного ID
+// генератор случайного Id
 const idRand = (): string => {
 	const id = Math.random()
 	return id.toString()
@@ -233,10 +233,10 @@ const handlerCurrentDetails = (
 		const index = arr.findIndex(param => param.id === value)
 		// получаем значения свойства найденного tag'а
 		const nameTag = arr[index].nameTag
-		const sectionID = arr[index].sectionID
+		const sectionId = arr[index].sectionId
 		// сохраняем значения полей найденного tag'а в currentDitails.tag
 		obj = getNewObjDetails(obj, "tag", "nameTag", nameTag)
-		obj = getNewObjDetails(obj, "tag", "sectionID", sectionID)
+		obj = getNewObjDetails(obj, "tag", "sectionId", sectionId)
 	}
 
 	// сохраняем value input'a редактируемого поля nameTage
@@ -244,9 +244,9 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "tag", "nameTag", value)
 	}
 
-	// сохраняем value select'a редактируемого поля sectionID
-	else if (name === "editTagSectionID") {
-		obj = getNewObjDetails(obj, "tag", "sectionID", value)
+	// сохраняем value select'a редактируемого поля sectionId
+	else if (name === "editTagSectionId") {
+		obj = getNewObjDetails(obj, "tag", "sectionId", value)
 	}
 
 	// сохраняем id удаляемого tag
@@ -259,7 +259,7 @@ const handlerCurrentDetails = (
 	else if (name === "buttonEditTag" || name === "buttonRemoveTag") {
 		obj = getNewObjDetails(obj, "tag", "id", (value = ""))
 		obj = getNewObjDetails(obj, "tag", "nameTag", (value = ""))
-		obj = getNewObjDetails(obj, "tag", "sectionID", (value = ""))
+		obj = getNewObjDetails(obj, "tag", "sectionId", (value = ""))
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.note -------
@@ -277,15 +277,15 @@ const handlerCurrentDetails = (
 		const text = arr[index].text
 		const remarks = arr[index].remarks
 		const link = arr[index].link
-		const sectionID = arr[index].sectionID
-		const tagID = arr[index].tagID
+		const sectionId = arr[index].sectionId
+		const tagId = arr[index].tagId
 		// сохраняем значения полей найденного note'а в currentDitails.note
 		obj = getNewObjDetails(obj, "note", "header", header)
 		obj = getNewObjDetails(obj, "note", "text", text)
 		obj = getNewObjDetails(obj, "note", "remarks", remarks)
 		obj = getNewObjDetails(obj, "note", "link", link)
-		obj = getNewObjDetails(obj, "note", "sectionID", sectionID)
-		obj = getNewObjDetails(obj, "note", "tagID", tagID)
+		obj = getNewObjDetails(obj, "note", "sectionId", sectionId)
+		obj = getNewObjDetails(obj, "note", "tagId", tagId)
 	}
 
 	// сохраняем value input'a редактируемого поля header
@@ -308,14 +308,14 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "note", "link", value)
 	}
 
-	// сохраняем value select'a редактируемого поля sectionID
-	else if (name === "editNoteSectionID") {
-		obj = getNewObjDetails(obj, "note", "sectionID", value)
+	// сохраняем value select'a редактируемого поля sectionId
+	else if (name === "editNoteSectionId") {
+		obj = getNewObjDetails(obj, "note", "sectionId", value)
 	}
 
-	// сохраняем value select'a редактируемого поля tagID
-	else if (name === "editNoteTagID") {
-		obj = getNewObjDetails(obj, "note", "tagID", value)
+	// сохраняем value select'a редактируемого поля tagId
+	else if (name === "editNoteTagId") {
+		obj = getNewObjDetails(obj, "note", "tagId", value)
 	}
 
 	// сохраняем id удаляемоой note
@@ -331,8 +331,8 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "note", "text", (value = ""))
 		obj = getNewObjDetails(obj, "note", "remarks", (value = ""))
 		obj = getNewObjDetails(obj, "note", "link", (value = ""))
-		obj = getNewObjDetails(obj, "note", "sectionID", (value = ""))
-		obj = getNewObjDetails(obj, "note", "tagID", (value = ""))
+		obj = getNewObjDetails(obj, "note", "sectionId", (value = ""))
+		obj = getNewObjDetails(obj, "note", "tagId", (value = ""))
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.user -------
@@ -406,13 +406,13 @@ const addingItem = (
 		id?: any,
 		nameSection?: any, // for sections
 		nameTag?: any, // for tags
-		sectionID?: any, // for tags and notes
+		sectionId?: any, // for tags and notes
 		header?: any, // for notes
 		text?: any, // for notes
 		remarks?: any, // for notes
 		link?: any, // for notes
-		tagID?: any, // for notes
-		userID?: any, // for sections, tags and notes
+		tagId?: any, // for notes
+		userId?: any, // for sections, tags and notes
 		createdAt?: any, // for sections, tags and notes
 		updatedAt?: any, // for sections, tags and notes
 	}
@@ -422,7 +422,7 @@ const addingItem = (
 		const obj = {
 			id: params.id,
 			nameSection: params.nameSection,
-			userID: params.userID,
+			userId: params.userId,
 		}
 		arr.push(obj)
 		return arr
@@ -431,8 +431,8 @@ const addingItem = (
 		const obj = {
 			id: idRand(),
 			nameTag: params.nameTag,
-			userID: state.currentDetails.userProfile.id,
-			sectionID: params.sectionID,
+			userId: state.currentDetails.userProfile.id,
+			sectionId: params.sectionId,
 		}
 		arr.push(obj)
 		return arr
@@ -444,9 +444,9 @@ const addingItem = (
 			text: params.text,
 			remarks: params.remarks,
 			link: params.link,
-			userID: state.currentDetails.userProfile.id,
-			sectionID: params.sectionID,
-			tagID: params.tagID,
+			userId: state.currentDetails.userProfile.id,
+			sectionId: params.sectionId,
+			tagId: params.tagId,
 			createdAt: "2019-12-10T12:13:40.124Z",
 			updatedAt: "2019-12-10T12:13:40.124Z",
 		}
@@ -463,13 +463,13 @@ const editingItem = (
 		id: string,
 		nameSection?: any, // for sections
 		nameTag?: any, // for tags
-		sectionID?: any, // for tags and notes
+		sectionId?: any, // for tags and notes
 		header?: any, // for notes
 		text?: any, // for notes
 		remarks?: any, // for notes
 		link?: any, // for notes
-		tagID?: any, // for notes
-		userID?: any, // for notes
+		tagId?: any, // for notes
+		userId?: any, // for notes
 		createdAt?: any, // for sections, tags and notes
 		updatedAt?: any, // for sections, tags and notes
 	}
@@ -480,8 +480,8 @@ const editingItem = (
 		const index = arr.findIndex(param => param.id === params.id)
 		// присваиваем новое значение полю section.nameSection
 		arr[index].nameSection = params.nameSection
-		// присваиваем новое значение полю section.userID
-		arr[index].userID = params.userID
+		// присваиваем новое значение полю section.userId
+		arr[index].userId = params.userId
 
 		return arr
 	} else if (nameItem === "editTag") {
@@ -490,8 +490,8 @@ const editingItem = (
 		const index = arr.findIndex(param => param.id === params.id)
 		// присваиваем новое значение полю tag.nameTag
 		arr[index].nameTag = params.nameTag
-		// присваиваем новое значение полю tag.sectionID
-		arr[index].sectionID = params.sectionID
+		// присваиваем новое значение полю tag.sectionId
+		arr[index].sectionId = params.sectionId
 
 		return arr
 	} else if (nameItem === "editNote") {
@@ -506,10 +506,10 @@ const editingItem = (
 		arr[index].remarks = params.remarks
 		// присваиваем новое значение полю note.link
 		arr[index].link = params.link
-		// присваиваем новое значение полю note.sectionID
-		arr[index].sectionID = params.sectionID
-		// присваиваем новое значение полю note.tagID
-		arr[index].tagID = params.tagID
+		// присваиваем новое значение полю note.sectionId
+		arr[index].sectionId = params.sectionId
+		// присваиваем новое значение полю note.tagId
+		arr[index].tagId = params.tagId
 
 		return arr
 	}
@@ -561,9 +561,9 @@ const transplaceNotes = (
 	if (nameItem === "Tag") {
 		for (let i = 0; i < arr.length; i++) {
 			// если note относится к id удаляемому tag
-			if (arr[i].tagID === idItem) {
+			if (arr[i].tagId === idItem) {
 				// тогда переносим эту note в Untagged
-				arr[i].tagID = "0"
+				arr[i].tagId = "0"
 			}
 		}
 	}
@@ -571,11 +571,11 @@ const transplaceNotes = (
 	else if (nameItem === "Section") {
 		for (let i = 0; i < arr.length; i++) {
 			// если note относится к id удаляемой section
-			if (arr[i].sectionID === idItem) {
+			if (arr[i].sectionId === idItem) {
 				// тогда переносим эту note в Untagged
-				arr[i].tagID = "0"
+				arr[i].tagId = "0"
 				// и переносим эту note в All sections
-				arr[i].sectionID = "0"
+				arr[i].sectionId = "0"
 			}
 		}
 	}
@@ -583,9 +583,9 @@ const transplaceNotes = (
 	else if (nameItem === "editTag") {
 		for (let i = 0; i < arr.length; i++) {
 			// если note относится к id редактируемого tag
-			if (arr[i].tagID === idItem.id) {
+			if (arr[i].tagId === idItem.id) {
 				// перемещаем notes в секцию тега
-				arr[i].sectionID = idItem.sectionID
+				arr[i].sectionId = idItem.sectionId
 			}
 		}
 	}
@@ -597,9 +597,9 @@ const transplaceTags = (state: IState, idItem: string): ITags[] => {
 	const arr = state.tags.slice()
 	for (let i = 0; i < arr.length; i++) {
 		// если tag относится к id удаляемой section
-		if (arr[i].sectionID === idItem) {
+		if (arr[i].sectionId === idItem) {
 			// переносим этот tag в All sections
-			arr[i].sectionID = "0"
+			arr[i].sectionId = "0"
 		}
 	}
 	return arr
@@ -710,7 +710,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			const addSectionParams = {
 				id: action.result.data.id.toString(),
 				nameSection: action.result.data.nameSection,
-				userID: action.result.data.userId,
+				userId: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
 				updatedAt: action.result.data.updatedAt,
 			}
@@ -726,7 +726,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			const editSectionParams = {
 				id: action.result.data.id.toString(),
 				nameSection: action.result.data.nameSection,
-				userID: action.result.data.userId,
+				userId: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
 				updatedAt: action.result.data.updatedAt,
 			}
@@ -770,8 +770,8 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			const addTagParams = {
 				id: action.result.data.id.toString(),
 				nameTag: action.result.data.nameTag,
-				sectionID: action.result.data.sectionId,
-				userID: action.result.data.userId,
+				sectionId: action.result.data.sectionId,
+				userId: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
 				updatedAt: action.result.data.updatedAt,
 			}
@@ -787,8 +787,8 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			const editTagParams = {
 				id: action.result.data.id.toString(),
 				nameTag: action.result.data.nameTag,
-				sectionID: action.result.data.sectionId,
-				userID: action.result.data.userId,
+				sectionId: action.result.data.sectionId,
+				userId: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
 				updatedAt: action.result.data.updatedAt,
 			}

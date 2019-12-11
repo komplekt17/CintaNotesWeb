@@ -8,14 +8,14 @@ interface IRemoveItemProps {
 	resetHighlightItem: (elem: any, nameElem: string) => void;
 	namePopup: string;
 	lang: string;
-	removableItemID: string;
+	removableItemId: string;
 }
 
 export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 	const {
 		removeItem,
 		namePopup,
-		removableItemID,
+		removableItemId,
 		handlerCurrentValue,
 		resetHighlightItem,
 		lang,
@@ -70,7 +70,7 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 					<div className="modal-footer">
 						<button
 							onClick={() => {
-								removeItem(namePopup, removableItemID)
+								removeItem(namePopup, removableItemId)
 
 								if (namePopup === "Section") {
 									// сбрасываем подсветку текущей section

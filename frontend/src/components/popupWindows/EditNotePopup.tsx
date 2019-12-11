@@ -7,8 +7,8 @@ interface IEditNoteProps {
 	tags: Array<{
 		id: string,
 		nameTag: string,
-		sectionID: string,
-		userID: string
+		sectionId: string,
+		userId: string
 	}>;
 	editNote: (editedNote: {
     id: string,
@@ -16,8 +16,8 @@ interface IEditNoteProps {
     text: string,
     remarks: string,
     link: string,
-    sectionID: string,
-    tagID: string,
+    sectionId: string,
+    tagId: string,
 	}) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	currentEditedNote:	{
@@ -26,8 +26,8 @@ interface IEditNoteProps {
     text: string;
     remarks: string;
     link: string;
-		sectionID: string;
-    tagID: string;
+		sectionId: string;
+    tagId: string;
 	}
 	namePopup: string;
 	lang: string;
@@ -48,17 +48,17 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
     text,
     remarks,
     link, 
-    // sectionID, 
-		tagID } = currentEditedNote
+    // sectionId, 
+		tagId } = currentEditedNote
 		
-		// получаем SectionID из tags[] по tagID из notes[] 
-		const getSectionIDtag = (tagID:string): string =>{
-			let noteTagSectionID = "0"
+		// получаем SectionId из tags[] по tagId из notes[] 
+		const getSectionIdtag = (tagId:string): string =>{
+			let noteTagSectionId = "0"
 			for(let i=0;i<tags.length;i++){
-				if(tags[i].id === tagID ) noteTagSectionID = tags[i].sectionID
+				if(tags[i].id === tagId ) noteTagSectionId = tags[i].sectionId
 			}
 			
-			return noteTagSectionID
+			return noteTagSectionId
 		}
 
 	// let sectionsList: any = ""
@@ -66,7 +66,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 	// if (sections && sections.length !== 0) {
 	// 	sectionsList = sections.map((item: any, index: number) => {
 	// 		return (
-	// 			<option key={index} className={item.sectionID} value={item.id}>
+	// 			<option key={index} className={item.sectionId} value={item.id}>
 	// 				{item.nameSection}
 	// 			</option>
 	// 		)
@@ -78,7 +78,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 	if (tags && tags.length !== 0) {
 		tagsList = tags.map((item: any, index: number) => {
 			return (
-				<option key={index} className={item.tagID} value={item.id}>
+				<option key={index} className={item.tagId} value={item.id}>
 					{item.nameTag}
 				</option>
 			)
@@ -154,13 +154,13 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 							</div>
 
 						 <div className="form-label-group">
-								<label htmlFor="editNoteSectionID">Select Section</label>
+								<label htmlFor="editNoteSectionId">Select Section</label>
 								<select
-									value={sectionID == null ? "" : sectionID}
+									value={sectionId == null ? "" : sectionId}
 									onChange={ev => {
 										handlerCurrentValue(ev.target.id, ev.target.value)
 									}}
-									id="editNoteSectionID"
+									id="editNoteSectionId"
 									className="form-control"
 									aria-describedby="formEditNote"
 								>
@@ -173,13 +173,13 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 							</div> */}
 
 							<div className="form-label-group">
-								<label htmlFor="editNoteTagID">Select Tag</label>
+								<label htmlFor="editNoteTagId">Select Tag</label>
 								<select
-									value={tagID == null ? "" : tagID}
+									value={tagId == null ? "" : tagId}
 									onChange={ev => {
 										handlerCurrentValue(ev.target.id, ev.target.value)
 									}}
-									id="editNoteTagID"
+									id="editNoteTagId"
 									className="form-control"
 									aria-describedby="formEditNote"
 								>
@@ -231,8 +231,8 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 										const editedNote = {
                       id, 
 											header, text, remarks, link, 
-											sectionID: getSectionIDtag(tagID), 
-											tagID 
+											sectionId: getSectionIdtag(tagId), 
+											tagId 
 										}
 										editNote(editedNote)
 										// очищаем поля currentDetails.note,

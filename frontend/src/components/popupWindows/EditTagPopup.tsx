@@ -13,8 +13,8 @@ interface IEditTagProps {
 	currentEditedTag:	{
 		id: string;
     nameTag: string;
-    userID: string;
-		sectionID: string;
+    userId: string;
+		sectionId: string;
 	}
 	namePopup: string;
 	lang: string;
@@ -30,14 +30,14 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 		sections
 	} = props
 
-	const {id, nameTag, sectionID, userID} = currentEditedTag
+	const {id, nameTag, sectionId, userId} = currentEditedTag
 
 	let sectionsList: any = ""
 
 	if (sections && sections.length !== 0) {
 		sectionsList = sections.map((item: any, index: number) => {
 			return (
-				<option key={index} className={item.sectionID} value={item.id}>
+				<option key={index} className={item.sectionId} value={item.id}>
 					{item.nameSection}
 				</option>
 			)
@@ -90,13 +90,13 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="editTagSectionID">Select Cathegorie</label>
+								<label htmlFor="editTagSectionId">Select Cathegorie</label>
 								<select
-									value={sectionID == null ? "" : sectionID}
+									value={sectionId == null ? "" : sectionId}
 									onChange={ev => {
 										handlerCurrentValue(ev.target.id, ev.target.value)
 									}}
-									id="editTagSectionID"
+									id="editTagSectionId"
 									className="form-control"
 									aria-describedby="formEditTag"
 								>
@@ -115,8 +115,8 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 										const editedTag = {
 											id, 
 											nameTag, 
-											sectionId: sectionID,
-											userId: userID,
+											sectionId: sectionId,
+											userId: userId,
 										}
 										editTag(editedTag)
 										// очищаем поля currentDetails.tag,

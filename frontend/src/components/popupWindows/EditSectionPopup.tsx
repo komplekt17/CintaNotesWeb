@@ -14,7 +14,7 @@ interface IEditSectionProps {
 	};
 	namePopup: string;
 	lang: string;
-	currentUserID: string;
+	currentUserId: string;
 }
 export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 	const {
@@ -23,7 +23,7 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 		currentEditedSection,
 		namePopup,
 		lang,
-		currentUserID,
+		currentUserId,
 	} = props
 
 	const { id, nameSection } = currentEditedSection
@@ -79,7 +79,7 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 										const editedSection = {
 											id,
 											nameSection,
-											userId: currentUserID,
+											userId: currentUserId,
 										}
 										editSection(editedSection)
 										// очищаем поля currentDetails.section,

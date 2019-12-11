@@ -4,8 +4,8 @@ const addNewNoteAction = (newNote: {
 	text: string,
 	remarks: string,
 	link: string,
-	sectionID: string,
-	tagID: string,
+	sectionId: string,
+	tagId: string,
 }) => {
 	return {
 		type: "ADD_NEW_NOTE_ACTION",
@@ -20,8 +20,8 @@ const editNoteAction = (editedNote: {
 	text: string,
 	remarks: string,
 	link: string,
-	sectionID: string,
-	tagID: string,
+	sectionId: string,
+	tagId: string,
 }) => {
 	return {
 		type: "EDIT_NOTE_ACTION",
