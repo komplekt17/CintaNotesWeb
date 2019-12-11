@@ -30,10 +30,9 @@ router.route('/add').post((req, res) => {
 // обновление tag
 router.route('/update/:id').put((req, res) => {
 	//console.log(req.body)
-	Tag.findOne({ id: req.params._id }, (error, tag) => {
-		if (error) {
+	Tag.findOne({ where: { id: req.params.id } }).then(tag => {
+		if (!tag) {
 			return res.status(404).json({
-				error,
 				message: 'Tag not found!'
 			});
 		}
