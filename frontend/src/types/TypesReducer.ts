@@ -24,18 +24,20 @@ export interface INotes {
 	updatedAt: string;
 }
 
+export interface IUserProfile {
+	_id: string;
+	login: string;
+	pass: string;
+	status: string;
+	lang: string;
+	theme: string;
+}
+
 export interface ICurrentDetails {
 	section: ISections;
 	tag: ITags;
 	note: INotes;
-	userProfile: {
-		_id: string,
-		login: string,
-		pass: string,
-		status: string,
-		lang: string,
-		theme: string,
-	};
+	userProfile: IUserProfile;
 }
 
 export interface IState {

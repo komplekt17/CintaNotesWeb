@@ -3,45 +3,56 @@ import { SERVER_URI } from "../constants"
 import $ from "jquery"
 
 // получение данных с сервера по логину юзера
-const getDataByLoginAction = (user: { login: string, pass: string }) => {
+const getDataByLoginAction = (objUser: {
+	login: string,
+	pass: string,
+}) => {
 	return {
 		type: "GET_DATA_BY_LOGIN_ACTION",
 		data: "data from server",
-		user,
+		objUser,
 	}
 }
 
 // создание нового пользователя
-const createNewUserAction = (objNewUser: { login: string, pass: string }) => {
+const createNewUserAction = (objNewUser: {
+	login: string,
+	pass: string,
+}) => {
 	$("#modal-createUser").modal("hide")
+	console.log(objNewUser)
 	return (dispatch: {
 		(arg0: { type: string }): void,
 		(arg0: { type: string, result: any }): void,
 		(arg0: { type: string, error: any }): void,
 	}) => {
-    dispatch({
-      type: "LOAD_REQUESTED_DATA_ACTION"
-    });
-    axios.post(`${SERVER_URI}/users/create`, objNewUser)
-      .then(response => {
-        console.log(response.data);
-        dispatch({
-          type: "CREATE_NEW_USER_ACTION",
-          result: response.data
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: "LOAD_FAILURE_DATA_ACTION",
-          error
-        });
-        console.log(error);
-      })
-  }
+		dispatch({
+			type: "LOAD_REQUESTED_DATA_ACTION",
+		})
+		axios
+			.post(`${SERVER_URI}/users/create`, objNewUser)
+			.then(response => {
+				console.log(response.data)
+				dispatch({
+					type: "CREATE_NEW_USER_ACTION",
+					result: response.data,
+				})
+			})
+			.catch(error => {
+				dispatch({
+					type: "LOAD_FAILURE_DATA_ACTION",
+					error,
+				})
+				console.log(error)
+			})
+	}
 }
 
 // обработчик обновления user
-const updateEditUserAction = (objUser: { login: any, pass: any }) => {
+const updateEditUserAction = (objUser: {
+	login: string,
+	pass: string,
+}) => {
 	return {
 		type: "UPDATE_USER_ACTION",
 		objUser,

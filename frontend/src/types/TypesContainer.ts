@@ -13,9 +13,9 @@ export interface IAppProps {
 		tags: ITags[],
 		notes: INotes[],
 	};
-	getDataByLoginToApp: (user: { login: any, pass: any }) => void;
+	getDataByLoginToApp: (objUser: { login: string, pass: string }) => void;
 	getStatusLoginToApp: (token: string) => void;
-	createNewUserToApp: (objUser: { login: any, pass: any }) => void;
+	createNewUserToApp: (objUser: { login: string, pass: string }) => void;
 	addNewSectionToApp: (objSection: {nameSection: string, userId: string}) => void;
 	addNewTagToApp: (newTag: { nameTag: any, sectionID: any }) => void;
 	addNewNoteToApp: (newNote: {

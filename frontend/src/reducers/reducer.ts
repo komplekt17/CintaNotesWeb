@@ -34,7 +34,7 @@ export const initialState = {
 			_id: "1",
 			login: "",
 			pass: "",
-			status: "",
+			status: "user",
 			lang: "en",
 			theme: "night", // or light
 		},
@@ -625,23 +625,24 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		case "GET_DATA_BY_LOGIN_ACTION":
 			return {
 				...state,
+				currentDetails: handlerCurrentDetails(state, "userData", action.user),
 				loading: false,
 				loaded: true,
 				auth: !state.auth,
-				currentDetails: handlerCurrentDetails(state, "userData", action.user),
 			}
 
 		case "CREATE_NEW_USER_ACTION":
 			return {
 				...state,
-				loading: false,
-				loaded: true,
-				auth: !state.auth,
 				currentDetails: handlerCurrentDetails(
 					state,
 					"userData",
 					action.result.data
 				),
+				loading: false,
+				loaded: true,
+				textMessage: action.result.message,
+				auth: !state.auth,
 			}
 
 		case "USER_LOGOUT_ACTION":

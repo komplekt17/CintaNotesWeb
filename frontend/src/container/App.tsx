@@ -345,7 +345,7 @@ const App: React.FC<IAppProps> = props => {
 			<AddNewUserPopup
 				createNewUser={createNewUserToApp}
 				namePopup={namePopup}
-				lang={currentDetails.userProfile.lang}
+				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewSectionPopup
 				addNewSection={addNewSectionToApp}
@@ -438,8 +438,8 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
 	return {
-		getDataByLoginToApp: (user: { login: any, pass: any }) =>
-			dispatch(getDataByLoginAction(user)),
+		getDataByLoginToApp: (objUser: { login: string, pass: string }) =>
+			dispatch(getDataByLoginAction(objUser)),
 		getStatusLoginToApp: (token: string) =>
 			dispatch(getStatusLoginAction(token)),
 		handlerHeaderPopupToApp: (header: string) =>
@@ -451,7 +451,7 @@ const mapDispatchToProps = (dispatch: any) => {
 		handlerLangToApp: (lang: string) => dispatch(handlerLangAction(lang)),
 		handlerThemeToApp: (theme: string) =>
 			dispatch(handlerThemeAction(theme)),
-		createNewUserToApp: (objUser: { login: any, pass: any }) =>
+		createNewUserToApp: (objUser: { login: string, pass: string }) =>
 			dispatch(createNewUserAction(objUser)),
 		addNewSectionToApp: (newSection: {
 			nameSection: string,

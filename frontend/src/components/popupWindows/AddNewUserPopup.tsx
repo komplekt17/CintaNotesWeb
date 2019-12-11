@@ -1,14 +1,23 @@
 import * as React from "react"
+import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
 import $ from "jquery"
 
 interface IAddUserProps {
-	createNewUser: (objUser: { login: any, pass: any }) => void;
+	createNewUser: (objUser: {
+		login: any,
+		pass: any,
+		status: string,
+		lang: string,
+		theme: string,
+	}) => void;
 	namePopup: string;
-	lang: string;
+	userProfile: IUserProfile;
 }
 export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
-	const { createNewUser, namePopup, lang } = props
+	const { createNewUser, namePopup, userProfile } = props
+
+	const { status, lang, theme } = userProfile
 
 	return (
 		<div
@@ -88,7 +97,13 @@ export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
 									const pass = $("#inputPassword").val()
 									const repeat = $("#repeatPassword").val()
 									if (login !== "" && pass !== "" && pass === repeat) {
-										const objUser = { login, pass }
+										const objUser = {
+											login,
+											pass,
+											status,
+											lang,
+											theme,
+										}
 										createNewUser(objUser)
 										$("#inputEmail").val("")
 										$("#inputPassword").val("")
