@@ -13,7 +13,7 @@ const StatisticInfoPanel: React.FC<IStatisticInfoPanelProps> = props => {
 
 	// получение названия активной секции
 	const getNameActiveSection = (
-		sections: Array<{ _id: string, nameSection: string }>,
+		sections: Array<{ id: string, nameSection: string }>,
 		filters: { sections: string, tags: string }
 	): string => {
 		let nameCurrentSection
@@ -21,7 +21,7 @@ const StatisticInfoPanel: React.FC<IStatisticInfoPanelProps> = props => {
 			nameCurrentSection = CONSTANTS[lang].BUTTON_ALL
 		} else {
 			const index = sections.findIndex(
-				param => param._id === filters.sections
+				param => param.id === filters.sections
 			)
 			nameCurrentSection = sections[index].nameSection
 		}

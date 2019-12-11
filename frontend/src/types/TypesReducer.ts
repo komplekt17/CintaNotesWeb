@@ -1,18 +1,18 @@
 export interface ISections {
-	_id: string;
+	id: string;
 	nameSection: string;
 	userID: string;
 }
 
 export interface ITags {
-	_id: string;
+	id: string;
 	nameTag: string;
 	userID: string;
 	sectionID: string;
 }
 
 export interface INotes {
-	_id: string;
+	id: string;
 	header: string;
 	text: string;
 	remarks: string;
@@ -25,7 +25,7 @@ export interface INotes {
 }
 
 export interface IUserProfile {
-	_id: string;
+	id: string;
 	login: string;
 	pass: string;
 	status: string;

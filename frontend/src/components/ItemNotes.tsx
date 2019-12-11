@@ -34,7 +34,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 	const getNameTag = (tagIDfromNotes: string): string => {
 		let nameTag = "Untagged"
 		for (let i = 0; i < tags.length; i++) {
-			if (tags[i]._id === tagIDfromNotes) {
+			if (tags[i].id === tagIDfromNotes) {
 				nameTag = tags[i].nameTag
 			}
 		}
@@ -70,8 +70,8 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 								className="text-success"
 								onClick={() => {
 									handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_NOTE)
-									// сохраняем _id удаляемой Note
-									handlerCurrentValue("saveIdEditedNote", item._id)
+									// сохраняем id удаляемой Note
+									handlerCurrentValue("saveIdEditedNote", item.id)
 									$("#modal-editNote").modal("show")
 								}}
 							>
@@ -82,8 +82,8 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 								className="text-danger"
 								onClick={() => {
 									handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_NOTE)
-									// сохраняем _id удаляемой Note
-									handlerCurrentValue("saveIdRemovedNote", item._id)
+									// сохраняем id удаляемой Note
+									handlerCurrentValue("saveIdRemovedNote", item.id)
 									$("#modal-removeItem").modal("show")
 								}}
 							>

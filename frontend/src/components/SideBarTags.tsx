@@ -6,7 +6,7 @@ import "../styles/SideBarTag.css"
 
 interface ISideBarTagsProps {
 	tags: Array<{
-		_id: string,
+		id: string,
 		nameTag: string,
 		sectionID: string,
 		userID: string,
@@ -49,22 +49,22 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 						className="nav-link name_tag"
 						onClick={ev => {
 							resetHighlightItem(ev.target, "")
-							handlerValueFilters("filterTag", item._id)
+							handlerValueFilters("filterTag", item.id)
 						}}
 					>
 						{item.nameTag}
 					</span>
 					<span className="nav-link">
 						<span className="name_tag-qwt">
-							{countQualityItems("tagBarNotes", item._id)}
+							{countQualityItems("tagBarNotes", item.id)}
 						</span>
 						<span className="name_tag-btns">
 							<i
 								className="fas fa-edit text-success"
 								onClick={() => {
 									handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_TAG)
-									// сохраняем _id удаляемой Tag
-									handlerCurrentValue("saveIdEditedTag", item._id)
+									// сохраняем id удаляемой Tag
+									handlerCurrentValue("saveIdEditedTag", item.id)
 									$("#modal-editTag").modal("show")
 								}}
 							/>{" "}
@@ -72,8 +72,8 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 								className="fas fa-trash-alt text-danger"
 								onClick={() => {
 									handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_TAG)
-									// сохраняем _id удаляемой Tag
-									handlerCurrentValue("saveIdRemovedTag", item._id)
+									// сохраняем id удаляемой Tag
+									handlerCurrentValue("saveIdRemovedTag", item.id)
 									$("#modal-removeItem").modal("show")
 								}}
 							/>

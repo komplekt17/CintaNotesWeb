@@ -9,7 +9,7 @@ interface IEditSectionProps {
 	}) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	currentEditedSection: {
-		_id: string,
+		id: string,
 		nameSection: string,
 	};
 	namePopup: string;
@@ -26,7 +26,7 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 		currentUserID,
 	} = props
 
-	const { _id, nameSection } = currentEditedSection
+	const { id, nameSection } = currentEditedSection
 	return (
 		<div
 			id="modal-editSection"
@@ -77,7 +77,7 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 								onClick={() => {
 									if (nameSection !== "") {
 										const editedSection = {
-											id: _id,
+											id,
 											nameSection,
 											userId: currentUserID,
 										}

@@ -35,7 +35,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						if ($(elem).hasClass("fas")) elem = $(elem).parent()
 						resetHighlightItem(elem, "")
 						resetHighlightItem($(".app-side-tags ul"), "clearItems")
-						handlerValueFilters("filterSection", item._id)
+						handlerValueFilters("filterSection", item.id)
 					}}
 				>
 					<span className="nav-link">
@@ -46,8 +46,8 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 								handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_SECTION)
 								// сохраняем value input редактируемой section
 								handlerCurrentValue("editNameSection", item.nameSection)
-								// сохраняем _id редактируемой section
-								handlerCurrentValue("saveIdEditedSection", item._id)
+								// сохраняем id редактируемой section
+								handlerCurrentValue("saveIdEditedSection", item.id)
 								$("#modal-editSection").modal("show")
 							}}
 						/>{" "}
@@ -55,8 +55,8 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 							className="fas fa-trash-alt text-danger"
 							onClick={() => {
 								handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_SECTION)
-								// сохраняем _id удаляемой section
-								handlerCurrentValue("saveIdRemovedSection", item._id)
+								// сохраняем id удаляемой section
+								handlerCurrentValue("saveIdRemovedSection", item.id)
 								$("#modal-removeItem").modal("show")
 							}}
 						/>

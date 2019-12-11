@@ -16,10 +16,10 @@ export const initialState = {
 	error: null,
 	filters: { sections: "All", tags: "All" },
 	currentDetails: {
-		section: { _id: "", nameSection: "", userID: "" },
-		tag: { _id: "", nameTag: "", sectionID: "", userID: "" },
+		section: { id: "", nameSection: "", userID: "" },
+		tag: { id: "", nameTag: "", sectionID: "", userID: "" },
 		note: {
-			_id: "",
+			id: "",
 			header: "",
 			text: "",
 			remarks: "",
@@ -31,7 +31,7 @@ export const initialState = {
 			updatedAt: "",
 		},
 		userProfile: {
-			_id: "1",
+			id: "1",
 			login: "",
 			pass: "",
 			status: "user",
@@ -40,18 +40,18 @@ export const initialState = {
 		},
 	},
 	sections: [
-		{ _id: "1", nameSection: "Tab-1", userID: "1" },
-		{ _id: "2", nameSection: "Tab-2", userID: "1" },
-		{ _id: "3", nameSection: "Tab-3", userID: "1" },
+		{ id: "1", nameSection: "Tab-1", userID: "1" },
+		{ id: "2", nameSection: "Tab-2", userID: "1" },
+		{ id: "3", nameSection: "Tab-3", userID: "1" },
 	],
 	tags: [
-		{ _id: "1", nameTag: "audiobooks", userID: "1", sectionID: "1" },
-		{ _id: "2", nameTag: "webgames", userID: "1", sectionID: "2" },
-		{ _id: "3", nameTag: "programs", userID: "1", sectionID: "3" },
+		{ id: "1", nameTag: "audiobooks", userID: "1", sectionID: "1" },
+		{ id: "2", nameTag: "webgames", userID: "1", sectionID: "2" },
+		{ id: "3", nameTag: "programs", userID: "1", sectionID: "3" },
 	],
 	notes: [
 		{
-			_id: "1",
+			id: "1",
 			header: "aud-1",
 			text:
 				"<h3>txt-aud-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
@@ -64,7 +64,7 @@ export const initialState = {
 			updatedAt: "21.10.2019, 12:31",
 		},
 		{
-			_id: "2",
+			id: "2",
 			header: "aud-2",
 			text:
 				"<h3>txt-aud-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
@@ -77,7 +77,7 @@ export const initialState = {
 			updatedAt: "22.10.2019, 13:31",
 		},
 		{
-			_id: "3",
+			id: "3",
 			header: "web-1",
 			text:
 				"<h3>txt-web-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
@@ -90,7 +90,7 @@ export const initialState = {
 			updatedAt: "24.10.2019, 12:11",
 		},
 		{
-			_id: "4",
+			id: "4",
 			header: "web-2",
 			text:
 				"<h3>txt-web-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
@@ -103,7 +103,7 @@ export const initialState = {
 			updatedAt: "23.10.2019, 10:36",
 		},
 		{
-			_id: "5",
+			id: "5",
 			header: "pro-1",
 			text:
 				"<h3>txt-pro-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
@@ -116,7 +116,7 @@ export const initialState = {
 			updatedAt: "21.10.2019, 12:31",
 		},
 		{
-			_id: "6",
+			id: "6",
 			header: "pro-2",
 			text:
 				"<h3>txt-pro-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
@@ -129,7 +129,7 @@ export const initialState = {
 			updatedAt: "25.10.2019, 15:33",
 		},
 		{
-			_id: "7",
+			id: "7",
 			header: "Untagged-2",
 			text:
 				"<h4>Untagged-2.</h4> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
@@ -142,7 +142,7 @@ export const initialState = {
 			updatedAt: "25.10.2019, 15:33",
 		},
 		{
-			_id: "8",
+			id: "8",
 			header: "Untagged-3",
 			text:
 				"<h4>Untagged-3.</h4> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
@@ -203,12 +203,12 @@ const handlerCurrentDetails = (
 	if (name === "addNameSection" || name === "editNameSection") {
 		obj = getNewObjDetails(obj, "section", "nameSection", value)
 	}
-	// сохраняем _id удаляемой или редактируемой section
+	// сохраняем id удаляемой или редактируемой section
 	else if (
 		name === "saveIdRemovedSection" ||
 		name === "saveIdEditedSection"
 	) {
-		obj = getNewObjDetails(obj, "section", "_id", value)
+		obj = getNewObjDetails(obj, "section", "id", value)
 	}
 	// очищаем поля section'а в currentDitails.section,
 	// если Section added, edited or removed
@@ -217,7 +217,7 @@ const handlerCurrentDetails = (
 		name === "buttonEditSection" ||
 		name === "buttonRemoveSection"
 	) {
-		obj = getNewObjDetails(obj, "section", "_id", (value = ""))
+		obj = getNewObjDetails(obj, "section", "id", (value = ""))
 		obj = getNewObjDetails(obj, "section", "nameSection", (value = ""))
 	}
 
@@ -225,12 +225,12 @@ const handlerCurrentDetails = (
 
 	// сохраняем данные редактируемого tag'а в currentDitails.tag
 	else if (name === "saveIdEditedTag") {
-		// сохраняем _id редактируемого tag'а
-		obj = getNewObjDetails(obj, "tag", "_id", value)
-		// находим по _id данные редактируемого tag'а
+		// сохраняем id редактируемого tag'а
+		obj = getNewObjDetails(obj, "tag", "id", value)
+		// находим по id данные редактируемого tag'а
 		const arr = state.tags.slice()
-		// получаем index элемента массива tags с _id === value
-		const index = arr.findIndex(param => param._id === value)
+		// получаем index элемента массива tags с id === value
+		const index = arr.findIndex(param => param.id === value)
 		// получаем значения свойства найденного tag'а
 		const nameTag = arr[index].nameTag
 		const sectionID = arr[index].sectionID
@@ -249,15 +249,15 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "tag", "sectionID", value)
 	}
 
-	// сохраняем _id удаляемого tag
+	// сохраняем id удаляемого tag
 	else if (name === "saveIdRemovedTag") {
-		obj = getNewObjDetails(obj, "tag", "_id", value)
+		obj = getNewObjDetails(obj, "tag", "id", value)
 	}
 
 	// очищаем поля tag'а в currentDitails.tag,
 	// когда tag removed или edited
 	else if (name === "buttonEditTag" || name === "buttonRemoveTag") {
-		obj = getNewObjDetails(obj, "tag", "_id", (value = ""))
+		obj = getNewObjDetails(obj, "tag", "id", (value = ""))
 		obj = getNewObjDetails(obj, "tag", "nameTag", (value = ""))
 		obj = getNewObjDetails(obj, "tag", "sectionID", (value = ""))
 	}
@@ -266,12 +266,12 @@ const handlerCurrentDetails = (
 
 	// сохраняем данные редактируемого note'а в currentDitails.note
 	else if (name === "saveIdEditedNote") {
-		// сохраняем _id редактируемой note'а
-		obj = getNewObjDetails(obj, "note", "_id", value)
-		// находим по _id данные редактируемой note'а
+		// сохраняем id редактируемой note'а
+		obj = getNewObjDetails(obj, "note", "id", value)
+		// находим по id данные редактируемой note'а
 		const arr = state.notes.slice()
-		// получаем index элемента массива notes с _id === value
-		const index = arr.findIndex(param => param._id === value)
+		// получаем index элемента массива notes с id === value
+		const index = arr.findIndex(param => param.id === value)
 		// получаем значения свойства найденного note'а
 		const header = arr[index].header
 		const text = arr[index].text
@@ -318,15 +318,15 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "note", "tagID", value)
 	}
 
-	// сохраняем _id удаляемоой note
+	// сохраняем id удаляемоой note
 	else if (name === "saveIdRemovedNote") {
-		obj = getNewObjDetails(obj, "note", "_id", value)
+		obj = getNewObjDetails(obj, "note", "id", value)
 	}
 
 	// очищаем поля note'а в currentDitails.note,
 	// когда note removed или edited
 	else if (name === "buttonEditNote" || name === "buttonRemoveNote") {
-		obj = getNewObjDetails(obj, "note", "_id", (value = ""))
+		obj = getNewObjDetails(obj, "note", "id", (value = ""))
 		obj = getNewObjDetails(obj, "note", "header", (value = ""))
 		obj = getNewObjDetails(obj, "note", "text", (value = ""))
 		obj = getNewObjDetails(obj, "note", "remarks", (value = ""))
@@ -343,7 +343,7 @@ const handlerCurrentDetails = (
 		// value = user{login, pass}
 		const { id, login, pass, status, lang, theme } = value
 		// обновляем значения полей
-		obj = getNewObjDetails(obj, "userProfile", "_id", id)
+		obj = getNewObjDetails(obj, "userProfile", "id", id)
 		obj = getNewObjDetails(obj, "userProfile", "login", login)
 		obj = getNewObjDetails(obj, "userProfile", "pass", pass)
 		obj = getNewObjDetails(obj, "userProfile", "status", status)
@@ -420,7 +420,7 @@ const addingItem = (
 	if (nameItem === "addSection") {
 		const arr = state.sections.slice()
 		const obj = {
-			_id: params.id,
+			id: params.id,
 			nameSection: params.nameSection,
 			userID: params.userID,
 		}
@@ -429,9 +429,9 @@ const addingItem = (
 	} else if (nameItem === "addTag") {
 		const arr = state.tags.slice()
 		const obj = {
-			_id: idRand(),
+			id: idRand(),
 			nameTag: params.nameTag,
-			userID: state.currentDetails.userProfile._id,
+			userID: state.currentDetails.userProfile.id,
 			sectionID: params.sectionID,
 		}
 		arr.push(obj)
@@ -439,12 +439,12 @@ const addingItem = (
 	} else if (nameItem === "addNote") {
 		const arr = state.notes.slice()
 		const obj = {
-			_id: idRand(),
+			id: idRand(),
 			header: params.header,
 			text: params.text,
 			remarks: params.remarks,
 			link: params.link,
-			userID: state.currentDetails.userProfile._id,
+			userID: state.currentDetails.userProfile.id,
 			sectionID: params.sectionID,
 			tagID: params.tagID,
 			createdAt: "2019-12-10T12:13:40.124Z",
@@ -476,8 +476,8 @@ const editingItem = (
 ): any => {
 	if (nameItem === "editSection") {
 		const arr = state.sections.slice()
-		// получаем index элемента массива sections с _id === id
-		const index = arr.findIndex(param => param._id === params.id)
+		// получаем index элемента массива sections с id === id
+		const index = arr.findIndex(param => param.id === params.id)
 		// присваиваем новое значение полю section.nameSection
 		arr[index].nameSection = params.nameSection
 		// присваиваем новое значение полю section.userID
@@ -486,8 +486,8 @@ const editingItem = (
 		return arr
 	} else if (nameItem === "editTag") {
 		const arr = state.tags.slice()
-		// получаем index элемента массива tags с _id === id
-		const index = arr.findIndex(param => param._id === params.id)
+		// получаем index элемента массива tags с id === id
+		const index = arr.findIndex(param => param.id === params.id)
 		// присваиваем новое значение полю tag.nameTag
 		arr[index].nameTag = params.nameTag
 		// присваиваем новое значение полю tag.sectionID
@@ -496,8 +496,8 @@ const editingItem = (
 		return arr
 	} else if (nameItem === "editNote") {
 		const arr = state.notes.slice()
-		// получаем index элемента массива notes с _id === id
-		const index = arr.findIndex(param => param._id === params.id)
+		// получаем index элемента массива notes с id === id
+		const index = arr.findIndex(param => param.id === params.id)
 		// присваиваем новое значение полю note.header
 		arr[index].header = params.header
 		// присваиваем новое значение полю note.text
@@ -523,26 +523,26 @@ const removingItem = (
 ): ISections[] | ITags[] | INotes[] | undefined => {
 	if (nameItem === "Section") {
 		const arr = state.sections.slice()
-		// находим section с _id === idx
+		// находим section с id === idx
 		for (let i: number = 0; i < arr.length; i++) {
 			// вырезаем элемент
-			if (arr[i]._id === id) arr.splice(i, 1)
+			if (arr[i].id === id) arr.splice(i, 1)
 		}
 		return arr
 	} else if (nameItem === "Tag") {
 		const arr = state.tags.slice()
-		// находим tag с _id === idx
+		// находим tag с id === idx
 		for (let i: number = 0; i < arr.length; i++) {
 			// вырезаем элемент
-			if (arr[i]._id === id) arr.splice(i, 1)
+			if (arr[i].id === id) arr.splice(i, 1)
 		}
 		return arr
 	} else if (nameItem === "Note") {
 		const arr = state.notes.slice()
-		// находим note с _id === idx
+		// находим note с id === idx
 		for (let i: number = 0; i < arr.length; i++) {
 			// вырезаем элемент
-			if (arr[i]._id === id) arr.splice(i, 1)
+			if (arr[i].id === id) arr.splice(i, 1)
 		}
 		return arr
 	}
@@ -628,7 +628,11 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		case "GET_DATA_BY_LOGIN_ACTION":
 			return {
 				...state,
-				currentDetails: handlerCurrentDetails(state, "userData", action.user),
+				currentDetails: handlerCurrentDetails(
+					state,
+					"userData",
+					action.result.data.user
+				),
 				loading: false,
 				loaded: true,
 				auth: !state.auth,

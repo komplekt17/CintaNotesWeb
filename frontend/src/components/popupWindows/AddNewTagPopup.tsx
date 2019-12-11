@@ -17,7 +17,7 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 	if (sections && sections.length !== 0) {
 		sectionsList = sections.map((item: any, index: number) => {
 			return (
-				<option key={index} className={item.sectionID} value={item._id}>
+				<option key={index} className={item.sectionID} value={item.id}>
 					{item.nameSection}
 				</option>
 			)

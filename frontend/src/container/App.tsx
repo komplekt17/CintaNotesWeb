@@ -180,7 +180,7 @@ const App: React.FC<IAppProps> = props => {
 	const getFiltredArray = (
 		typeArray: string,
 		arr: Array<{
-			_id: string,
+			id: string,
 			sectionID: string,
 			tagID?: string,
 			userID: string,
@@ -273,11 +273,11 @@ const App: React.FC<IAppProps> = props => {
 	const getRemovableItemID = (namePopup: string): string => {
 		let removableItemID = ""
 		if (namePopup === "Section") {
-			removableItemID = currentDetails.section._id
+			removableItemID = currentDetails.section.id
 		} else if (namePopup === "Tag") {
-			removableItemID = currentDetails.tag._id
+			removableItemID = currentDetails.tag.id
 		} else if (namePopup === "Note") {
-			removableItemID = currentDetails.note._id
+			removableItemID = currentDetails.note.id
 		}
 		return removableItemID
 	}
@@ -352,7 +352,7 @@ const App: React.FC<IAppProps> = props => {
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
-				currentUserID={currentDetails.userProfile._id}
+				currentUserID={currentDetails.userProfile.id}
 			/>
 			<AddNewTagPopup
 				sections={sections}
@@ -375,7 +375,7 @@ const App: React.FC<IAppProps> = props => {
 				currentEditedSection={currentDetails.section}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
-				currentUserID={currentDetails.userProfile._id}
+				currentUserID={currentDetails.userProfile.id}
 			/>
 			<EditTagPopup
 				sections={sections}

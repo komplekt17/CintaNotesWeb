@@ -6,7 +6,7 @@ import $ from "jquery"
 interface IAddNewTagPopup {
 	sections: [];
 	tags: Array<{
-		_id: string,
+		id: string,
 		nameTag: string,
 		sectionID: string,
 		userID: string,
@@ -42,7 +42,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 	// if (sections && sections.length !== 0) {
 	// 	sectionsList = sections.map((item: any, index: number) => {
 	// 		return (
-	// 			<option key={index} className={item.sectionID} value={item._id}>
+	// 			<option key={index} className={item.sectionID} value={item.id}>
 	// 				{item.nameSection}
 	// 			</option>
 	// 		)
@@ -53,7 +53,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 	const getSectionIDtag = (tagID: any): string => {
 		let noteTagSectionID = "0"
 		for (let i = 0; i < tags.length; i++) {
-			if (tags[i]._id === tagID) noteTagSectionID = tags[i].sectionID
+			if (tags[i].id === tagID) noteTagSectionID = tags[i].sectionID
 		}
 
 		return noteTagSectionID
@@ -64,7 +64,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 	if (tags && tags.length !== 0) {
 		tagsList = tags.map((item: any, index: number) => {
 			return (
-				<option key={index} className={item.tagID} value={item._id}>
+				<option key={index} className={item.tagID} value={item.id}>
 					{item.nameTag}
 				</option>
 			)

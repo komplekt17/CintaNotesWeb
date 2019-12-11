@@ -89,7 +89,7 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 									const repeat = $("#repeatNewPass").val()
 									if (oldPass !== "" && newPass !== "" && newPass === repeat) {
 										const objUser = {
-											// _id: user.userID,
+											// id: user.userID,
 											inputOldPass: oldPass,
 											inputNewPass: newPass,
 											repeatNewPass: repeat,

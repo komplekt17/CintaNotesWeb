@@ -76,18 +76,18 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 									// сбрасываем подсветку текущей section
 									// подсвечиваем section All
 									resetHighlightItem($(".section-panel ul"), "clearItems")
-									// очищаем поле _id в currentDetails.section,
+									// очищаем поле id в currentDetails.section,
 									// action.name === buttonRemoveSection
 									handlerCurrentValue("buttonRemoveSection", "")
 								} else if (namePopup === "Tag") {
 									// сбрасываем подсветку текущего tag
 									// подсвечиваем tag All
 									resetHighlightItem($(".app-side-tags ul"), "clearItems")
-									// очищаем поле _id в currentDetails.tag,
+									// очищаем поле id в currentDetails.tag,
 									// action.name === buttonRemoveTag
 									handlerCurrentValue("buttonRemoveTag", "")
 								} else if (namePopup === "Note") {
-									// очищаем поле _id в currentDetails.note,
+									// очищаем поле id в currentDetails.note,
 									// action.name === buttonRemoveNote
 									handlerCurrentValue("buttonRemoveNote", "")
 								}

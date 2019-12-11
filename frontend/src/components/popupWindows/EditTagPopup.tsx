@@ -10,7 +10,7 @@ interface IEditTagProps {
 	}) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	currentEditedTag:	{
-		_id: string;
+		id: string;
     nameTag: string;
     userID: string;
 		sectionID: string;
@@ -28,14 +28,14 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 		sections
 	} = props
 
-	const {_id, nameTag, sectionID} = currentEditedTag
+	const {id, nameTag, sectionID} = currentEditedTag
 
 	let sectionsList: any = ""
 
 	if (sections && sections.length !== 0) {
 		sectionsList = sections.map((item: any, index: number) => {
 			return (
-				<option key={index} className={item.sectionID} value={item._id}>
+				<option key={index} className={item.sectionID} value={item.id}>
 					{item.nameSection}
 				</option>
 			)
@@ -110,7 +110,7 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 							<button
 								onClick={() => {
 									if (nameTag !== "") {
-										const editedTag = {id: _id, nameTag, sectionID}
+										const editedTag = {id, nameTag, sectionID}
 										editTag(editedTag)
 										// очищаем поля currentDetails.tag,
 										// action.name === buttonEditTag
