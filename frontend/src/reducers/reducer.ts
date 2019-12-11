@@ -632,7 +632,6 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "CREATE_NEW_USER_ACTION":
-			$("#modal-createUser").modal("hide")
 			return {
 				...state,
 				loading: false,
@@ -641,7 +640,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				currentDetails: handlerCurrentDetails(
 					state,
 					"userData",
-					action.newUser
+					action.result.data
 				),
 			}
 
@@ -722,7 +721,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				sections: editingItem(state, "editSection", editSectionParams),
-				// textMessage: action.result.message,
+				textMessage: action.result.message,
 				loading: false,
 				loaded: true,
 			}

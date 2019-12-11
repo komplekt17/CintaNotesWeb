@@ -1,5 +1,9 @@
+import axios from "axios"
+import { SERVER_URI } from "../constants"
+import $ from "jquery"
+
 // получение данных с сервера по логину юзера
-const getDataByLoginAction = (user: { login: any, pass: any }) => {
+const getDataByLoginAction = (user: { login: string, pass: string }) => {
 	return {
 		type: "GET_DATA_BY_LOGIN_ACTION",
 		data: "data from server",
@@ -8,11 +12,32 @@ const getDataByLoginAction = (user: { login: any, pass: any }) => {
 }
 
 // создание нового пользователя
-const createNewUserAction = (newUser: { login: any, pass: any }) => {
-	return {
-		type: "CREATE_NEW_USER_ACTION",
-		newUser,
-	}
+const createNewUserAction = (objNewUser: { login: string, pass: string }) => {
+	$("#modal-createUser").modal("hide")
+	return (dispatch: {
+		(arg0: { type: string }): void,
+		(arg0: { type: string, result: any }): void,
+		(arg0: { type: string, error: any }): void,
+	}) => {
+    dispatch({
+      type: "LOAD_REQUESTED_DATA_ACTION"
+    });
+    axios.post(`${SERVER_URI}/users/create`, objNewUser)
+      .then(response => {
+        console.log(response.data);
+        dispatch({
+          type: "CREATE_NEW_USER_ACTION",
+          result: response.data
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: "LOAD_FAILURE_DATA_ACTION",
+          error
+        });
+        console.log(error);
+      })
+  }
 }
 
 // обработчик обновления user
