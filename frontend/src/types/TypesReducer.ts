@@ -41,6 +41,7 @@ export interface ICurrentDetails {
 export interface IState {
 	auth: boolean;
 	namePopup: string;
+	textMessage: string;
 	loading: boolean;
 	loaded: boolean;
 	error: null;
