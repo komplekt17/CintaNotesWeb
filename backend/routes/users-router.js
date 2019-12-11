@@ -13,7 +13,7 @@ router.route('/create').post((req, res) => {
 		lang: req.body.lang,
 		theme: req.body.theme
 	});
-	console.log('string 14: ', newUser);
+	// console.log('string 14: ', newUser);
 
 	newUser
 		.save()
@@ -71,12 +71,10 @@ router.route('/enter').post(async (req, res) => {
 				{ where: { userId: user.id } }
 			);
 			const tags = await Tag.findAll(
-				// { raw: true } - получение результата без метаданных
 				{ raw: true },
 				{ where: { userId: user.id } }
 			);
 			const notes = await Note.findAll(
-				// { raw: true } - получение результата без метаданных
 				{ raw: true },
 				{ where: { userId: user.id } }
 			);
