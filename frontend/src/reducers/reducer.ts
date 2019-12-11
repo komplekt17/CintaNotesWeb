@@ -767,20 +767,39 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= TAGS =======
 		// eslint-disable-next-line
 		case "ADD_NEW_TAG_ACTION":
-			$("#modal-addTag").modal("hide")
+			const addTagParams = {
+				id: action.result.data.id.toString(),
+				nameTag: action.result.data.nameTag,
+				sectionID: action.result.data.sectionId,
+				userID: action.result.data.userId,
+				createdAt: action.result.data.createdAt,
+				updatedAt: action.result.data.updatedAt,
+			}
 			return {
 				...state,
-				tags: addingItem(state, "addTag", action.newTag),
+				tags: addingItem(state, "addTag", addTagParams),
+				textMessage: action.result.message,
+				loading: false,
+				loaded: true,
 			}
 
 		case "EDIT_TAG_ACTION":
-			$("#modal-editTag").modal("hide")
+			const editTagParams = {
+				id: action.result.data.id.toString(),
+				nameTag: action.result.data.nameTag,
+				sectionID: action.result.data.sectionId,
+				userID: action.result.data.userId,
+				createdAt: action.result.data.createdAt,
+				updatedAt: action.result.data.updatedAt,
+			}
 			return {
 				...state,
-				tags: editingItem(state, "editTag", action.editedTag),
-				notes: transplaceNotes(state, "editTag", action.editedTag),
+				sections: editingItem(state, "editTag", editTagParams),
+				notes: transplaceNotes(state, "editTag", action.result.data),
+				textMessage: action.result.message,
+				loading: false,
+				loaded: true,
 			}
-
 		// ======= END TAGS =======
 
 		// ======= NOTES =======

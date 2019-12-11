@@ -4,13 +4,18 @@ import $ from "jquery"
 
 interface IAddNewTagPopup {
 	sections: [];
-	addNewTag: (newTag: { nameTag: any, sectionID: any }) => void;
+	addNewTag: (newTag: {
+		nameTag: any,
+		sectionId: any,
+		userId: string,
+	}) => void;
 	namePopup: string;
 	lang: string;
+	currentUserID: string;
 }
 
 export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
-	const { sections, addNewTag, namePopup, lang } = props
+	const { sections, addNewTag, namePopup, lang, currentUserID } = props
 
 	let sectionsList: any = ""
 
@@ -83,7 +88,11 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 									const nameTag = $("#addNameTag").val()
 									const sectionID = $("#addTagSectionID").val()
 									if (nameTag !== "" && sectionID !== "") {
-										const newTag = { nameTag, sectionID }
+										const newTag = {
+											nameTag,
+											sectionId: sectionID,
+											userId: currentUserID,
+										}
 										addNewTag(newTag)
 										$("#addNameTag").val("")
 										$("#addTagSectionID").val("")

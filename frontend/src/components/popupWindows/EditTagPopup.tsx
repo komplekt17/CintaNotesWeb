@@ -6,7 +6,8 @@ interface IEditTagProps {
 	editTag: (editedTag: {
 		id: string,
 		nameTag: string,
-		sectionID: string,
+		sectionId: string,
+		userId: string,
 	}) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	currentEditedTag:	{
@@ -24,11 +25,12 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 		editTag,
 		handlerCurrentValue,
 		currentEditedTag,
-		namePopup,lang,
+		namePopup,
+		lang,
 		sections
 	} = props
 
-	const {id, nameTag, sectionID} = currentEditedTag
+	const {id, nameTag, sectionID, userID} = currentEditedTag
 
 	let sectionsList: any = ""
 
@@ -110,7 +112,12 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 							<button
 								onClick={() => {
 									if (nameTag !== "") {
-										const editedTag = {id, nameTag, sectionID}
+										const editedTag = {
+											id, 
+											nameTag, 
+											sectionId: sectionID,
+											userId: userID,
+										}
 										editTag(editedTag)
 										// очищаем поля currentDetails.tag,
 										// action.name === buttonEditTag

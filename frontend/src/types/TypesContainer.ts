@@ -17,7 +17,10 @@ export interface IAppProps {
 	getStatusLoginToApp: (token: string) => void;
 	createNewUserToApp: (objUser: { login: string, pass: string }) => void;
 	addNewSectionToApp: (objSection: {nameSection: string, userId: string}) => void;
-	addNewTagToApp: (newTag: { nameTag: any, sectionID: any }) => void;
+	addNewTagToApp: (newTag: { 
+		nameTag: any,
+		sectionId: any,
+		userId: string }) => void;
 	addNewNoteToApp: (newNote: {
 		header: string,
 		text: string,
@@ -33,7 +36,8 @@ export interface IAppProps {
 	editTagToApp: (editedTag: {
 		id: string,
 		nameTag: string,
-		sectionID: string,
+		sectionId: string,
+		userId: string,
 	}) => void;
 	editNoteToApp: (editedNote: {
 		id: string,

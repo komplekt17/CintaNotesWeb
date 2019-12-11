@@ -359,6 +359,7 @@ const App: React.FC<IAppProps> = props => {
 				addNewTag={addNewTagToApp}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
+				currentUserID={currentDetails.userProfile.id}
 			/>
 			<AddNewNotePopup
 				tags={tags}
@@ -457,8 +458,11 @@ const mapDispatchToProps = (dispatch: any) => {
 			nameSection: string,
 			userId: string,
 		}) => dispatch(addNewSectionAction(newSection)),
-		addNewTagToApp: (newTag: { nameTag: string, sectionID: string }) =>
-			dispatch(addNewTagAction(newTag)),
+		addNewTagToApp: (newTag: {
+			nameTag: any,
+			sectionId: any,
+			userId: string,
+		}) => dispatch(addNewTagAction(newTag)),
 		addNewNoteToApp: (newNote: {
 			header: string,
 			text: string,
@@ -475,7 +479,8 @@ const mapDispatchToProps = (dispatch: any) => {
 		editTagToApp: (editedTag: {
 			id: string,
 			nameTag: string,
-			sectionID: string,
+			sectionId: string,
+			userId: string,
 		}) => dispatch(editTagAction(editedTag)),
 		editNoteToApp: (editedNote: {
 			id: string,
