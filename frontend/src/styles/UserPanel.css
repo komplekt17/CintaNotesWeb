@@ -35,6 +35,10 @@
 	text-decoration: none;
 }
 
+.auth-false .nav-item, .auth-true .nav-item {
+  cursor: pointer;
+}
+
 
 @media (max-width: 767.98px) {
 
