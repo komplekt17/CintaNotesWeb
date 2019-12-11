@@ -11,7 +11,8 @@ const sequelize = new Sequelize(
 		host: process.env.LOCAL_URI,
 		// host: process.env.HOSTING_URI,
 		port: process.env.DATABASE_PORT,
-		dialect: process.env.DATABASE_DIALECT
+		dialect: process.env.DATABASE_DIALECT,
+		logging: false
 	}
 );
 
