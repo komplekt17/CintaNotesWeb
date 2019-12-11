@@ -7,7 +7,7 @@ const getDataByLoginAction = (objUser: {
 	login: string,
 	pass: string,
 }) => {
-	console.log(objUser)
+	// console.log(objUser)
 	return (dispatch: {
 		(arg0: { type: string }): void,
 		(arg0: { type: string, result: any }): void,
@@ -19,7 +19,7 @@ const getDataByLoginAction = (objUser: {
 		axios
 			.post(`${SERVER_URI}/users/enter`, objUser)
 			.then(response => {
-				console.log(response.data)
+				// console.log(response.data)
 				dispatch({
 					type: "GET_DATA_BY_LOGIN_ACTION",
 					result: response.data,

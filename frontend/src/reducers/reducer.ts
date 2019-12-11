@@ -626,15 +626,16 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "GET_DATA_BY_LOGIN_ACTION":
+			// console.log(action.result.sections)
 			return {
 				...state,
-				sections: action.result.data.section,
-				tags: action.result.data.tags,
-				notes: action.result.data.notes,
+				sections: action.result.sections,
+				tags: action.result.tags,
+				notes: action.result.notes,
 				currentDetails: handlerCurrentDetails(
 					state,
 					"userData",
-					action.result.data.user
+					action.result.user
 				),
 				loading: false,
 				loaded: true,
