@@ -628,6 +628,9 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		case "GET_DATA_BY_LOGIN_ACTION":
 			return {
 				...state,
+				sections: action.result.data.section,
+				tags: action.result.data.tags,
+				notes: action.result.data.notes,
 				currentDetails: handlerCurrentDetails(
 					state,
 					"userData",
