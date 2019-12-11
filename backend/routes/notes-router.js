@@ -34,36 +34,37 @@ router.route('/add').post((req, res) => {
 // обновление note
 router.route('/update/:id').put((req, res) => {
 	//console.log(req.body)
-	Note.findOne({ id: req.params._id }, (error, note) => {
-		if (error) {
+	Note.findOne({ where: { id: req.params.id } }).then((note, error) => {
+		if (!note) {
 			return res.status(404).json({
-				error,
-				message: 'Note not found!'
+				message: 'Note not found!',
+				error
 			});
 		}
 
 		note.header = req.body.header;
-		(note.text = req.body.text),
-			(note.remarks = req.body.remarks),
-			(note.link = req.body.link),
-			(note.userId = req.body.userId);
+		note.text = req.body.text;
+		note.remarks = req.body.remarks;
+		note.link = req.body.link;
+		note.userId = req.body.userId;
 		note.sectionId = req.body.sectionId;
-		(note.tagId = req.body.tagId),
-			note
-				.save()
-				.then(() => {
-					return res.status(200).json({
-						success: true,
-						data: note,
-						message: 'This note was updated successful!'
-					});
-				})
-				.catch(error => {
-					return res.status(400).json({
-						error,
-						message: 'Note not updated!'
-					});
+		note.tagId = req.body.tagId;
+
+		note
+			.save()
+			.then(() => {
+				return res.status(200).json({
+					success: true,
+					data: note,
+					message: 'This note was updated successful!'
 				});
+			})
+			.catch(error => {
+				return res.status(400).json({
+					error,
+					message: 'Note not updated!'
+				});
+			});
 	});
 });
 
