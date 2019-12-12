@@ -35,7 +35,7 @@ router.route('/add').post((req, res) => {
 // обновление note
 router.route('/update/:id').put((req, res) => {
 	// { raw: true } - получение результата без метаданных
-	Note.findOne({ raw: true }, { where: { id: req.params.id } }).then(
+	Note.findOne({ where: { id: req.params.id } }, { raw: true }).then(
 		(note, error) => {
 			if (!note) {
 				return res.status(404).json({

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Tag = require('../models/tags-model');
+let Note = require('../models/notes-model');
 
 // добавление нового tag
 router.route('/add').post((req, res) => {
@@ -31,13 +32,20 @@ router.route('/add').post((req, res) => {
 // обновление tag
 router.route('/update/:id').put((req, res) => {
 	// { raw: true } - получение результата без метаданных
-	Tag.findOne({ raw: true }, { where: { id: req.params.id } }).then(
+	Tag.findOne({ where: { id: req.params.id } }, { raw: true }).then(
 		tag => {
 			if (!tag) {
 				return res.status(404).json({
 					message: 'Tag not found!'
 				});
 			}
+
+			// переносим note в другую section
+			// вместе с родительским tag
+			Note.update(
+				{ sectionId: req.body.sectionId },
+				{ where: { tagId: req.params.id } }
+			);
 
 			tag.nameTag = req.body.nameTag;
 			tag.userId = req.body.userId;
