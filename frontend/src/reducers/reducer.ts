@@ -810,6 +810,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		// ======= NOTES =======
 		case "ADD_NEW_NOTE_ACTION":
+			console.log(action.result.data)
 			const addNoteParams = {
 				id: action.result.data.id,
 				header: action.result.data.header,
