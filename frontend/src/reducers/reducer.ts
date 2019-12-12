@@ -157,12 +157,6 @@ export const initialState = {
 	],
 }
 
-// генератор случайного Id
-const idRand = (): string => {
-	const id = Math.random()
-	return id.toString()
-}
-
 // обработчик значений фильтров
 const handlerFiltersValue = (
 	state: IState,
@@ -422,7 +416,7 @@ const addingItem = (
 	state: IState,
 	nameItem: string,
 	params: {
-		id?: any,
+		id: any,
 		nameSection?: any, // for sections
 		nameTag?: any, // for tags
 		sectionId?: any, // for tags and notes
@@ -448,9 +442,9 @@ const addingItem = (
 	} else if (nameItem === "addTag") {
 		const arr = state.tags.slice()
 		const obj = {
-			id: idRand(),
+			id: params.id,
 			nameTag: params.nameTag,
-			userId: state.currentDetails.userProfile.id,
+			userId: params.userId,
 			sectionId: params.sectionId,
 		}
 		arr.push(obj)
@@ -458,16 +452,16 @@ const addingItem = (
 	} else if (nameItem === "addNote") {
 		const arr = state.notes.slice()
 		const obj = {
-			id: idRand(),
+			id: params.id,
 			header: params.header,
 			text: params.text,
 			remarks: params.remarks,
 			link: params.link,
-			userId: state.currentDetails.userProfile.id,
+			userId: params.userId,
 			sectionId: params.sectionId,
 			tagId: params.tagId,
-			createdAt: "2019-12-10T12:13:40.124Z",
-			updatedAt: "2019-12-10T12:13:40.124Z",
+			createdAt: params.createdAt,
+			updatedAt: params.updatedAt,
 		}
 		arr.push(obj)
 		return arr
@@ -635,7 +629,6 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "LOAD_FAILURE_DATA_ACTION":
 			// $("#modal-alert").modal("show");
-			console.log(action.error)
 			return {
 				...state,
 				loading: false,
@@ -823,7 +816,6 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		// ======= NOTES =======
 		case "ADD_NEW_NOTE_ACTION":
-			console.log(action.result.data)
 			const addNoteParams = {
 				id: action.result.data.id,
 				header: action.result.data.header,
@@ -831,6 +823,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				remarks: action.result.data.remarks,
 				link: action.result.data.link,
 				sectionId: action.result.data.sectionId,
+				tagId: action.result.data.tagId,
 				userId: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
 				updatedAt: action.result.data.updatedAt,
@@ -851,6 +844,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				remarks: action.result.data.remarks,
 				link: action.result.data.link,
 				sectionId: action.result.data.sectionId,
+				tagId: action.result.data.tagId,
 				userId: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
 				updatedAt: action.result.data.updatedAt,

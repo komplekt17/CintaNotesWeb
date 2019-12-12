@@ -13,7 +13,6 @@ const addNewNoteAction = (newNote: {
 	userId: string,
 }) => {
 	$("#modal-addNote").modal("hide")
-	console.log(newNote)
 	return (dispatch: {
 		(arg0: { type: string }): void,
 		(arg0: { type: string, result: any }): void,
@@ -25,7 +24,6 @@ const addNewNoteAction = (newNote: {
 		axios
 			.post(`${SERVER_URI}/notes/add`, newNote)
 			.then(response => {
-				console.log(response.data)
 				dispatch({
 					type: "ADD_NEW_NOTE_ACTION",
 					result: response.data,
