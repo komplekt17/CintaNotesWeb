@@ -663,6 +663,9 @@ export const Reducer = (state: IState = initialState, action: any) => {
 					"userData",
 					action.result.data
 				),
+				sections: [],
+				tags: [],
+				notes: [],
 				loading: false,
 				loaded: true,
 				textMessage: action.result.message,
