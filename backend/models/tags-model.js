@@ -4,9 +4,10 @@ const sequelize = require('../db_connect');
 // Создание таблицы tags
 const Tag = sequelize.define('tag', {
 	id: {
-		type: Sequelize.INTEGER,
-		autoIncrement: true,
+		type: Sequelize.UUID,
+		// autoIncrement: true,
 		primaryKey: true,
+		defaultValue: Sequelize.UUIDV4,
 		allowNull: false
 	},
 	nameTag: {
@@ -14,7 +15,7 @@ const Tag = sequelize.define('tag', {
 		allowNull: false
 	},
 	sectionId: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.UUID,
 		allowNull: false
 	}
 });

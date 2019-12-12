@@ -4,9 +4,10 @@ const sequelize = require('../db_connect');
 // Создание таблицы notes
 const Note = sequelize.define('note', {
 	id: {
-		type: Sequelize.INTEGER,
-		autoIncrement: true,
+		type: Sequelize.UUID,
+		// autoIncrement: true,
 		primaryKey: true,
+		defaultValue: Sequelize.UUIDV4,
 		allowNull: false
 	},
 	header: {
@@ -26,11 +27,11 @@ const Note = sequelize.define('note', {
 		allowNull: true
 	},
 	sectionId: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.UUID,
 		allowNull: false
 	},
 	tagId: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.UUID,
 		allowNull: false
 	}
 });

@@ -8,9 +8,10 @@ const Note = require('../models/notes-model');
 // Создание таблицы users
 const User = sequelize.define('user', {
 	id: {
-		type: Sequelize.INTEGER,
-		autoIncrement: true,
+		type: Sequelize.UUID,
+		// autoIncrement: true,
 		primaryKey: true,
+		defaultValue: Sequelize.UUIDV4,
 		allowNull: false
 	},
 	login: {
