@@ -40,7 +40,7 @@ router.route('/enter').post(async (req, res) => {
 	const findByCredentials = async (login, pass) => {
 		let user = {};
 		// { raw: true } - получение результата без метаданных
-		const result = await User.findOne({ raw: true }, { where: { login } });
+		const result = await User.findOne({ where: { login } }, { raw: true });
 
 		if (!result) user = { error: 'Invalid login credentials' };
 		else {
