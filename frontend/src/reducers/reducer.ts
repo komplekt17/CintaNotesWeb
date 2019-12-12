@@ -628,31 +628,39 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "LOAD_FAILURE_DATA_ACTION":
-			// $("#modal-alert").modal("show");
 			return {
 				...state,
 				loading: false,
 				loaded: true,
 				error: action.error,
-				namePopup: action.message,
 			}
 
 		case "GET_DATA_BY_LOGIN_ACTION":
-			// console.log(action.result.sections)
-			return {
-				...state,
-				sections: action.result.sections,
-				tags: action.result.tags,
-				notes: action.result.notes,
-				currentDetails: handlerCurrentDetails(
-					state,
-					"userData",
-					action.result.user
-				),
-				loading: false,
-				loaded: true,
-				auth: !state.auth,
-				filters: { sections: "All", tags: "All" },
+			if (!action.result.error) {
+				return {
+					...state,
+					sections: action.result.sections,
+					tags: action.result.tags,
+					notes: action.result.notes,
+					currentDetails: handlerCurrentDetails(
+						state,
+						"userData",
+						action.result.user
+					),
+					loading: false,
+					loaded: true,
+					auth: !state.auth,
+					textMessage: "",
+					filters: { sections: "All", tags: "All" },
+				}
+			} else {
+				// $("#modal-alert").modal("show");
+				return {
+					...state,
+					loading: false,
+					loaded: true,
+					textMessage: action.result.error,
+				}
 			}
 
 		case "CREATE_NEW_USER_ACTION":
