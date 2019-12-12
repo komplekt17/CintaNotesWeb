@@ -37,10 +37,9 @@ router.route('/create').post((req, res) => {
 router.route('/enter').post(async (req, res) => {
 	// Search for a user by login and pass.
 	// Поиск пользователя по электронной почте и паролю.
-	const findByCredentials = async (login, pass) => {
+	const findByCredentials = async (userLogin, pass) => {
 		let user = {};
-		// { raw: true } - получение результата без метаданных
-		const result = await User.findOne({ where: { login } }, { raw: true });
+		const result = await User.findOne({ where: { login: userLogin } });
 
 		if (!result) user = { error: 'Invalid login credentials' };
 		else {
@@ -65,19 +64,11 @@ router.route('/enter').post(async (req, res) => {
 			return res.status(201).send(data);
 		} else {
 			// const token = await user.generateAuthToken();
-			const sections = await Section.findAll(
-				// { raw: true } - получение результата без метаданных
-				{ raw: true },
-				{ where: { userId: user.id } }
-			);
-			const tags = await Tag.findAll(
-				{ raw: true },
-				{ where: { userId: user.id } }
-			);
-			const notes = await Note.findAll(
-				{ raw: true },
-				{ where: { userId: user.id } }
-			);
+			const sections = await Section.findAll({
+				where: { userId: user.id }
+			});
+			const tags = await Tag.findAll({ where: { userId: user.id } });
+			const notes = await Note.findAll({ where: { userId: user.id } });
 
 			const data = {
 				user,

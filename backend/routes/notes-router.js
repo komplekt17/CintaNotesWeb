@@ -34,42 +34,39 @@ router.route('/add').post((req, res) => {
 
 // обновление note
 router.route('/update/:id').put((req, res) => {
-	// { raw: true } - получение результата без метаданных
-	Note.findOne({ where: { id: req.params.id } }, { raw: true }).then(
-		(note, error) => {
-			if (!note) {
-				return res.status(404).json({
-					message: 'Note not found!',
-					error
-				});
-			}
-
-			note.header = req.body.header;
-			note.text = req.body.text;
-			note.remarks = req.body.remarks;
-			note.link = req.body.link;
-			note.userId = req.body.userId;
-			note.sectionId = req.body.sectionId;
-			note.tagId = req.body.tagId;
-
-			note
-				// { raw: true } - получение результата без метаданных
-				.save({ raw: true })
-				.then(() => {
-					return res.status(200).json({
-						success: true,
-						data: note,
-						message: 'This note was updated successful!'
-					});
-				})
-				.catch(error => {
-					return res.status(400).json({
-						error,
-						message: 'Note not updated!'
-					});
-				});
+	Note.findOne({ where: { id: req.params.id } }).then((note, error) => {
+		if (!note) {
+			return res.status(404).json({
+				message: 'Note not found!',
+				error
+			});
 		}
-	);
+
+		note.header = req.body.header;
+		note.text = req.body.text;
+		note.remarks = req.body.remarks;
+		note.link = req.body.link;
+		note.userId = req.body.userId;
+		note.sectionId = req.body.sectionId;
+		note.tagId = req.body.tagId;
+
+		note
+			// { raw: true } - получение результата без метаданных
+			.save({ raw: true })
+			.then(() => {
+				return res.status(200).json({
+					success: true,
+					data: note,
+					message: 'This note was updated successful!'
+				});
+			})
+			.catch(error => {
+				return res.status(400).json({
+					error,
+					message: 'Note not updated!'
+				});
+			});
+	});
 });
 
 // удаление note
