@@ -11,10 +11,10 @@ interface IEditSectionProps {
 	currentEditedSection: {
 		id: string,
 		nameSection: string,
+		userId: string,
 	};
 	namePopup: string;
 	lang: string;
-	currentUserId: string;
 }
 export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 	const {
@@ -23,10 +23,9 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 		currentEditedSection,
 		namePopup,
 		lang,
-		currentUserId,
 	} = props
 
-	const { id, nameSection } = currentEditedSection
+	const { id, nameSection, userId } = currentEditedSection
 	return (
 		<div
 			id="modal-editSection"
@@ -79,7 +78,7 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 										const editedSection = {
 											id,
 											nameSection,
-											userId: currentUserId,
+											userId,
 										}
 										editSection(editedSection)
 										// очищаем поля currentDetails.section,

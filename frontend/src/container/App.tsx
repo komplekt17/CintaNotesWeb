@@ -374,7 +374,6 @@ const App: React.FC<IAppProps> = props => {
 				currentEditedSection={currentDetails.section}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
-				currentUserId={currentDetails.userProfile.id}
 			/>
 			<EditTagPopup
 				sections={sections}

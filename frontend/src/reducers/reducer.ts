@@ -203,12 +203,24 @@ const handlerCurrentDetails = (
 	if (name === "addNameSection" || name === "editNameSection") {
 		obj = getNewObjDetails(obj, "section", "nameSection", value)
 	}
-	// сохраняем id удаляемой или редактируемой section
+	// сохраняем данные удаляемой или редактируемой section
+	// в currentDitails.section
 	else if (
 		name === "saveIdRemovedSection" ||
 		name === "saveIdEditedSection"
 	) {
+		// находим по id данные удаляемой или редактируемой section
+		const arr = state.sections.slice()
+		// получаем index элемента массива sections с id === value
+		const index = arr.findIndex(param => param.id === value)
+		// получаем значения свойств найденного section'а
+		const nameSection = arr[index].nameSection
+		const userId = arr[index].userId
+		// сохраняем значения полей найденного section'а
+		// в currentDitails.section
 		obj = getNewObjDetails(obj, "section", "id", value)
+		obj = getNewObjDetails(obj, "section", "nameSection", nameSection)
+		obj = getNewObjDetails(obj, "section", "userId", userId)
 	}
 	// очищаем поля section'а в currentDitails.section,
 	// если Section added, edited or removed
@@ -219,6 +231,7 @@ const handlerCurrentDetails = (
 	) {
 		obj = getNewObjDetails(obj, "section", "id", (value = ""))
 		obj = getNewObjDetails(obj, "section", "nameSection", (value = ""))
+		obj = getNewObjDetails(obj, "section", "userId", (value = ""))
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.tag -------
