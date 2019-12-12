@@ -652,6 +652,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				loading: false,
 				loaded: true,
 				auth: !state.auth,
+				filters: { sections: "All", tags: "All" },
 			}
 
 		case "CREATE_NEW_USER_ACTION":
