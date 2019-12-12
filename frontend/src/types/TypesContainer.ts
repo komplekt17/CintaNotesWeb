@@ -28,6 +28,7 @@ export interface IAppProps {
 		link: string,
 		sectionId: string,
 		tagId: string,
+		userId: string,
 	}) => void;
 	editSectionToApp: (editedSection: {
 		id: string,
@@ -47,6 +48,7 @@ export interface IAppProps {
 		link: string,
 		sectionId: string,
 		tagId: string,
+		userId: string,
 	}) => void;
 	removeItemToApp: (name: string, id: string) => void;
 	handlerCurrentValueToApp: (name: string, value: string) => void;

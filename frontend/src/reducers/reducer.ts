@@ -262,6 +262,7 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "tag", "id", (value = ""))
 		obj = getNewObjDetails(obj, "tag", "nameTag", (value = ""))
 		obj = getNewObjDetails(obj, "tag", "sectionId", (value = ""))
+		// obj = getNewObjDetails(obj, "tag", "userId", (value = ""))
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.note -------
@@ -281,6 +282,7 @@ const handlerCurrentDetails = (
 		const link = arr[index].link
 		const sectionId = arr[index].sectionId
 		const tagId = arr[index].tagId
+		const userId = arr[index].userId
 		// сохраняем значения полей найденного note'а в currentDitails.note
 		obj = getNewObjDetails(obj, "note", "header", header)
 		obj = getNewObjDetails(obj, "note", "text", text)
@@ -288,6 +290,7 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "note", "link", link)
 		obj = getNewObjDetails(obj, "note", "sectionId", sectionId)
 		obj = getNewObjDetails(obj, "note", "tagId", tagId)
+		obj = getNewObjDetails(obj, "note", "userId", userId)
 	}
 
 	// сохраняем value input'a редактируемого поля header
@@ -335,6 +338,7 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "note", "link", (value = ""))
 		obj = getNewObjDetails(obj, "note", "sectionId", (value = ""))
 		obj = getNewObjDetails(obj, "note", "tagId", (value = ""))
+		obj = getNewObjDetails(obj, "note", "userId", (value = ""))
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.user -------
@@ -353,7 +357,7 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "userProfile", "theme", theme)
 	}
 
-	// удаляем данные User'а при входе из профиля
+	// удаляем данные User'а при выходе из профиля
 	else if (name === "userLogOut") {
 		// обновляем поле login
 		obj = getNewObjDetails(obj, "userProfile", "login", (value = ""))
@@ -786,7 +790,6 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "EDIT_TAG_ACTION":
-			console.log(action.result.data)
 			const editTagParams = {
 				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
@@ -807,17 +810,43 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		// ======= NOTES =======
 		case "ADD_NEW_NOTE_ACTION":
-			$("#modal-addNote").modal("hide")
+			const addNoteParams = {
+				id: action.result.data.id,
+				header: action.result.data.header,
+				text: action.result.data.text,
+				remarks: action.result.data.remarks,
+				link: action.result.data.link,
+				sectionId: action.result.data.sectionId,
+				userId: action.result.data.userId,
+				createdAt: action.result.data.createdAt,
+				updatedAt: action.result.data.updatedAt,
+			}
 			return {
 				...state,
-				notes: addingItem(state, "addNote", action.newNote),
+				notes: addingItem(state, "addNote", addNoteParams),
+				textMessage: action.result.message,
+				loading: false,
+				loaded: true,
 			}
 
 		case "EDIT_NOTE_ACTION":
-			$("#modal-editNote").modal("hide")
+			const editNoteParams = {
+				id: action.result.data.id,
+				header: action.result.data.header,
+				text: action.result.data.text,
+				remarks: action.result.data.remarks,
+				link: action.result.data.link,
+				sectionId: action.result.data.sectionId,
+				userId: action.result.data.userId,
+				createdAt: action.result.data.createdAt,
+				updatedAt: action.result.data.updatedAt,
+			}
 			return {
 				...state,
-				notes: editingItem(state, "editNote", action.editedNote),
+				notes: editingItem(state, "editNote", editNoteParams),
+				textMessage: action.result.message,
+				loading: false,
+				loaded: true,
 			}
 
 		// ======= END NOTES =======

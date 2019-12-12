@@ -470,6 +470,7 @@ const mapDispatchToProps = (dispatch: any) => {
 			link: string,
 			sectionId: string,
 			tagId: string,
+			userId: string,
 		}) => dispatch(addNewNoteAction(newNote)),
 		editSectionToApp: (editedSection: {
 			id: string,
@@ -490,6 +491,7 @@ const mapDispatchToProps = (dispatch: any) => {
 			link: string,
 			sectionId: string,
 			tagId: string,
+			userId: string,
 		}) => dispatch(editNoteAction(editedNote)),
 		removeItemToApp: (name: string, id: string) =>
 			dispatch(removeItemAction(name, id)),

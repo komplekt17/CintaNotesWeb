@@ -14,6 +14,7 @@ interface IAddNewTagPopup {
 	handlerCurrentValue: (name: string, value: string) => void;
 	currentEditedNote: {
 		text: string,
+		userId: string,
 	};
 	addNewNote: (newNote: {
 		header: any,
@@ -22,6 +23,7 @@ interface IAddNewTagPopup {
 		link: any,
 		sectionId: any,
 		tagId: any,
+		userId: string,
 	}) => void;
 	namePopup: string;
 	lang: string;
@@ -191,10 +193,11 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 										const newNote = {
 											header,
 											text: currentEditedNote.text,
-											tagId,
-											sectionId: getSectionIdtag(tagId),
 											remarks,
 											link,
+											sectionId: getSectionIdtag(tagId),
+											tagId,
+											userId: currentEditedNote.userId
 										}
 										addNewNote(newNote)
 										$("#addHeaderNote").val("")

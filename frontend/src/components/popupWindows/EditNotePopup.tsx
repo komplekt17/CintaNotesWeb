@@ -18,6 +18,7 @@ interface IEditNoteProps {
     link: string,
     sectionId: string,
     tagId: string,
+		userId: string,
 	}) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	currentEditedNote:	{
@@ -28,6 +29,7 @@ interface IEditNoteProps {
     link: string;
 		sectionId: string;
     tagId: string;
+		userId: string,
 	}
 	namePopup: string;
 	lang: string;
@@ -39,7 +41,8 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 		currentEditedNote,
 		namePopup,
     // sections,
-    tags,lang
+		tags,
+		lang
 	} = props
 
 	const {
@@ -49,7 +52,8 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
     remarks,
     link, 
     // sectionId, 
-		tagId } = currentEditedNote
+		tagId, 
+		userId } = currentEditedNote
 		
 		// получаем SectionId из tags[] по tagId из notes[] 
 		const getSectionIdtag = (tagId:string): string =>{
@@ -232,7 +236,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
                       id, 
 											header, text, remarks, link, 
 											sectionId: getSectionIdtag(tagId), 
-											tagId 
+											tagId, userId 
 										}
 										editNote(editedNote)
 										// очищаем поля currentDetails.note,
