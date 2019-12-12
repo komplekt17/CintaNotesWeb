@@ -1,4 +1,5 @@
 import * as React from "react"
+import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
 import { AddNoteTextEditor } from "../notesEditor"
 import $ from "jquery"
@@ -14,7 +15,6 @@ interface IAddNewTagPopup {
 	handlerCurrentValue: (name: string, value: string) => void;
 	currentEditedNote: {
 		text: string,
-		userId: string,
 	};
 	addNewNote: (newNote: {
 		header: any,
@@ -26,7 +26,7 @@ interface IAddNewTagPopup {
 		userId: string,
 	}) => void;
 	namePopup: string;
-	lang: string;
+	userProfile: IUserProfile;
 }
 
 export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
@@ -34,22 +34,12 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 		tags,
 		addNewNote,
 		namePopup,
-		lang,
 		currentEditedNote,
 		handlerCurrentValue,
+		userProfile,
 	} = props
 
-	// let sectionsList: any = ""
-
-	// if (sections && sections.length !== 0) {
-	// 	sectionsList = sections.map((item: any, index: number) => {
-	// 		return (
-	// 			<option key={index} className={item.sectionId} value={item.id}>
-	// 				{item.nameSection}
-	// 			</option>
-	// 		)
-	// 	})
-	// }
+	const { lang, id } = userProfile
 
 	// получаем SectionId из tags[] по tagId из notes[]
 	const getSectionIdtag = (tagId: any): string => {
@@ -128,19 +118,6 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
-
-							 <div className="form-label-group">
-								<label htmlFor="addNoteSectionId">Select Section</label>
-								<select
-									id="addNoteSectionId"
-									className="form-control"
-									aria-describedby="formAddNote"
-								>
-									{sectionsList}
-									<option value="0">All</option>
-								</select>
-								<div className="invalid-feedback">Please select a section</div>
-							</div> 
 							*/}
 
 							<div className="form-label-group">
@@ -197,7 +174,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 											link,
 											sectionId: getSectionIdtag(tagId),
 											tagId,
-											userId: currentEditedNote.userId
+											userId: id,
 										}
 										addNewNote(newNote)
 										$("#addHeaderNote").val("")

@@ -1,4 +1,5 @@
 import * as React from "react"
+import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
 import $ from "jquery"
 
@@ -10,12 +11,12 @@ interface IAddNewTagPopup {
 		userId: string,
 	}) => void;
 	namePopup: string;
-	lang: string;
-	currentUserId: string;
+	userProfile: IUserProfile;
 }
 
 export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
-	const { sections, addNewTag, namePopup, lang, currentUserId } = props
+	const { sections, addNewTag, namePopup, userProfile } = props
+	const { lang, id } = userProfile
 
 	let sectionsList: any = ""
 
@@ -90,8 +91,8 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 									if (nameTag !== "" && sectionId !== "") {
 										const newTag = {
 											nameTag,
-											sectionId: sectionId,
-											userId: currentUserId,
+											sectionId,
+											userId: id,
 										}
 										addNewTag(newTag)
 										$("#addNameTag").val("")

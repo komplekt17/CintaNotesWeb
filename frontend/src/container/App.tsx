@@ -351,22 +351,20 @@ const App: React.FC<IAppProps> = props => {
 				addNewSection={addNewSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
-				lang={currentDetails.userProfile.lang}
-				currentUserId={currentDetails.userProfile.id}
+				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewTagPopup
 				sections={sections}
 				addNewTag={addNewTagToApp}
 				namePopup={namePopup}
-				lang={currentDetails.userProfile.lang}
-				currentUserId={currentDetails.userProfile.id}
+				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewNotePopup
 				tags={tags}
 				sections={sections}
 				addNewNote={addNewNoteToApp}
 				namePopup={namePopup}
-				lang={currentDetails.userProfile.lang}
+				userProfile={currentDetails.userProfile}
 				currentEditedNote={currentDetails.note}
 				handlerCurrentValue={handlerCurrentValueToApp}
 			/>

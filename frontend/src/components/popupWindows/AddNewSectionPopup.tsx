@@ -1,4 +1,5 @@
 import * as React from "react"
+import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
 import $ from "jquery"
 
@@ -6,17 +7,17 @@ interface IAddSectionProps {
 	addNewSection: (value: any) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	namePopup: string;
-	lang: string;
-	currentUserId: string;
+	userProfile: IUserProfile;
 }
 export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 	const {
 		addNewSection,
 		handlerCurrentValue,
 		namePopup,
-		lang,
-		currentUserId,
+		userProfile,
 	} = props
+
+	const { lang, id } = userProfile
 
 	return (
 		<div
@@ -66,7 +67,7 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 									if (nameSection !== "") {
 										const newSection = {
 											nameSection,
-											userId: currentUserId,
+											userId: id,
 										}
 										addNewSection(newSection)
 										// очищаем поле addNameSection,
