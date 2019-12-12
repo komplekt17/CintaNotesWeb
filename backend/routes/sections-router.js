@@ -10,10 +10,11 @@ router.route('/add').post((req, res) => {
 		nameSection,
 		userId
 	});
-	console.log('string 14: ', newSection);
+	// console.log('string 14: ', newSection);
 
 	newSection
-		.save()
+		// { raw: true } - получение результата без метаданных
+		.save({ raw: true })
 		.then(() => {
 			return res.status(200).json({
 				success: true,
@@ -44,7 +45,8 @@ router.route('/update/:id').put((req, res) => {
 		section.userId = req.body.userId;
 
 		section
-			.save()
+			// { raw: true } - получение результата без метаданных
+			.save({ raw: true })
 			.then(() => {
 				return res.status(200).json({
 					success: true,

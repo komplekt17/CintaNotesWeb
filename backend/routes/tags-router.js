@@ -11,7 +11,8 @@ router.route('/add').post((req, res) => {
 	//console.log('string 14: ', newTag)
 
 	newTag
-		.save()
+		// { raw: true } - получение результата без метаданных
+		.save({ raw: true })
 		.then(() => {
 			return res.status(200).json({
 				success: true,
@@ -29,34 +30,37 @@ router.route('/add').post((req, res) => {
 
 // обновление tag
 router.route('/update/:id').put((req, res) => {
-	//console.log(req.body)
-	Tag.findOne({ where: { id: req.params.id } }).then(tag => {
-		if (!tag) {
-			return res.status(404).json({
-				message: 'Tag not found!'
-			});
+	// { raw: true } - получение результата без метаданных
+	Tag.findOne({ raw: true }, { where: { id: req.params.id } }).then(
+		tag => {
+			if (!tag) {
+				return res.status(404).json({
+					message: 'Tag not found!'
+				});
+			}
+
+			tag.nameTag = req.body.nameTag;
+			tag.userId = req.body.userId;
+			tag.sectionId = req.body.sectionId;
+
+			tag
+				// { raw: true } - получение результата без метаданных
+				.save({ raw: true })
+				.then(() => {
+					return res.status(200).json({
+						success: true,
+						data: tag,
+						message: 'This tag was updated successful!'
+					});
+				})
+				.catch(error => {
+					return res.status(400).json({
+						error,
+						message: 'Tag not updated!'
+					});
+				});
 		}
-
-		tag.nameTag = req.body.nameTag;
-		tag.userId = req.body.userId;
-		tag.sectionId = req.body.sectionId;
-
-		tag
-			.save()
-			.then(() => {
-				return res.status(200).json({
-					success: true,
-					data: tag,
-					message: 'This tag was updated successful!'
-				});
-			})
-			.catch(error => {
-				return res.status(400).json({
-					error,
-					message: 'Tag not updated!'
-				});
-			});
-	});
+	);
 });
 
 // удаление tag
