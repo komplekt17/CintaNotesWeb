@@ -234,9 +234,11 @@ const handlerCurrentDetails = (
 		// получаем значения свойства найденного tag'а
 		const nameTag = arr[index].nameTag
 		const sectionId = arr[index].sectionId
+		const userId = arr[index].userId
 		// сохраняем значения полей найденного tag'а в currentDitails.tag
 		obj = getNewObjDetails(obj, "tag", "nameTag", nameTag)
 		obj = getNewObjDetails(obj, "tag", "sectionId", sectionId)
+		obj = getNewObjDetails(obj, "tag", "userId", userId)
 	}
 
 	// сохраняем value input'a редактируемого поля nameTage
@@ -708,7 +710,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "ADD_NEW_SECTION_ACTION":
 			const addSectionParams = {
-				id: action.result.data.id.toString(),
+				id: action.result.data.id,
 				nameSection: action.result.data.nameSection,
 				userId: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
@@ -724,7 +726,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "EDIT_SECTION_ACTION":
 			const editSectionParams = {
-				id: action.result.data.id.toString(),
+				id: action.result.data.id,
 				nameSection: action.result.data.nameSection,
 				userId: action.result.data.userId,
 				createdAt: action.result.data.createdAt,
@@ -768,7 +770,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// eslint-disable-next-line
 		case "ADD_NEW_TAG_ACTION":
 			const addTagParams = {
-				id: action.result.data.id.toString(),
+				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
 				sectionId: action.result.data.sectionId,
 				userId: action.result.data.userId,
@@ -784,8 +786,9 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "EDIT_TAG_ACTION":
+			console.log(action.result.data)
 			const editTagParams = {
-				id: action.result.data.id.toString(),
+				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
 				sectionId: action.result.data.sectionId,
 				userId: action.result.data.userId,
@@ -794,7 +797,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			return {
 				...state,
-				sections: editingItem(state, "editTag", editTagParams),
+				tags: editingItem(state, "editTag", editTagParams),
 				notes: transplaceNotes(state, "editTag", action.result.data),
 				textMessage: action.result.message,
 				loading: false,

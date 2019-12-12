@@ -115,8 +115,8 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 										const editedTag = {
 											id, 
 											nameTag, 
-											sectionId: sectionId,
-											userId: userId,
+											sectionId,
+											userId,
 										}
 										editTag(editedTag)
 										// очищаем поля currentDetails.tag,
