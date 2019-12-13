@@ -18,6 +18,7 @@ import {
 	RemoveItemPopup,
 	UserPassResetPopup,
 	UserPassChangePopup,
+	MessagesPopup,
 } from "../components"
 import {
 	getDataByLoginAction,
@@ -408,6 +409,7 @@ const App: React.FC<IAppProps> = props => {
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
 			/>
+			<MessagesPopup category={"warning"} message={"MessagesPopup"} />
 			{/*
 				https://www.npmjs.com/package/react-spinners
 				https://www.react-spinners.com/
