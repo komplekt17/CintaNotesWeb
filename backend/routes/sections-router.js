@@ -1,5 +1,7 @@
 const router = require('express').Router();
-let Section = require('../models/sections-model');
+const Section = require('../models/sections-model');
+const Tag = require('../models/tags-model');
+const Note = require('../models/notes-model');
 
 // добавление новой section
 router.route('/add').post((req, res) => {
@@ -64,28 +66,35 @@ router.route('/update/:id').put((req, res) => {
 });
 
 // удаление section
-router.route('/remove/:id').delete((req, res) => {
-	//console.log('req.params.idx', req.params.id)
-	Section.findOneAndDelete({ id: req.params._id }, (error, section) => {
-		//console.log('section', section)
-		if (!section) {
-			return res.status(405).json({
-				success: false,
-				massage: 'Section not found',
-				error
+router.route('/remove/:id').post((req, res) => {
+	// переносим notes в All section -> sectionId = 0
+	Note.update({ sectionId: '0' }, { where: { sectionId: req.params.id } });
+
+	// переносим tags в All section -> sectionId = 0
+	Tag.update({ sectionId: '0' }, { where: { sectionId: req.params.id } });
+
+	Section.destroy({ where: { id: req.params.id } })
+		.then(section => {
+			if (!section) {
+				return res.status(405).json({
+					success: false,
+					massage: 'Section not found',
+					error
+				});
+			}
+			return res.status(200).json({
+				success: true,
+				data: section,
+				message: `This section was removed successful! 
+			All notes of removed section has traversed to unsorted`
 			});
-		}
-		return res.status(200).json({
-			success: true,
-			data: section,
-			message: 'This section was removed successful!'
+		})
+		.catch(error => {
+			res.status(400).json({
+				error,
+				message: 'Section not deleted!'
+			});
 		});
-	}).catch(error => {
-		res.status(400).json({
-			error,
-			message: 'Section not deleted!'
-		});
-	});
 });
 
 module.exports = router;

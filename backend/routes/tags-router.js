@@ -1,6 +1,6 @@
 const router = require('express').Router();
-let Tag = require('../models/tags-model');
-let Note = require('../models/notes-model');
+const Tag = require('../models/tags-model');
+const Note = require('../models/notes-model');
 
 // добавление нового tag
 router.route('/add').post((req, res) => {
@@ -69,28 +69,34 @@ router.route('/update/:id').put((req, res) => {
 });
 
 // удаление tag
-router.route('/remove/:id').delete((req, res) => {
-	//console.log('req.params.idx', req.params._id)
-	Tag.findOneAndDelete({ id: req.params._id }, (error, tag) => {
-		//console.log('tag', tag)
-		if (!tag) {
-			return res.status(405).json({
-				success: false,
-				massage: 'Tag not found',
-				error
+router.route('/remove/:id').post((req, res) => {
+	// переносим notes в All section -> sectionId = 0
+	Note.update({ sectionId: '0' }, { where: { tagId: req.params.id } });
+
+	// переносим notes в Unsorted tag -> tagId = 0
+	Note.update({ tagId: '0' }, { where: { tagId: req.params.id } });
+
+	Tag.destroy({ where: { id: req.params.id } })
+		.then(tag => {
+			if (!tag) {
+				return res.status(405).json({
+					success: false,
+					massage: 'Tag not found',
+					error
+				});
+			}
+			return res.status(200).json({
+				success: true,
+				data: tag,
+				message: 'This tag was removed successful!'
 			});
-		}
-		return res.status(200).json({
-			success: true,
-			data: tag,
-			message: 'This tag was removed successful!'
+		})
+		.catch(error => {
+			res.status(400).json({
+				error,
+				message: 'Tag not deleted!'
+			});
 		});
-	}).catch(error => {
-		res.status(400).json({
-			error,
-			message: 'Tag not deleted!'
-		});
-	});
 });
 
 module.exports = router;

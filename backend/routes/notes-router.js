@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let Note = require('../models/notes-model');
+const Note = require('../models/notes-model');
 
 // добавление нового note
 router.route('/add').post((req, res) => {
@@ -70,28 +70,30 @@ router.route('/update/:id').put((req, res) => {
 });
 
 // удаление note
-router.route('/remove/:id').delete((req, res) => {
+router.route('/remove/:id').post((req, res) => {
 	//console.log('req.params.idx', req.params._id)
-	Note.findOneAndDelete({ id: req.params._id }, (error, note) => {
-		//console.log('note', note)
-		if (!note) {
-			return res.status(405).json({
-				success: false,
-				massage: 'Note not found',
-				error
+	Note.destroy({ where: { id: req.params.id } })
+		.then(note => {
+			//console.log('note', note)
+			if (!note) {
+				return res.status(405).json({
+					success: false,
+					massage: 'Note not found',
+					error
+				});
+			}
+			return res.status(200).json({
+				success: true,
+				data: note,
+				message: 'This note was removed successful!'
 			});
-		}
-		return res.status(200).json({
-			success: true,
-			data: note,
-			message: 'This note was removed successful!'
+		})
+		.catch(error => {
+			res.status(400).json({
+				error,
+				message: 'Note not deleted!'
+			});
 		});
-	}).catch(error => {
-		res.status(400).json({
-			error,
-			message: 'Note not deleted!'
-		});
-	});
 });
 
 module.exports = router;
