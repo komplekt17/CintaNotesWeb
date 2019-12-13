@@ -82,6 +82,7 @@ const App: React.FC<IAppProps> = props => {
 		notes,
 		filters,
 		currentDetails,
+		messagePopup,
 		namePopup,
 		auth,
 		loading,
@@ -409,7 +410,10 @@ const App: React.FC<IAppProps> = props => {
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
 			/>
-			<MessagesPopup category={"warning"} message={"MessagesPopup"} />
+			<MessagesPopup
+				category={messagePopup.category}
+				message={messagePopup.message}
+			/>
 			{/*
 				https://www.npmjs.com/package/react-spinners
 				https://www.react-spinners.com/

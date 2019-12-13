@@ -6,11 +6,12 @@ import {
 	ITags,
 	INotes,
 } from "../types"
+import { string } from "prop-types"
 
 export const initialState = {
 	auth: false,
 	namePopup: "",
-	textMessage: "",
+	messagePopup: {category: "", message: ""},
 	loading: false,
 	loaded: false,
 	error: null,
@@ -650,16 +651,16 @@ export const Reducer = (state: IState = initialState, action: any) => {
 					loading: false,
 					loaded: true,
 					auth: !state.auth,
-					textMessage: "",
+					messagePopup: {category: "", message: ""},
 					filters: { sections: "All", tags: "All" },
 				}
 			} else {
-				// $("#modal-alert").modal("show");
+				$("#modal-alert").modal("show");
 				return {
 					...state,
 					loading: false,
 					loaded: true,
-					textMessage: action.result.error,
+					messagePopup: {category: "error", message: action.result.error},
 				}
 			}
 
@@ -676,7 +677,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				notes: [],
 				loading: false,
 				loaded: true,
-				textMessage: action.result.message,
+				messagePopup: {category: "success", message: action.result.message},
 				auth: !state.auth,
 			}
 
@@ -690,7 +691,6 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "HANDLER_VALUE_INPUTS_ACTION":
-			// console.log(action.name, action.value)
 			return {
 				...state,
 				currentDetails: handlerCurrentDetails(
@@ -741,7 +741,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				sections: addingItem(state, "addSection", addSectionParams),
-				textMessage: action.result.message,
+				messagePopup: {category: "success", message: action.result.message},
 				loading: false,
 				loaded: true,
 			}
@@ -757,7 +757,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				sections: editingItem(state, "editSection", editSectionParams),
-				textMessage: action.result.message,
+				messagePopup: {category: "success", message: action.result.message},
 				loading: false,
 				loaded: true,
 			}
@@ -802,7 +802,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				tags: addingItem(state, "addTag", addTagParams),
-				textMessage: action.result.message,
+				messagePopup: {category: "success", message: action.result.message},
 				loading: false,
 				loaded: true,
 			}
@@ -820,7 +820,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				...state,
 				tags: editingItem(state, "editTag", editTagParams),
 				notes: transplaceNotes(state, "editTag", action.result.data),
-				textMessage: action.result.message,
+				messagePopup: {category: "success", message: action.result.message},
 				loading: false,
 				loaded: true,
 			}
@@ -843,7 +843,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				notes: addingItem(state, "addNote", addNoteParams),
-				textMessage: action.result.message,
+				messagePopup: {category: "success", message: action.result.message},
 				loading: false,
 				loaded: true,
 			}
@@ -864,7 +864,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				notes: editingItem(state, "editNote", editNoteParams),
-				textMessage: action.result.message,
+				messagePopup: {category: "success", message: action.result.message},
 				loading: false,
 				loaded: true,
 			}

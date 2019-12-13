@@ -43,7 +43,7 @@ export interface ICurrentDetails {
 export interface IState {
 	auth: boolean;
 	namePopup: string;
-	textMessage: string;
+	messagePopup: {category: string, message: string}
 	loading: boolean;
 	loaded: boolean;
 	error: null;

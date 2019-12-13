@@ -6,7 +6,7 @@ export interface IAppProps {
 		loading: boolean,
 		loaded: boolean,
 		namePopup: string,
-		textMessage: string,
+		messagePopup: {category: string, message: string},
 		filters: { sections:string, tags:string }
 		currentDetails: ICurrentDetails,
 		sections: [],
