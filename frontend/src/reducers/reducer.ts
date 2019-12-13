@@ -6,12 +6,11 @@ import {
 	ITags,
 	INotes,
 } from "../types"
-import { string } from "prop-types"
 
 export const initialState = {
 	auth: false,
 	namePopup: "",
-	messagePopup: {category: "", message: ""},
+	messagePopup: { category: "", message: "" },
 	loading: false,
 	loaded: false,
 	error: null,
@@ -651,16 +650,16 @@ export const Reducer = (state: IState = initialState, action: any) => {
 					loading: false,
 					loaded: true,
 					auth: !state.auth,
-					messagePopup: {category: "", message: ""},
+					messagePopup: { category: "", message: "" },
 					filters: { sections: "All", tags: "All" },
 				}
 			} else {
-				$("#modal-alert").modal("show");
+				$("#modal-alert").modal("show")
 				return {
 					...state,
 					loading: false,
 					loaded: true,
-					messagePopup: {category: "error", message: action.result.error},
+					messagePopup: { category: "error", message: action.result.error },
 				}
 			}
 
@@ -677,7 +676,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				notes: [],
 				loading: false,
 				loaded: true,
-				messagePopup: {category: "success", message: action.result.message},
+				messagePopup: { category: "success", message: action.result.message },
 				auth: !state.auth,
 			}
 
@@ -731,6 +730,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= SECTIONS =======
 
 		case "ADD_NEW_SECTION_ACTION":
+			$("#modal-alert").modal("show")
 			const addSectionParams = {
 				id: action.result.data.id,
 				nameSection: action.result.data.nameSection,
@@ -741,12 +741,13 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				sections: addingItem(state, "addSection", addSectionParams),
-				messagePopup: {category: "success", message: action.result.message},
+				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
 			}
 
 		case "EDIT_SECTION_ACTION":
+			$("#modal-alert").modal("show")
 			const editSectionParams = {
 				id: action.result.data.id,
 				nameSection: action.result.data.nameSection,
@@ -757,13 +758,14 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				sections: editingItem(state, "editSection", editSectionParams),
-				messagePopup: {category: "success", message: action.result.message},
+				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
 			}
 
 		case "REMOVE_ANY_ITEM_ACTION":
-			$("#modal-removeItem").modal("hide")
+			// $("#modal-alert").modal("show");
+			// $("#modal-removeItem").modal("hide")
 			if (action.name === "Section") {
 				return {
 					...state,
@@ -791,6 +793,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= TAGS =======
 		// eslint-disable-next-line
 		case "ADD_NEW_TAG_ACTION":
+			$("#modal-alert").modal("show")
 			const addTagParams = {
 				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
@@ -802,12 +805,13 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				tags: addingItem(state, "addTag", addTagParams),
-				messagePopup: {category: "success", message: action.result.message},
+				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
 			}
 
 		case "EDIT_TAG_ACTION":
+			$("#modal-alert").modal("show")
 			const editTagParams = {
 				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
@@ -820,7 +824,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				...state,
 				tags: editingItem(state, "editTag", editTagParams),
 				notes: transplaceNotes(state, "editTag", action.result.data),
-				messagePopup: {category: "success", message: action.result.message},
+				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
 			}
@@ -828,6 +832,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		// ======= NOTES =======
 		case "ADD_NEW_NOTE_ACTION":
+			$("#modal-alert").modal("show")
 			const addNoteParams = {
 				id: action.result.data.id,
 				header: action.result.data.header,
@@ -843,12 +848,13 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				notes: addingItem(state, "addNote", addNoteParams),
-				messagePopup: {category: "success", message: action.result.message},
+				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
 			}
 
 		case "EDIT_NOTE_ACTION":
+			$("#modal-alert").modal("show")
 			const editNoteParams = {
 				id: action.result.data.id,
 				header: action.result.data.header,
@@ -864,7 +870,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				notes: editingItem(state, "editNote", editNoteParams),
-				messagePopup: {category: "success", message: action.result.message},
+				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
 			}
