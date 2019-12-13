@@ -67,12 +67,11 @@ const editSectionAction = (editedSection: {
 }
 
 // удаление любого Item
-const removeItemAction = (name: string, id: string) => {
+const removeSectionAction = (sectionId: string) => {
 	return {
-		type: "REMOVE_ANY_ITEM_ACTION",
-		name,
-		id,
+		type: "REMOVE_SECTION_ACTION",
+		sectionId
 	}
 }
 
-export { addNewSectionAction, editSectionAction, removeItemAction }
+export { addNewSectionAction, editSectionAction, removeSectionAction }

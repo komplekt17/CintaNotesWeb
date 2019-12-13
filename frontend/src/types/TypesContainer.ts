@@ -50,7 +50,9 @@ export interface IAppProps {
 		tagId: string,
 		userId: string,
 	}) => void;
-	removeItemToApp: (name: string, id: string) => void;
+	removeSectionToApp: (sectionId: string) => void;
+	removeTagToApp: (tagId: string) => void;
+	removeNoteToApp: (noteId: string) => void;
 	handlerCurrentValueToApp: (name: string, value: string) => void;
 	handlerHeaderPopupToApp: (header: string) => void;
 	handlerValueFiltersToApp: (filter: string, id: string) => void;
