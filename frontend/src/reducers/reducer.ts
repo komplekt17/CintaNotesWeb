@@ -764,15 +764,14 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "REMOVE_SECTION_ACTION":
-			// $("#modal-alert").modal("show");
-			// $("#modal-removeItem").modal("hide")
-				return {
-					...state,
-					sections: removingItem(state, action.name, action.id),
-					tags: transplaceTags(state, action.id),
-					notes: transplaceNotes(state, action.name, action.id),
-					filters: { sections: "All", tags: "All" },
-				}
+			$("#modal-alert").modal("show")
+			return {
+				...state,
+				sections: removingItem(state, action.name, action.id),
+				tags: transplaceTags(state, action.id),
+				notes: transplaceNotes(state, action.name, action.id),
+				filters: { sections: "All", tags: "All" },
+			}
 
 		// ======= END SECTIONS =======
 
@@ -815,15 +814,14 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				loaded: true,
 			}
 
-			case "REMOVE_TAG_ACTION":
-				// $("#modal-alert").modal("show");
-				// $("#modal-removeItem").modal("hide")
-					return {
-						...state,
-						tags: removingItem(state, action.name, action.id),
-						notes: transplaceNotes(state, action.name, action.id),
-						filters: { sections: state.filters.sections, tags: "All" },
-					}
+		case "REMOVE_TAG_ACTION":
+			$("#modal-alert").modal("show")
+			return {
+				...state,
+				tags: removingItem(state, action.name, action.id),
+				notes: transplaceNotes(state, action.name, action.id),
+				filters: { sections: state.filters.sections, tags: "All" },
+			}
 		// ======= END TAGS =======
 
 		// ======= NOTES =======
@@ -871,13 +869,12 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				loaded: true,
 			}
 
-			case "REMOVE_NOTE_ACTION":
-				// $("#modal-alert").modal("show");
-				// $("#modal-removeItem").modal("hide")
-					return {
-						...state,
-						notes: removingItem(state, action.name, action.id),
-					}
+		case "REMOVE_NOTE_ACTION":
+			$("#modal-alert").modal("show")
+			return {
+				...state,
+				notes: removingItem(state, action.name, action.id),
+			}
 
 		// ======= END NOTES =======
 

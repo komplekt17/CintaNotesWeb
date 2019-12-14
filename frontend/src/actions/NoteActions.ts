@@ -77,4 +77,33 @@ const editNoteAction = (editedNote: {
 	}
 }
 
-export { addNewNoteAction, editNoteAction }
+// удаление tag
+const removeNoteAction = (noteId: string) => {
+	$("#modal-removeItem").modal("hide")
+	return (dispatch: {
+		(arg0: { type: string }): void,
+		(arg0: { type: string, result: any }): void,
+		(arg0: { type: string, error: any }): void,
+	}) => {
+		dispatch({
+			type: "LOAD_REQUESTED_DATA_ACTION",
+		})
+		axios
+			.post(`${SERVER_URI}/notes/remove/${noteId}`)
+			.then(response => {
+				dispatch({
+					type: "REMOVE_NOTE_ACTION",
+					result: response.data,
+				})
+			})
+			.catch(error => {
+				dispatch({
+					type: "LOAD_FAILURE_DATA_ACTION",
+					error,
+				})
+				console.log(error)
+			})
+	}
+}
+
+export { addNewNoteAction, editNoteAction, removeNoteAction }

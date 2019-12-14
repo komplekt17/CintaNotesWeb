@@ -69,4 +69,33 @@ const editTagAction = (editedTag: {
 	}
 }
 
-export { addNewTagAction, editTagAction }
+// удаление tag
+const removeTagAction = (tagId: string) => {
+	$("#modal-removeItem").modal("hide")
+	return (dispatch: {
+		(arg0: { type: string }): void,
+		(arg0: { type: string, result: any }): void,
+		(arg0: { type: string, error: any }): void,
+	}) => {
+		dispatch({
+			type: "LOAD_REQUESTED_DATA_ACTION",
+		})
+		axios
+			.post(`${SERVER_URI}/tags/remove/${tagId}`)
+			.then(response => {
+				dispatch({
+					type: "REMOVE_TAG_ACTION",
+					result: response.data,
+				})
+			})
+			.catch(error => {
+				dispatch({
+					type: "LOAD_FAILURE_DATA_ACTION",
+					error,
+				})
+				console.log(error)
+			})
+	}
+}
+
+export { addNewTagAction, editTagAction, removeTagAction }

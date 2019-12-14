@@ -66,11 +66,32 @@ const editSectionAction = (editedSection: {
 	}
 }
 
-// удаление любого Item
+// удаление section
 const removeSectionAction = (sectionId: string) => {
-	return {
-		type: "REMOVE_SECTION_ACTION",
-		sectionId
+	$("#modal-removeItem").modal("hide")
+	return (dispatch: {
+		(arg0: { type: string }): void,
+		(arg0: { type: string, result: any }): void,
+		(arg0: { type: string, error: any }): void,
+	}) => {
+		dispatch({
+			type: "LOAD_REQUESTED_DATA_ACTION",
+		})
+		axios
+			.post(`${SERVER_URI}/sections/remove/${sectionId}`)
+			.then(response => {
+				dispatch({
+					type: "REMOVE_SECTION_ACTION",
+					result: response.data,
+				})
+			})
+			.catch(error => {
+				dispatch({
+					type: "LOAD_FAILURE_DATA_ACTION",
+					error,
+				})
+				console.log(error)
+			})
 	}
 }
 

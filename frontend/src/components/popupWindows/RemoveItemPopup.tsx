@@ -3,7 +3,9 @@ import { CONSTANTS } from "../../constants"
 import $ from "jquery"
 
 interface IRemoveItemProps {
-	removeItem: (namePopup: string, id: string) => void;
+	removeSection: (sectionId: string) => void;
+	removeTag: (tagId: string) => void;
+	removeNote: (noteId: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	resetHighlightItem: (elem: any, nameElem: string) => void;
 	namePopup: string;
@@ -13,7 +15,9 @@ interface IRemoveItemProps {
 
 export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 	const {
-		removeItem,
+		removeSection,
+		removeTag,
+		removeNote,
 		namePopup,
 		removableItemId,
 		handlerCurrentValue,
@@ -70,9 +74,8 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 					<div className="modal-footer">
 						<button
 							onClick={() => {
-								removeItem(namePopup, removableItemId)
-
 								if (namePopup === "Section") {
+									removeSection(removableItemId)
 									// сбрасываем подсветку текущей section
 									// подсвечиваем section All
 									resetHighlightItem($(".section-panel ul"), "clearItems")
@@ -80,6 +83,7 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 									// action.name === buttonRemoveSection
 									handlerCurrentValue("buttonRemoveSection", "")
 								} else if (namePopup === "Tag") {
+									removeTag(removableItemId)
 									// сбрасываем подсветку текущего tag
 									// подсвечиваем tag All
 									resetHighlightItem($(".app-side-tags ul"), "clearItems")
@@ -87,6 +91,7 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 									// action.name === buttonRemoveTag
 									handlerCurrentValue("buttonRemoveTag", "")
 								} else if (namePopup === "Note") {
+									removeNote(removableItemId)
 									// очищаем поле id в currentDetails.note,
 									// action.name === buttonRemoveNote
 									handlerCurrentValue("buttonRemoveNote", "")

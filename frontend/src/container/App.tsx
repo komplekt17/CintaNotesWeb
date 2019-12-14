@@ -31,6 +31,8 @@ import {
 	editTagAction,
 	editNoteAction,
 	removeSectionAction,
+	removeTagAction,
+	removeNoteAction,
 	handlerCurrentValueAction,
 	handlerHeaderPopupAction,
 	handlerValueFiltersAction,
@@ -69,6 +71,8 @@ const App: React.FC<IAppProps> = props => {
 		editTagToApp,
 		editNoteToApp,
 		removeSectionToApp,
+		removeTagToApp,
+		removeNoteToApp,
 		handlerCurrentValueToApp,
 		handlerHeaderPopupToApp,
 		handlerValueFiltersToApp,
@@ -395,7 +399,9 @@ const App: React.FC<IAppProps> = props => {
 				lang={currentDetails.userProfile.lang}
 			/>
 			<RemoveItemPopup
-				removeItem={removeSectionToApp}
+				removeSection={removeSectionToApp}
+				removeTag={removeTagToApp}
+				removeNote={removeNoteToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				removableItemId={getRemovableItemId(namePopup)}
@@ -497,7 +503,9 @@ const mapDispatchToProps = (dispatch: any) => {
 			userId: string,
 		}) => dispatch(editNoteAction(editedNote)),
 		removeSectionToApp: (sectionId: string) =>
-			dispatch(removeSectionAction(sectionId)),
+			dispatch(removeTagAction(sectionId)),
+		removeTagToApp: (tagId: string) => dispatch(removeSectionAction(tagId)),
+		removeNoteToApp: (noteId: string) => dispatch(removeNoteAction(noteId)),
 	}
 }
 
