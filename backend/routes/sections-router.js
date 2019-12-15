@@ -84,7 +84,7 @@ router.route('/remove/:id').post((req, res) => {
 			}
 			return res.status(200).json({
 				success: true,
-				data: section,
+				data: { id: req.params.id },
 				message: `This section was removed successful! 
 			All notes of removed section has traversed to unsorted`
 			});
