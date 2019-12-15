@@ -573,7 +573,7 @@ const transplaceNotes = (
 	// при удалении tag
 	if (nameItem === "Tag") {
 		for (let i = 0; i < arr.length; i++) {
-			// если note относится к id удаляемому tag
+			// если note относится к id удаляемого tag
 			if (arr[i].tagId === idItem) {
 				// тогда переносим эту note в Untagged
 				arr[i].tagId = "0"
@@ -767,10 +767,13 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			$("#modal-alert").modal("show")
 			return {
 				...state,
-				sections: removingItem(state, action.name, action.id),
-				tags: transplaceTags(state, action.id),
-				notes: transplaceNotes(state, action.name, action.id),
+				sections: removingItem(state, "Section", action.result.data.id),
+				tags: transplaceTags(state, action.result.data.id),
+				notes: transplaceNotes(state, "Section", action.result.data.id),
 				filters: { sections: "All", tags: "All" },
+				messagePopup: { category: "success", message: action.result.message },
+				loading: false,
+				loaded: true,
 			}
 
 		// ======= END SECTIONS =======
@@ -818,9 +821,12 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			$("#modal-alert").modal("show")
 			return {
 				...state,
-				tags: removingItem(state, action.name, action.id),
-				notes: transplaceNotes(state, action.name, action.id),
+				tags: removingItem(state, "Tag", action.result.data.id),
+				notes: transplaceNotes(state, "Tag", action.result.data.id),
 				filters: { sections: state.filters.sections, tags: "All" },
+				messagePopup: { category: "success", message: action.result.message },
+				loading: false,
+				loaded: true,
 			}
 		// ======= END TAGS =======
 
