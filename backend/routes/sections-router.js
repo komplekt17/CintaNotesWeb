@@ -86,7 +86,7 @@ router.route('/remove/:id').post((req, res) => {
 				success: true,
 				data: { id: req.params.id },
 				message: `This section was removed successful! 
-			All notes of removed section have traversed to unsorted`
+			All tags of removed section have traversed to All`
 			});
 		})
 		.catch(error => {

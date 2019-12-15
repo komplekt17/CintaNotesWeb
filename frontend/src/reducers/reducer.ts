@@ -589,8 +589,6 @@ const transplaceNotes = (
 			if (arr[i].sectionId === idItem) {
 				// переносим notes в All section -> sectionId = 0
 				arr[i].sectionId = "0"
-				// переносим notes в Unsorted tag -> tagId = 0
-				arr[i].tagId = "0"
 			}
 		}
 	}
