@@ -873,7 +873,10 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			$("#modal-alert").modal("show")
 			return {
 				...state,
-				notes: removingItem(state, action.name, action.id),
+				notes: removingItem(state, "Note", action.result.data.id),
+				messagePopup: { category: "success", message: action.result.message },
+				loading: false,
+				loaded: true,
 			}
 
 		// ======= END NOTES =======
