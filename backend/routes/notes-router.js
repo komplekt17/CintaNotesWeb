@@ -84,7 +84,7 @@ router.route('/remove/:id').post((req, res) => {
 			}
 			return res.status(200).json({
 				success: true,
-				data: note,
+				data: { id: req.params.id },
 				message: 'This note was removed successful!'
 			});
 		})
