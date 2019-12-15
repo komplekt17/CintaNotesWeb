@@ -21,6 +21,18 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		handlerCurrentValue,
 	} = props
 
+	// получение отформатированной даты создания/редактирования
+	const getDateNormed = (date: string): string => {
+		// отрезаем перед . 2019-12-15T08:46:08.000Z
+		const arrD = date.split(".")
+		// отрезаем перед T 2019-12-15T08:46:08.000Z
+		const arrT = arrD[0].split("T")
+		// преобразуем дату к виду DD.MM.YYYY
+		const arrR = arrT[0].split("-")
+		const result = `${arrR[2]}.${arrR[1]}.${arrR[0]}, ${arrT[1]}`
+		return result
+	}
+
 	let NotesList: any = (
 		<div className="col-12">{CONSTANTS[lang].ERROR_TEXT}</div>
 	)
@@ -46,22 +58,22 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		NotesList = notes.map((item: any, index: number) => {
 			return (
 				<div key={index} className="col-12 note">
-					<div className="note-header d-flex justify-content-between">
-						<div className="note-name"> {item.header} </div>
-						<div className="note-date">
-							<i className="far fa-calendar-alt text-primary" />
-							{"   "}
-							{item.updatedAt}
-							{"   "}|{"   "}
-							<i className="fas fa-calendar-alt text-info" />
-							{"   "}
-							{item.createdAt}
+					<div className="note-header">{item.header}</div>
+					<div className="d-flex justify-content-between">
+						<div className="note-tag">
+							<span className="text-primary border-primary">
+								{getNameTag(item.tagId)}
+							</span>
 						</div>
-					</div>
-					<div className="note-tag">
-						<span className="text-primary border-primary">
-							{getNameTag(item.tagId)}
-						</span>
+						<div className="note-date">
+							<i className="far fa-calendar-alt text-primary" title="updated" />
+							{"   "}
+							{getDateNormed(item.updatedAt)}
+							{"   "}|{"   "}
+							<i className="fas fa-calendar-alt text-info" title="created" />
+							{"   "}
+							{getDateNormed(item.createdAt)}
+						</div>
 					</div>
 					<div className="note-text">{item.text}</div>
 					<div className="note-footer">
