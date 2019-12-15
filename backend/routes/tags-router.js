@@ -87,7 +87,7 @@ router.route('/remove/:id').post((req, res) => {
 			}
 			return res.status(200).json({
 				success: true,
-				data: tag,
+				data: { id: req.params.id },
 				message: 'This tag was removed successful!'
 			});
 		})
