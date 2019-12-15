@@ -503,8 +503,8 @@ const mapDispatchToProps = (dispatch: any) => {
 			userId: string,
 		}) => dispatch(editNoteAction(editedNote)),
 		removeSectionToApp: (sectionId: string) =>
-			dispatch(removeTagAction(sectionId)),
-		removeTagToApp: (tagId: string) => dispatch(removeSectionAction(tagId)),
+			dispatch(removeSectionAction(sectionId)),
+		removeTagToApp: (tagId: string) => dispatch(removeTagAction(tagId)),
 		removeNoteToApp: (noteId: string) => dispatch(removeNoteAction(noteId)),
 	}
 }

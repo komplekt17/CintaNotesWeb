@@ -575,8 +575,10 @@ const transplaceNotes = (
 		for (let i = 0; i < arr.length; i++) {
 			// если note относится к id удаляемого tag
 			if (arr[i].tagId === idItem) {
-				// тогда переносим эту note в Untagged
+				// переносим notes в Unsorted tag -> tagId = 0
 				arr[i].tagId = "0"
+				// переносим notes в All section -> sectionId = 0
+				arr[i].sectionId = "0"
 			}
 		}
 	}
@@ -585,10 +587,10 @@ const transplaceNotes = (
 		for (let i = 0; i < arr.length; i++) {
 			// если note относится к id удаляемой section
 			if (arr[i].sectionId === idItem) {
-				// тогда переносим эту note в Untagged
-				arr[i].tagId = "0"
-				// и переносим эту note в All sections
+				// переносим notes в All section -> sectionId = 0
 				arr[i].sectionId = "0"
+				// переносим notes в Unsorted tag -> tagId = 0
+				arr[i].tagId = "0"
 			}
 		}
 	}
@@ -611,7 +613,7 @@ const transplaceTags = (state: IState, idItem: string): ITags[] => {
 	for (let i = 0; i < arr.length; i++) {
 		// если tag относится к id удаляемой section
 		if (arr[i].sectionId === idItem) {
-			// переносим этот tag в All sections
+			// переносим tags в All section -> sectionId = 0
 			arr[i].sectionId = "0"
 		}
 	}
