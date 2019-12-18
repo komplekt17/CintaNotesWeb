@@ -150,10 +150,11 @@ router.route('/create').post(async (req, res) => {
 // Войти зарегистрированному пользователю
 // И получение данных, если login и pass существуют
 router.route('/enter').post(async (req, res) => {
-	//Login a registered user
 	try {
 		const { login, pass } = req.body;
 		const user = await findByCredentials(login, pass);
+
+		// если есть сообщения об ошибке
 		if (user.typeMsg) {
 			const data = {
 				typeMsg: user.typeMsg,
@@ -161,8 +162,12 @@ router.route('/enter').post(async (req, res) => {
 			};
 
 			return res.status(201).send(data);
-		} else {
+		}
+		// если ошибок нет
+		else {
 			user.token = await generateAuthToken();
+			// сохраняем token в БД
+			await user.save();
 
 			const sections = await Section.findAll({
 				where: { userId: user.id }
