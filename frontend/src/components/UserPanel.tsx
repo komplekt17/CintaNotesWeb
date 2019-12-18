@@ -1,4 +1,5 @@
 import * as React from "react"
+import { IUserProfile } from "../types"
 import $ from "jquery"
 import { CONSTANTS } from "../constants"
 
@@ -6,8 +7,7 @@ import "../styles/UserPanel.css"
 
 interface IUserPanelProps {
 	auth: boolean;
-	login: string;
-	lang: string;
+	userProfile: IUserProfile;
 	getStatusLogin: (token: string) => void;
 	getDataByLogin: (user: { login: any, pass: any }) => void;
 	handlerHeaderPopup: (name: string) => void;
@@ -18,14 +18,15 @@ interface IUserPanelProps {
 export const UserPanel: React.FC<IUserPanelProps> = props => {
 	const {
 		auth,
-		login,
-		lang,
+		userProfile,
 		getStatusLogin,
 		getDataByLogin,
 		handlerHeaderPopup,
 		handlerLang,
 		handlerTheme,
 	} = props
+
+	const { lang, login } = userProfile
 
 	const leftNavBar = (
 		<>

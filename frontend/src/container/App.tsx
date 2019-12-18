@@ -24,6 +24,7 @@ import {
 	getDataByLoginAction,
 	getStatusLoginAction,
 	createNewUserAction,
+	updateUserPassAction,
 	addNewSectionAction,
 	addNewTagAction,
 	addNewNoteAction,
@@ -64,6 +65,7 @@ const App: React.FC<IAppProps> = props => {
 		getDataByLoginToApp,
 		getStatusLoginToApp,
 		createNewUserToApp,
+		updateUserPassToApp,
 		addNewSectionToApp,
 		addNewTagToApp,
 		addNewNoteToApp,
@@ -294,9 +296,8 @@ const App: React.FC<IAppProps> = props => {
 				<div className="row">
 					<UserPanel
 						auth={auth}
-						login={currentDetails.userProfile.login}
-						lang={currentDetails.userProfile.lang}
 						getStatusLogin={getStatusLoginToApp}
+						userProfile={currentDetails.userProfile}
 						getDataByLogin={getDataByLoginToApp}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
 						handlerLang={handlerLangToApp}
@@ -414,7 +415,8 @@ const App: React.FC<IAppProps> = props => {
 			/>
 			<UserPassChangePopup
 				namePopup={namePopup}
-				lang={currentDetails.userProfile.lang}
+				userProfile={currentDetails.userProfile}
+				updateUserPass={updateUserPassToApp}
 			/>
 			<MessagesPopup
 				category={messagePopup.category}
@@ -452,6 +454,13 @@ const mapDispatchToProps = (dispatch: any) => {
 			dispatch(getDataByLoginAction(objUser)),
 		getStatusLoginToApp: (token: string) =>
 			dispatch(getStatusLoginAction(token)),
+		createNewUserToApp: (objUser: { login: string, pass: string }) =>
+			dispatch(createNewUserAction(objUser)),
+		updateUserPassToApp: (objUser: {
+			inputOldPass: any,
+			inputNewPass: any,
+			token: string,
+		}) => dispatch(updateUserPassAction(objUser)),
 		handlerHeaderPopupToApp: (header: string) =>
 			dispatch(handlerHeaderPopupAction(header)),
 		handlerCurrentValueToApp: (name: string, value: string) =>
@@ -461,8 +470,6 @@ const mapDispatchToProps = (dispatch: any) => {
 		handlerLangToApp: (lang: string) => dispatch(handlerLangAction(lang)),
 		handlerThemeToApp: (theme: string) =>
 			dispatch(handlerThemeAction(theme)),
-		createNewUserToApp: (objUser: { login: string, pass: string }) =>
-			dispatch(createNewUserAction(objUser)),
 		addNewSectionToApp: (newSection: {
 			nameSection: string,
 			userId: string,

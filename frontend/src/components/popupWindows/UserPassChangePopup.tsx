@@ -1,14 +1,21 @@
 import * as React from "react"
+import { IUserProfile } from "../../types"
 import $ from "jquery"
 import { CONSTANTS } from "../../constants"
 
 interface IUserPassChangeProps {
 	namePopup: string;
-	lang: string;
+	userProfile: IUserProfile;
+	updateUserPass: (objUser: {
+		inputOldPass: any,
+		inputNewPass: any,
+		token: string,
+	}) => void;
 }
 
 export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
-	const { namePopup, lang } = props
+	const { namePopup, userProfile, updateUserPass } = props
+	const { lang, token } = userProfile
 
 	return (
 		<div
@@ -84,17 +91,23 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 
 							<button
 								onClick={() => {
-									const oldPass = $("#inputOldPass").val()
-									const newPass = $("#inputNewPass").val()
+									const inputOldPass = $("#inputOldPass").val()
+									const inputNewPass = $("#inputNewPass").val()
 									const repeat = $("#repeatNewPass").val()
-									if (oldPass !== "" && newPass !== "" && newPass === repeat) {
+									if (
+										inputOldPass !== "" &&
+										inputNewPass !== "" &&
+										inputNewPass === repeat
+									) {
 										const objUser = {
-											// id: user.userId,
-											inputOldPass: oldPass,
-											inputNewPass: newPass,
-											repeatNewPass: repeat,
+											inputOldPass,
+											inputNewPass,
+											token,
 										}
-										console.log(objUser)
+										updateUserPass(objUser)
+										$("#inputOldPass").val("")
+										$("#inputNewPass").val("")
+										$("#repeatNewPass").val("")
 									}
 								}}
 								className="btn btn-info btn-block mt-3"

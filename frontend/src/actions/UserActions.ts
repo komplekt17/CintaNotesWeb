@@ -69,13 +69,36 @@ const createNewUserAction = (objNewUser: {
 }
 
 // обработчик обновления user (изменение пароля)
-const updateEditUserAction = (objUser: {
-	login: string,
-	pass: string,
+const updateUserPassAction = (objUserPass: {
+	inputOldPass: any,
+	inputNewPass: any,
+	token: string,
 }) => {
-	return {
-		type: "UPDATE_USER_ACTION",
-		objUser,
+	$("#modal-changePass").modal("hide")
+	return (dispatch: {
+		(arg0: { type: string }): void,
+		(arg0: { type: string, result: any }): void,
+		(arg0: { type: string, error: any }): void,
+	}) => {
+		dispatch({
+			type: "LOAD_REQUESTED_DATA_ACTION",
+		})
+		axios
+			.put(`${SERVER_URI}/users/update/${objUserPass.token}`, objUserPass)
+			.then(response => {
+				console.log(response.data)
+				dispatch({
+					type: "UPDATE_USER_PASS_ACTION",
+					result: response.data,
+				})
+			})
+			.catch(error => {
+				dispatch({
+					type: "LOAD_FAILURE_DATA_ACTION",
+					error,
+				})
+				console.log(error)
+			})
 	}
 }
 
@@ -100,6 +123,6 @@ export {
 	getDataByLoginAction,
 	getStatusLoginAction,
 	createNewUserAction,
-	updateEditUserAction,
+	updateUserPassAction,
 	resetPasswordAction,
 }

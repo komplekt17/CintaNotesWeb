@@ -16,6 +16,11 @@ export interface IAppProps {
 	getDataByLoginToApp: (objUser: { login: string, pass: string }) => void;
 	getStatusLoginToApp: (token: string) => void;
 	createNewUserToApp: (objUser: { login: string, pass: string }) => void;
+	updateUserPassToApp: (objUser: {
+		inputOldPass: any,
+		inputNewPass: any,
+		token: string,
+	}) => void;
 	addNewSectionToApp: (objSection: {nameSection: string, userId: string}) => void;
 	addNewTagToApp: (newTag: { 
 		nameTag: any,
