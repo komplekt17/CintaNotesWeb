@@ -720,12 +720,17 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "USER_LOGOUT_ACTION":
+			// console.log(action.result)
 			return {
 				...state,
 				auth: !state.auth,
 				loading: false,
 				loaded: true,
 				currentDetails: handlerCurrentDetails(state, "userLogOut"),
+				messagePopup: {
+					category: action.result.typeMsg,
+					message: action.result.message,
+				},
 			}
 
 		case "HANDLER_VALUE_INPUTS_ACTION":
