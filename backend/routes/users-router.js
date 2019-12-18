@@ -1,59 +1,85 @@
 const router = require('express').Router();
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+
 const User = require('../models/users-model');
 const Section = require('../models/sections-model');
 const Tag = require('../models/tags-model');
 const Note = require('../models/notes-model');
 
+require('dotenv').config();
+
+// Хешируем пароль
+const getHashPassUser = async pass => {
+	const passHashed = await bcrypt.hash(pass, 8);
+	return passHashed;
+};
+
+// Генерируем авторизационный токен для пользователя
+const generateAuthToken = async () => {
+	const user = this;
+	const token = jwt.sign({ id: user.id }, process.env.JWT_KEY);
+
+	return token;
+};
+
+// Search for a user by login and pass.
+const findByCredentials = async (userLogin, pass) => {
+	let user = {};
+	const result = await User.findOne({ where: { login: userLogin } });
+
+	if (!result) user = { error: 'Invalid login credentials' };
+	else {
+		user = result;
+
+		const isPasswordMatch = await bcrypt.compare(pass, user.pass);
+		if (!isPasswordMatch) {
+			user = { error: 'Invalid password credentials' };
+		}
+	}
+	return user;
+};
+
 // добавление нового user
-router.route('/create').post((req, res) => {
-	const newUser = new User({
+router.route('/create').post(async (req, res) => {
+	const user = new User({
 		login: req.body.login,
-		pass: req.body.pass,
+		pass: await getHashPassUser(req.body.pass),
 		status: req.body.status,
 		lang: req.body.lang,
-		theme: req.body.theme
+		theme: req.body.theme,
+		token: generateAuthToken()
 	});
-	// console.log('string 14: ', newUser);
 
-	newUser
-		.save()
-		.then(() => {
-			return res.status(200).json({
-				success: true,
-				data: newUser,
-				message: 'NewUser was created successful!'
+	const isLoginEmail = validator.isEmail(req.body.login);
+	if (isLoginEmail) {
+		await user
+			.save()
+			.then(() => {
+				return res.status(200).json({
+					success: true,
+					data: user,
+					message: 'NewUser was created successful!'
+				});
+			})
+			.catch(error => {
+				return res.status(400).json({
+					error,
+					message: 'User not created!'
+				});
 			});
-		})
-		.catch(error => {
-			return res.status(400).json({
-				error,
-				message: 'User not created!'
-			});
+	} else {
+		return res.status(201).json({
+			message: 'Login is not email. User not created!'
 		});
+	}
 });
 
 // Войти зарегистрированному пользователю
 // И получение данных, если login и pass существуют
 router.route('/enter').post(async (req, res) => {
-	// Search for a user by login and pass.
-	// Поиск пользователя по электронной почте и паролю.
-	const findByCredentials = async (userLogin, pass) => {
-		let user = {};
-		const result = await User.findOne({ where: { login: userLogin } });
-
-		if (!result) user = { error: 'Invalid login credentials' };
-		else {
-			user = result;
-
-			// const isPasswordMatch = await bcrypt.compare(pass, user.pass)
-			const isPasswordMatch = pass === user.pass;
-			if (!isPasswordMatch) {
-				user = { error: 'Invalid password credentials' };
-			}
-		}
-		return user;
-	};
-
 	//Login a registered user
 	try {
 		const { login, pass } = req.body;
@@ -63,7 +89,9 @@ router.route('/enter').post(async (req, res) => {
 			const data = { error };
 			return res.status(201).send(data);
 		} else {
-			// const token = await user.generateAuthToken();
+			user.token = await generateAuthToken();
+			await user.save();
+
 			const sections = await Section.findAll({
 				where: { userId: user.id }
 			});
@@ -72,7 +100,6 @@ router.route('/enter').post(async (req, res) => {
 
 			const data = {
 				user,
-				// token,
 				sections,
 				tags,
 				notes

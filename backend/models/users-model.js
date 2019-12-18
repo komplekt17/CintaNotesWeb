@@ -9,7 +9,6 @@ const Note = require('../models/notes-model');
 const User = sequelize.define('user', {
 	id: {
 		type: Sequelize.UUID,
-		// autoIncrement: true,
 		primaryKey: true,
 		defaultValue: Sequelize.UUIDV4,
 		allowNull: false
@@ -37,6 +36,10 @@ const User = sequelize.define('user', {
 		type: Sequelize.ENUM,
 		values: ['night', 'light'],
 		allowNull: false
+	},
+	token: {
+		type: Sequelize.STRING,
+		allowNull: true
 	}
 });
 
