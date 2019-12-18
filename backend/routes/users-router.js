@@ -203,7 +203,7 @@ router.route('/update/:token').put(async (req, res) => {
 			typeMsg: 'error',
 			message: 'Token not found!'
 		};
-		return res.status(404).json(data);
+		return res.status(201).json(data);
 	}
 
 	let { inputNewPass, inputOldPass } = req.body;
@@ -241,13 +241,25 @@ router.route('/update/:token').put(async (req, res) => {
 
 // Выход пользователя из приложения
 router.route('/logout/:token').get(async (req, res) => {
-	// Log user out of the application
 	try {
-		req.user.tokens = req.user.tokens.filter(token => {
-			return token.token != req.token;
+		const user = await User.findOne({
+			where: { token: req.params.token }
 		});
-		await req.user.save();
-		res.send(req.user);
+		if (!user) {
+			const data = {
+				typeMsg: 'error',
+				message: 'Token not found!'
+			};
+			return res.status(201).json(data);
+		}
+		user.token = '';
+		// сохраняем token в БД
+		await user.save();
+		const data = {
+			typeMsg: 'success',
+			message: 'You logout success!'
+		};
+		return res.status(201).json(data);
 	} catch (error) {
 		res.status(500).send(error);
 	}
