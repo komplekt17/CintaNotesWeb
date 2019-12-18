@@ -66,16 +66,22 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 							</span>
 						</div>
 						<div className="note-date">
-							<i className="far fa-calendar-alt text-primary" title="updated" />
-							{"   "}
-							{getDateNormed(item.updatedAt)}
-							{"   "}|{"   "}
+							{item.updatedAt === item.createdAt ? (
+								""
+							) : (
+								<span>
+									<i className="far fa-calendar-alt text-primary" title="updated" />
+									{"   " + getDateNormed(item.updatedAt) + "   |   "}
+								</span>
+							)}
 							<i className="fas fa-calendar-alt text-info" title="created" />
-							{"   "}
-							{getDateNormed(item.createdAt)}
+							{"   " + getDateNormed(item.createdAt)}
 						</div>
 					</div>
-					<div className="note-text">{item.text}</div>
+					<div
+						className="note-text"
+						dangerouslySetInnerHTML={{ __html: item.text }}
+					/>
 					<div className="note-footer">
 						<div className="note-date">
 							<span
