@@ -8,7 +8,7 @@ import "../styles/UserPanel.css"
 interface IUserPanelProps {
 	auth: boolean;
 	userProfile: IUserProfile;
-	getStatusLogin: (token: string) => void;
+	changeStatusLogin: (token: string) => void;
 	getDataByLogin: (user: { login: any, pass: any }) => void;
 	handlerHeaderPopup: (name: string) => void;
 	handlerLang: (lang: string) => void;
@@ -19,14 +19,14 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 	const {
 		auth,
 		userProfile,
-		getStatusLogin,
+		changeStatusLogin,
 		getDataByLogin,
 		handlerHeaderPopup,
 		handlerLang,
 		handlerTheme,
 	} = props
 
-	const { lang, login } = userProfile
+	const { lang, login, token } = userProfile
 
 	const leftNavBar = (
 		<>
@@ -103,7 +103,7 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 									<span
 										className="dropdown-item"
 										onClick={() => {
-											getStatusLogin("token")
+											changeStatusLogin(token)
 										}}
 									>
 										{CONSTANTS[lang].MENU_LOGOUT}

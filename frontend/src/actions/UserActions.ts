@@ -112,16 +112,39 @@ const resetPasswordAction = (objUser: { login: any, pass: any }) => {
 
 // обработчик статуса логина (залогинен или нет User)
 // выход из всех сессий (сброс токенов)
-const getStatusLoginAction = (token: string) => {
-	return {
-		type: "USER_LOGOUT_ACTION",
-		token,
+const changeStatusLoginAction = (token: string) => {
+	{
+		return (dispatch: {
+			(arg0: { type: string }): void,
+			(arg0: { type: string, result: any }): void,
+			(arg0: { type: string, error: any }): void,
+		}) => {
+			dispatch({
+				type: "LOAD_REQUESTED_DATA_ACTION",
+			})
+			axios
+				.get(`${SERVER_URI}/users/logout/${token}`)
+				.then(response => {
+					console.log(response.data)
+					dispatch({
+						type: "USER_LOGOUT_ACTION",
+						result: response.data,
+					})
+				})
+				.catch(error => {
+					dispatch({
+						type: "LOAD_FAILURE_DATA_ACTION",
+						error,
+					})
+					console.log(error)
+				})
+		}
 	}
 }
 
 export {
 	getDataByLoginAction,
-	getStatusLoginAction,
+	changeStatusLoginAction,
 	createNewUserAction,
 	updateUserPassAction,
 	resetPasswordAction,

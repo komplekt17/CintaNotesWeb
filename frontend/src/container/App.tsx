@@ -22,7 +22,7 @@ import {
 } from "../components"
 import {
 	getDataByLoginAction,
-	getStatusLoginAction,
+	changeStatusLoginAction,
 	createNewUserAction,
 	updateUserPassAction,
 	addNewSectionAction,
@@ -63,7 +63,7 @@ const App: React.FC<IAppProps> = props => {
 	const {
 		store,
 		getDataByLoginToApp,
-		getStatusLoginToApp,
+		changeStatusLoginToApp,
 		createNewUserToApp,
 		updateUserPassToApp,
 		addNewSectionToApp,
@@ -296,7 +296,7 @@ const App: React.FC<IAppProps> = props => {
 				<div className="row">
 					<UserPanel
 						auth={auth}
-						getStatusLogin={getStatusLoginToApp}
+						changeStatusLogin={changeStatusLoginToApp}
 						userProfile={currentDetails.userProfile}
 						getDataByLogin={getDataByLoginToApp}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
@@ -452,8 +452,8 @@ const mapDispatchToProps = (dispatch: any) => {
 	return {
 		getDataByLoginToApp: (objUser: { login: string, pass: string }) =>
 			dispatch(getDataByLoginAction(objUser)),
-		getStatusLoginToApp: (token: string) =>
-			dispatch(getStatusLoginAction(token)),
+			changeStatusLoginToApp: (token: string) =>
+			dispatch(changeStatusLoginAction(token)),
 		createNewUserToApp: (objUser: { login: string, pass: string }) =>
 			dispatch(createNewUserAction(objUser)),
 		updateUserPassToApp: (objUser: {

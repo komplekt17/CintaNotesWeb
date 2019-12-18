@@ -14,7 +14,7 @@ export interface IAppProps {
 		notes: INotes[],
 	};
 	getDataByLoginToApp: (objUser: { login: string, pass: string }) => void;
-	getStatusLoginToApp: (token: string) => void;
+	changeStatusLoginToApp: (token: string) => void;
 	createNewUserToApp: (objUser: { login: string, pass: string }) => void;
 	updateUserPassToApp: (objUser: {
 		inputOldPass: any,
