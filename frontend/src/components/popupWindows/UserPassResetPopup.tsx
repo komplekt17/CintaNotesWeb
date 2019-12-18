@@ -5,10 +5,11 @@ import { CONSTANTS } from "../../constants"
 interface IUserPassResetProps {
 	namePopup: string;
 	lang: string;
+	resetPassword: (userLogin: any) => void;
 }
 
 export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
-	const { namePopup, lang } = props
+	const { namePopup, lang, resetPassword} = props
 
 	return (
 		<div
@@ -56,12 +57,9 @@ export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
 
 							<button
 								onClick={() => {
-									const inputLogin = $("#inputLogin").val()
-									if (inputLogin !== "") {
-										const objUser = {
-											inputLogin,
-										}
-										console.log(objUser)
+									const userLogin = $("#inputLogin").val()
+									if (userLogin !== "") {
+										resetPassword(userLogin)
 									}
 								}}
 								className="btn btn-info btn-block mt-3"

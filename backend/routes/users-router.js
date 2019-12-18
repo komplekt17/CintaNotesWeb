@@ -267,15 +267,15 @@ router.route('/logout/:token').get(async (req, res) => {
 
 // Восстановление пароля пользователя
 router.route('/reset-pass').post(async (req, res) => {
-	const { inputLogin } = req.body;
-	//console.log('string_185', inputLogin)
+	const { userLogin } = req.body;
+	//console.log('string_185', userLogin)
 
-	User.findOne({ where: { login: inputLogin } }).then(user => {
+	User.findOne({ where: { login: userLogin } }).then(user => {
 		// если user не найден
 		if (!user) {
 			const data = {
 				typeMsg: 'error',
-				message: `Your email ${inputLogin} not registered!`
+				message: `Your email ${userLogin} not registered!`
 			};
 			return res.status(201).json(data);
 		}
@@ -291,7 +291,7 @@ router.route('/reset-pass').post(async (req, res) => {
 				.then(() => {
 					const data = {
 						typeMsg: 'success',
-						message: `New Password sent on ${inputLogin}, Check spam`
+						message: `New Password sent on ${userLogin}, Check spam`
 					};
 					return res.status(201).json(data);
 				})

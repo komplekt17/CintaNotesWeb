@@ -103,42 +103,62 @@ const updateUserPassAction = (objUserPass: {
 }
 
 // сброс пароля
-const resetPasswordAction = (objUser: { login: any, pass: any }) => {
-	return {
-		type: "RESET_PASSWORD_ACTION",
-		objUser,
+const resetPasswordAction = (userLogin: any) => {
+	return (dispatch: {
+		(arg0: { type: string }): void,
+		(arg0: { type: string, result: any }): void,
+		(arg0: { type: string, error: any }): void,
+	}) => {
+		$("#modal-resetPass").modal("hide")
+		dispatch({
+			type: "LOAD_REQUESTED_DATA_ACTION",
+		})
+		axios
+			.post(`${SERVER_URI}/users/reset-pass`, userLogin)
+			.then(response => {
+				// console.log(response.data)
+				dispatch({
+					type: "RESET_PASSWORD_ACTION",
+					result: response.data,
+				})
+			})
+			.catch(error => {
+				dispatch({
+					type: "LOAD_FAILURE_DATA_ACTION",
+					error,
+				})
+				console.log(error)
+			})
 	}
 }
 
 // обработчик статуса логина (залогинен или нет User)
 // выход из всех сессий (сброс токенов)
 const changeStatusLoginAction = (token: string) => {
-	{
-		return (dispatch: {
-			(arg0: { type: string }): void,
-			(arg0: { type: string, result: any }): void,
-			(arg0: { type: string, error: any }): void,
-		}) => {
-			dispatch({
-				type: "LOAD_REQUESTED_DATA_ACTION",
+	return (dispatch: {
+		(arg0: { type: string }): void,
+		(arg0: { type: string, result: any }): void,
+		(arg0: { type: string, error: any }): void,
+	}) => {
+		dispatch({
+			type: "LOAD_REQUESTED_DATA_ACTION",
+		})
+		axios
+			.get(`${SERVER_URI}/users/logout/${token}`)
+			.then(response => {
+				// console.log(response.data)
+				dispatch({
+					type: "USER_LOGOUT_ACTION",
+					result: response.data,
+				})
 			})
-			axios
-				.get(`${SERVER_URI}/users/logout/${token}`)
-				.then(response => {
-					// console.log(response.data)
-					dispatch({
-						type: "USER_LOGOUT_ACTION",
-						result: response.data,
-					})
+			.catch(error => {
+				dispatch({
+					type: "LOAD_FAILURE_DATA_ACTION",
+					error,
 				})
-				.catch(error => {
-					dispatch({
-						type: "LOAD_FAILURE_DATA_ACTION",
-						error,
-					})
-					console.log(error)
-				})
-		}
+				console.log(error)
+			})
 	}
 }
 

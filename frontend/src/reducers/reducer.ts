@@ -719,6 +719,18 @@ export const Reducer = (state: IState = initialState, action: any) => {
 				},
 			}
 
+		case "RESET_PASSWORD_ACTION":
+			$("#modal-alert").modal("show")
+			return {
+				...state,
+				loading: false,
+				loaded: true,
+				messagePopup: {
+					category: action.result.typeMsg,
+					message: action.result.message,
+				},
+			}
+
 		case "USER_LOGOUT_ACTION":
 			// console.log(action.result)
 			return {

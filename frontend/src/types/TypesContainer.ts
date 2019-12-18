@@ -21,6 +21,7 @@ export interface IAppProps {
 		inputNewPass: any,
 		token: string,
 	}) => void;
+	resetPasswordToApp: (userLogin: any ) => void;
 	addNewSectionToApp: (objSection: {nameSection: string, userId: string}) => void;
 	addNewTagToApp: (newTag: { 
 		nameTag: any,

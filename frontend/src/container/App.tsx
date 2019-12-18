@@ -25,6 +25,7 @@ import {
 	changeStatusLoginAction,
 	createNewUserAction,
 	updateUserPassAction,
+	resetPasswordAction,
 	addNewSectionAction,
 	addNewTagAction,
 	addNewNoteAction,
@@ -66,6 +67,7 @@ const App: React.FC<IAppProps> = props => {
 		changeStatusLoginToApp,
 		createNewUserToApp,
 		updateUserPassToApp,
+		resetPasswordToApp,
 		addNewSectionToApp,
 		addNewTagToApp,
 		addNewNoteToApp,
@@ -411,6 +413,7 @@ const App: React.FC<IAppProps> = props => {
 			/>
 			<UserPassResetPopup
 				namePopup={namePopup}
+				resetPassword={resetPasswordToApp}
 				lang={currentDetails.userProfile.lang}
 			/>
 			<UserPassChangePopup
@@ -452,7 +455,7 @@ const mapDispatchToProps = (dispatch: any) => {
 	return {
 		getDataByLoginToApp: (objUser: { login: string, pass: string }) =>
 			dispatch(getDataByLoginAction(objUser)),
-			changeStatusLoginToApp: (token: string) =>
+		changeStatusLoginToApp: (token: string) =>
 			dispatch(changeStatusLoginAction(token)),
 		createNewUserToApp: (objUser: { login: string, pass: string }) =>
 			dispatch(createNewUserAction(objUser)),
@@ -461,6 +464,8 @@ const mapDispatchToProps = (dispatch: any) => {
 			inputNewPass: any,
 			token: string,
 		}) => dispatch(updateUserPassAction(objUser)),
+		resetPasswordToApp: (userLogin: any) =>
+			dispatch(resetPasswordAction(userLogin)),
 		handlerHeaderPopupToApp: (header: string) =>
 			dispatch(handlerHeaderPopupAction(header)),
 		handlerCurrentValueToApp: (name: string, value: string) =>
