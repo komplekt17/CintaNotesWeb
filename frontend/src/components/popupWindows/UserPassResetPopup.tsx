@@ -9,7 +9,7 @@ interface IUserPassResetProps {
 }
 
 export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
-	const { namePopup, lang, resetPassword} = props
+	const { namePopup, lang, resetPassword } = props
 
 	return (
 		<div
@@ -61,6 +61,7 @@ export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
 									if (userLogin !== "") {
 										resetPassword(userLogin)
 									}
+									$("#inputLogin").val("")
 								}}
 								className="btn btn-info btn-block mt-3"
 								type="button"
