@@ -204,7 +204,7 @@ router.route('/update/:token').put(async (req, res) => {
 	let { inputNewPass, inputOldPass } = req.body;
 	const isPasswordMatch = await bcrypt.compare(inputOldPass, user.pass);
 
-	// Если старые паароли совпадают
+	// Если старые пароли совпадают
 	if (isPasswordMatch) {
 		user.pass = await getHashPassUser(inputNewPass);
 		user
@@ -224,7 +224,7 @@ router.route('/update/:token').put(async (req, res) => {
 				});
 			});
 	}
-	// Если старые паароли не совпадают
+	// Если старые пароли не совпадают
 	else {
 		const data = {
 			typeMsg: 'error',
