@@ -52,6 +52,7 @@ const createNewUserAction = (objNewUser: {
 		axios
 			.post(`${SERVER_URI}/users/create`, objNewUser)
 			.then(response => {
+				// console.log(response.data)
 				dispatch({
 					type: "CREATE_NEW_USER_ACTION",
 					result: response.data,
