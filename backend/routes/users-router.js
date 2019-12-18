@@ -83,7 +83,7 @@ router.route('/create').post(async (req, res) => {
 		else {
 			return res.status(201).json({
 				typeMsg: 'error',
-				message: 'This Login is busy yet. User not created!'
+				message: 'This Login is already busy. User not created!'
 			});
 		}
 	}
