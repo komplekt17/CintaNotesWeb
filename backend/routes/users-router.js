@@ -268,7 +268,6 @@ router.route('/logout/:token').get(async (req, res) => {
 // Восстановление пароля пользователя
 router.route('/reset-pass').post(async (req, res) => {
 	const { userLogin } = req.body;
-	//console.log('string_185', userLogin)
 
 	User.findOne({ where: { login: userLogin } }).then(user => {
 		// если user не найден

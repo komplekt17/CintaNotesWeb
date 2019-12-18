@@ -104,6 +104,7 @@ const updateUserPassAction = (objUserPass: {
 
 // сброс пароля
 const resetPasswordAction = (userLogin: any) => {
+	const objUser = { userLogin }
 	return (dispatch: {
 		(arg0: { type: string }): void,
 		(arg0: { type: string, result: any }): void,
@@ -114,7 +115,7 @@ const resetPasswordAction = (userLogin: any) => {
 			type: "LOAD_REQUESTED_DATA_ACTION",
 		})
 		axios
-			.post(`${SERVER_URI}/users/reset-pass`, userLogin)
+			.post(`${SERVER_URI}/users/reset-pass/`, objUser)
 			.then(response => {
 				// console.log(response.data)
 				dispatch({
