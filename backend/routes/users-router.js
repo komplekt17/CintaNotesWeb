@@ -50,7 +50,7 @@ const findByCredentials = async (userLogin, pass) => {
 };
 
 // отправляем новый пароль на email user'a
-const sendNewPassword = async user => {
+const sendNewPassword = user => {
 	//console.log('string_64', user)
 
 	let mailOptions = {
@@ -72,7 +72,7 @@ const sendNewPassword = async user => {
 		}
 	});
 
-	await transporter.sendMail(mailOptions, function(error, info) {
+	transporter.sendMail(mailOptions, function(error, info) {
 		if (error) console.log(error);
 		else console.log('Email sent: ' + info.response);
 	});
@@ -270,33 +270,37 @@ router.route('/reset-pass').post(async (req, res) => {
 	const { inputLogin } = req.body;
 	//console.log('string_185', inputLogin)
 
-	User.findOne({ login: inputLogin }, async (error, user) => {
-		if (error) {
-			const data = { error, message: 'User not found!' };
-			return res.status(404).json(data);
-		}
+	User.findOne({ where: { login: inputLogin } }).then(user => {
+		// если user не найден
 		if (!user) {
 			const data = {
-				error,
+				typeMsg: 'error',
 				message: `Your email ${inputLogin} not registered!`
 			};
 			return res.status(201).json(data);
-		} else {
-			user.pass = await getRundomPass();
-			await sendNewPassword(user);
-
+		}
+		// если user найден
+		else {
+			// генерация случайного пароля
+			user.pass = getRundomPass();
+			// отправка пароля на user email
+			sendNewPassword(user);
+			// сохранение пароля в БД
 			user
 				.save()
 				.then(() => {
 					const data = {
-						success: true,
-						//data: user,
+						typeMsg: 'success',
 						message: `New Password sent on ${inputLogin}, Check spam`
 					};
 					return res.status(201).json(data);
 				})
 				.catch(error => {
-					const data = { error, message: 'Email not found!' };
+					const data = {
+						error,
+						typeMsg: 'error',
+						message: 'Oops!'
+					};
 					console.log(error);
 					return res.status(400).json(data);
 				});
