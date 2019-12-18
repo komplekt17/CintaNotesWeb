@@ -53,25 +53,42 @@ router.route('/create').post(async (req, res) => {
 		token: await generateAuthToken()
 	});
 
-	const isLoginEmail = validator.isEmail(req.body.login);
-	console.log(isLoginEmail);
+	// проверяем на валидность логин
+	const isLoginEmail = validator.isEmail(user.login);
+	// если логин валиден, проверяем его уникальность
+	const isExistLogin = await User.findOne({
+		where: { login: user.login }
+	});
+	// если логин валиден
 	if (isLoginEmail) {
-		await user
-			.save()
-			.then(() => {
-				return res.status(200).json({
-					typeMsg: 'success',
-					data: user,
-					message: 'NewUser was created successful!'
+		// если логин уникальный и еще не существует
+		if (!isExistLogin) {
+			await user
+				.save()
+				.then(() => {
+					return res.status(200).json({
+						typeMsg: 'success',
+						data: user,
+						message: 'NewUser was created successful!'
+					});
+				})
+				.catch(error => {
+					return res.status(400).json({
+						error,
+						message: 'User not created!'
+					});
 				});
-			})
-			.catch(error => {
-				return res.status(400).json({
-					error,
-					message: 'User not created!'
-				});
+		}
+		// если логин не уникальный и уже существует
+		else {
+			return res.status(201).json({
+				typeMsg: 'error',
+				message: 'This Login is busy yet. User not created!'
 			});
-	} else {
+		}
+	}
+	// если логин не валиден
+	else {
 		return res.status(201).json({
 			typeMsg: 'error',
 			message: 'Login is not email. User not created!'
