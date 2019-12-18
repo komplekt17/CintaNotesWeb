@@ -27,7 +27,7 @@ export interface INotes {
 export interface IUserProfile {
 	id: string;
 	login: string;
-	pass: string;
+	token: string;
 	status: string;
 	lang: string;
 	theme: string;

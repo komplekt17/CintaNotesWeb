@@ -33,7 +33,7 @@ export const initialState = {
 		userProfile: {
 			id: "1",
 			login: "",
-			pass: "",
+			token: "",
 			status: "user",
 			lang: "en",
 			theme: "night", // or light
@@ -353,12 +353,12 @@ const handlerCurrentDetails = (
 	// сохраняем данные User'а при входе/регистрации в профиль
 	else if (name === "userData") {
 		// деструктурируем value, т.к. в данном случае
-		// value = user{login, pass}
-		const { id, login, pass, status, lang, theme } = value
+		// value = user{login, token}
+		const { id, login, token, status, lang, theme } = value
 		// обновляем значения полей
 		obj = getNewObjDetails(obj, "userProfile", "id", id)
 		obj = getNewObjDetails(obj, "userProfile", "login", login)
-		obj = getNewObjDetails(obj, "userProfile", "pass", pass)
+		obj = getNewObjDetails(obj, "userProfile", "token", token)
 		obj = getNewObjDetails(obj, "userProfile", "status", status)
 		obj = getNewObjDetails(obj, "userProfile", "lang", lang)
 		obj = getNewObjDetails(obj, "userProfile", "theme", theme)
@@ -366,10 +366,10 @@ const handlerCurrentDetails = (
 
 	// удаляем данные User'а при выходе из профиля
 	else if (name === "userLogOut") {
-		// обновляем поле login
+		// очищаем значения полей id, login, token
+		obj = getNewObjDetails(obj, "userProfile", "id", (value = ""))
 		obj = getNewObjDetails(obj, "userProfile", "login", (value = ""))
-		// обновляем поле pass
-		obj = getNewObjDetails(obj, "userProfile", "pass", (value = ""))
+		obj = getNewObjDetails(obj, "userProfile", "token", (value = ""))
 	}
 
 	// смена языковой локализации User'а при клике EN/RU
@@ -683,7 +683,9 @@ export const Reducer = (state: IState = initialState, action: any) => {
 					},
 					auth: !state.auth,
 				}
-			} else if (action.result.typeMsg === "error") {
+			}
+			// action.result.typeMsg === "error"
+			else {
 				$("#modal-alert").modal("show")
 				return {
 					...state,
@@ -795,7 +797,6 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= END SECTIONS =======
 
 		// ======= TAGS =======
-		// eslint-disable-next-line
 		case "ADD_NEW_TAG_ACTION":
 			$("#modal-alert").modal("show")
 			const addTagParams = {

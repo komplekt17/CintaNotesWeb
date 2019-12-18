@@ -68,7 +68,7 @@ const createNewUserAction = (objNewUser: {
 	}
 }
 
-// обработчик обновления user
+// обработчик обновления user (изменение пароля)
 const updateEditUserAction = (objUser: {
 	login: string,
 	pass: string,
@@ -95,6 +95,7 @@ const getStatusLoginAction = (token: string) => {
 		token,
 	}
 }
+
 export {
 	getDataByLoginAction,
 	getStatusLoginAction,
