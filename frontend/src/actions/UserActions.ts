@@ -125,7 +125,7 @@ const changeStatusLoginAction = (token: string) => {
 			axios
 				.get(`${SERVER_URI}/users/logout/${token}`)
 				.then(response => {
-					console.log(response.data)
+					// console.log(response.data)
 					dispatch({
 						type: "USER_LOGOUT_ACTION",
 						result: response.data,
