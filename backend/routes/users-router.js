@@ -12,8 +12,8 @@ const Note = require('../models/notes-model');
 require('dotenv').config();
 
 // Хешируем пароль
-const getHashPassUser = async pass => {
-	const passHashed = await bcrypt.hash(pass, 8);
+const getHashPassUser = pass => {
+	const passHashed = bcrypt.hash(pass, 8);
 	return passHashed;
 };
 
@@ -50,18 +50,15 @@ const findByCredentials = async (userLogin, pass) => {
 };
 
 // отправляем новый пароль на email user'a
-const sendNewPassword = user => {
-	//console.log('string_64', user)
-
+const sendNewPassword = (login, pass) => {
 	let mailOptions = {
 		from: process.env.SERVICE_USER,
-		to: user.login,
+		to: login,
 		subject: 'Reset your account password',
-		html: `<h4><b>Resetting Password on CintaNotesWeb</b></h4>
-<p>your temporary password - ${user.pass}</p>
-<p>--CintaNotesWeb Team</p>`
+		html: `<h4><b>Resetting Password on ${process.env.SITE_NAME}</b></h4>
+					<p>your temporary password - ${pass}</p>
+					<p>--${process.env.SITE_NAME} Team</p>`
 	};
-	CintaNotesWeb;
 
 	var transporter = nodemailer.createTransport({
 		host: process.env.SERVICE_HOST,
@@ -268,9 +265,10 @@ router.route('/logout/:token').get(async (req, res) => {
 
 // Восстановление пароля пользователя
 router.route('/reset-pass').post(async (req, res) => {
-	const { userLogin } = req.body;
+	try {
+		const { userLogin } = req.body;
 
-	User.findOne({ where: { login: userLogin } }).then(user => {
+		const user = await User.findOne({ where: { login: userLogin } });
 		// если user не найден
 		if (!user) {
 			const data = {
@@ -282,30 +280,27 @@ router.route('/reset-pass').post(async (req, res) => {
 		// если user найден
 		else {
 			// генерация случайного пароля
-			user.pass = getHashPassUser(getRundomPass());
-			// отправка пароля на user email
-			sendNewPassword(user);
+			const newPass = getRundomPass();
+			// хешируем пароль для БД
+			user.pass = await getHashPassUser(newPass);
+			// отправка пароля на user email (user.login)
+			await sendNewPassword(user.login, newPass);
 			// сохранение пароля в БД
-			user
-				.save()
-				.then(() => {
-					const data = {
-						typeMsg: 'success',
-						message: `New Password sent on ${userLogin}, Check spam`
-					};
-					return res.status(201).json(data);
-				})
-				.catch(error => {
-					const data = {
-						error,
-						typeMsg: 'error',
-						message: 'Oops!'
-					};
-					console.log(error);
-					return res.status(400).json(data);
-				});
+			await user.save();
+			const data = {
+				typeMsg: 'success',
+				message: `New Password sent on ${userLogin}, Check spam`
+			};
+			return res.status(201).json(data);
 		}
-	});
+	} catch (error) {
+		const data = {
+			error,
+			typeMsg: 'error',
+			message: 'Oops!'
+		};
+		return res.status(400).json(data);
+	}
 });
 
 module.exports = router;

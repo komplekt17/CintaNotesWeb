@@ -86,7 +86,7 @@ const updateUserPassAction = (objUserPass: {
 		axios
 			.put(`${SERVER_URI}/users/update/${objUserPass.token}`, objUserPass)
 			.then(response => {
-				console.log(response.data)
+				// console.log(response.data)
 				dispatch({
 					type: "UPDATE_USER_PASS_ACTION",
 					result: response.data,
