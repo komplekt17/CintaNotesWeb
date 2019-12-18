@@ -636,7 +636,8 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "GET_DATA_BY_LOGIN_ACTION":
-			if (!action.result.error) {
+			// console.log(action.result)
+			if (action.result.typeMsg === "success") {
 				return {
 					...state,
 					sections: action.result.sections,
@@ -650,16 +651,24 @@ export const Reducer = (state: IState = initialState, action: any) => {
 					loading: false,
 					loaded: true,
 					auth: !state.auth,
-					messagePopup: { category: "", message: "" },
+					messagePopup: {
+						category: action.result.typeMsg,
+						message: action.result.message,
+					},
 					filters: { sections: "All", tags: "All" },
 				}
-			} else {
+			}
+			//  action.result.typeMsg === "error"
+			else {
 				$("#modal-alert").modal("show")
 				return {
 					...state,
 					loading: false,
 					loaded: true,
-					messagePopup: { category: "error", message: action.result.error },
+					messagePopup: {
+						category: action.result.typeMsg,
+						message: action.result.message,
+					},
 				}
 			}
 

@@ -30,13 +30,20 @@ const findByCredentials = async (userLogin, pass) => {
 	let user = {};
 	const result = await User.findOne({ where: { login: userLogin } });
 
-	if (!result) user = { error: 'Invalid login credentials' };
+	if (!result)
+		user = {
+			typeMsg: 'error',
+			message: 'Invalid login credentials'
+		};
 	else {
 		user = result;
 
 		const isPasswordMatch = await bcrypt.compare(pass, user.pass);
 		if (!isPasswordMatch) {
-			user = { error: 'Invalid password credentials' };
+			user = {
+				typeMsg: 'error',
+				message: 'Invalid password credentials'
+			};
 		}
 	}
 	return user;
@@ -107,11 +114,12 @@ router.route('/create').post(async (req, res) => {
 			await user
 				.save()
 				.then(() => {
-					return res.status(200).json({
+					const data = {
+						user,
 						typeMsg: 'success',
-						data: user,
 						message: 'NewUser was created successful!'
-					});
+					};
+					return res.status(200).json(data);
 				})
 				.catch(error => {
 					return res.status(400).json({
@@ -122,18 +130,20 @@ router.route('/create').post(async (req, res) => {
 		}
 		// если логин не уникальный и уже существует
 		else {
-			return res.status(201).json({
+			const data = {
 				typeMsg: 'error',
 				message: 'This Login is already busy. User not created!'
-			});
+			};
+			return res.status(201).json(data);
 		}
 	}
 	// если логин не валиден
 	else {
-		return res.status(201).json({
+		const data = {
 			typeMsg: 'error',
 			message: 'Login is not email. User not created!'
-		});
+		};
+		return res.status(201).json(data);
 	}
 });
 
@@ -144,13 +154,15 @@ router.route('/enter').post(async (req, res) => {
 	try {
 		const { login, pass } = req.body;
 		const user = await findByCredentials(login, pass);
-		const { error } = user;
-		if (error) {
-			const data = { error };
+		if (user.typeMsg) {
+			const data = {
+				typeMsg: user.typeMsg,
+				message: user.message
+			};
+
 			return res.status(201).send(data);
 		} else {
 			user.token = await generateAuthToken();
-			await user.save();
 
 			const sections = await Section.findAll({
 				where: { userId: user.id }
@@ -162,15 +174,12 @@ router.route('/enter').post(async (req, res) => {
 				user,
 				sections,
 				tags,
-				notes
-			};
-			// console.log('data', data);
-
-			return res.status(201).send({
+				notes,
 				typeMsg: 'success',
-				data,
 				message: 'Welcome to CintaNotesWeb!'
-			});
+			};
+
+			return res.status(201).send(data);
 		}
 	} catch (error) {
 		return res.status(400).send({
@@ -185,10 +194,11 @@ router.route('/update/:token').put(async (req, res) => {
 	//console.log(req.body)
 	const user = await User.findOne({ where: { token: req.params.token } });
 	if (!user) {
-		return res.status(404).json({
+		const data = {
 			typeMsg: 'error',
 			message: 'Token not found!'
-		});
+		};
+		return res.status(404).json(data);
 	}
 
 	let { inputNewPass, inputOldPass } = req.body;
@@ -200,10 +210,11 @@ router.route('/update/:token').put(async (req, res) => {
 		user
 			.save()
 			.then(() => {
-				return res.status(201).json({
+				const data = {
 					typeMsg: 'success',
 					message: 'Password was updated successful!'
-				});
+				};
+				return res.status(201).json(data);
 			})
 			.catch(error => {
 				return res.status(400).json({
@@ -215,10 +226,11 @@ router.route('/update/:token').put(async (req, res) => {
 	}
 	// Если старые паароли не совпадают
 	else {
-		return res.status(201).json({
+		const data = {
 			typeMsg: 'error',
 			message: 'Entered incorrect old Password'
-		});
+		};
+		return res.status(201).json(data);
 	}
 });
 
