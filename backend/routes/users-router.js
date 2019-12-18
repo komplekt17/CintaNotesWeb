@@ -20,7 +20,7 @@ const getHashPassUser = async pass => {
 // Генерируем авторизационный токен для пользователя
 const generateAuthToken = async () => {
 	const user = this;
-	const token = jwt.sign({ id: user.id }, process.env.JWT_KEY);
+	const token = await jwt.sign({ id: user.id }, process.env.JWT_KEY);
 
 	return token;
 };
@@ -50,16 +50,17 @@ router.route('/create').post(async (req, res) => {
 		status: req.body.status,
 		lang: req.body.lang,
 		theme: req.body.theme,
-		token: generateAuthToken()
+		token: await generateAuthToken()
 	});
 
 	const isLoginEmail = validator.isEmail(req.body.login);
+	console.log(isLoginEmail);
 	if (isLoginEmail) {
 		await user
 			.save()
 			.then(() => {
 				return res.status(200).json({
-					success: true,
+					typeMsg: 'success',
 					data: user,
 					message: 'NewUser was created successful!'
 				});
@@ -72,6 +73,7 @@ router.route('/create').post(async (req, res) => {
 			});
 	} else {
 		return res.status(201).json({
+			typeMsg: 'error',
 			message: 'Login is not email. User not created!'
 		});
 	}
