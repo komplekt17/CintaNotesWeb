@@ -664,20 +664,36 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "CREATE_NEW_USER_ACTION":
-			return {
-				...state,
-				currentDetails: handlerCurrentDetails(
-					state,
-					"userData",
-					action.result.data
-				),
-				sections: [],
-				tags: [],
-				notes: [],
-				loading: false,
-				loaded: true,
-				messagePopup: { category: "success", message: action.result.message },
-				auth: !state.auth,
+			if (action.result.typeMsg === "success") {
+				return {
+					...state,
+					currentDetails: handlerCurrentDetails(
+						state,
+						"userData",
+						action.result.data
+					),
+					sections: [],
+					tags: [],
+					notes: [],
+					loading: false,
+					loaded: true,
+					messagePopup: {
+						category: action.result.typeMsg,
+						message: action.result.message,
+					},
+					auth: !state.auth,
+				}
+			} else if (action.result.typeMsg === "error") {
+				$("#modal-alert").modal("show")
+				return {
+					...state,
+					loading: false,
+					loaded: true,
+					messagePopup: {
+						category: action.result.typeMsg,
+						message: action.result.message,
+					},
+				}
 			}
 
 		case "USER_LOGOUT_ACTION":
