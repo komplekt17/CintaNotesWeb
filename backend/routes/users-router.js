@@ -57,10 +57,11 @@ const sendNewPassword = user => {
 		from: process.env.SERVICE_USER,
 		to: user.login,
 		subject: 'Reset your account password',
-		html: `<h4><b>Resetting Password on Fast Pages</b></h4>
+		html: `<h4><b>Resetting Password on CintaNotesWeb</b></h4>
 <p>your temporary password - ${user.pass}</p>
-<p>--Fast Pages Team</p>`
+<p>--CintaNotesWeb Team</p>`
 	};
+	CintaNotesWeb;
 
 	var transporter = nodemailer.createTransport({
 		host: process.env.SERVICE_HOST,
@@ -281,7 +282,7 @@ router.route('/reset-pass').post(async (req, res) => {
 		// если user найден
 		else {
 			// генерация случайного пароля
-			user.pass = getRundomPass();
+			user.pass = getHashPassUser(getRundomPass());
 			// отправка пароля на user email
 			sendNewPassword(user);
 			// сохранение пароля в БД
