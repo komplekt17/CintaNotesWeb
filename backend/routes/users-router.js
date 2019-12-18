@@ -166,7 +166,11 @@ router.route('/enter').post(async (req, res) => {
 			};
 			// console.log('data', data);
 
-			return res.status(201).send(data);
+			return res.status(201).send({
+				typeMsg: 'success',
+				data,
+				message: 'Welcome to CintaNotesWeb!'
+			});
 		}
 	} catch (error) {
 		return res.status(400).send({
@@ -177,39 +181,44 @@ router.route('/enter').post(async (req, res) => {
 });
 
 // обновление user (изменение пароля)
-router.route('/update/:id').put(async (req, res) => {
+router.route('/update/:token').put(async (req, res) => {
 	//console.log(req.body)
-	const user = await User.findOne({ where: { id: req.params.id } });
+	const user = await User.findOne({ where: { token: req.params.token } });
 	if (!user) {
-		const data = { error, message: 'User not found!' };
-		return res.status(404).json(data);
+		return res.status(404).json({
+			typeMsg: 'error',
+			message: 'Token not found!'
+		});
 	}
 
 	let { inputNewPass, inputOldPass } = req.body;
 	const isPasswordMatch = await bcrypt.compare(inputOldPass, user.pass);
 
-	//console.log(isPasswordMatch);
-
+	// Если старые паароли совпадают
 	if (isPasswordMatch) {
-		user.pass = inputNewPass;
-
+		user.pass = await getHashPassUser(inputNewPass);
 		user
 			.save()
 			.then(() => {
-				const data = {
-					success: true,
-					data: user,
+				return res.status(201).json({
+					typeMsg: 'success',
 					message: 'Password was updated successful!'
-				};
-				return res.status(201).json(data);
+				});
 			})
 			.catch(error => {
-				const data = { error, message: 'User not updated!' };
-				return res.status(400).json(data);
+				return res.status(400).json({
+					error,
+					typeMsg: 'error',
+					message: 'User not updated!'
+				});
 			});
-	} else {
-		const data = { error, message: 'Entered incorrect old Password' };
-		return res.status(201).json(data);
+	}
+	// Если старые паароли не совпадают
+	else {
+		return res.status(201).json({
+			typeMsg: 'error',
+			message: 'Entered incorrect old Password'
+		});
 	}
 });
 
