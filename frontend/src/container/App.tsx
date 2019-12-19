@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import $ from "jquery"
 import { connect } from "react-redux"
 import {
+	GetBootsrapStyle,
 	UserPanel,
 	SectionsPanel,
 	SideBarTags,
@@ -42,7 +43,7 @@ import {
 	handlerThemeAction,
 } from "../actions"
 import { IAppProps } from "../types"
-import "bootswatch/dist/superhero/bootstrap.min.css"
+// import "bootswatch/dist/superhero/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
 import "../styles/App.css"
 import { css } from "@emotion/core"
@@ -95,6 +96,12 @@ const App: React.FC<IAppProps> = props => {
 		auth,
 		loading,
 	} = store
+
+	// useEffect(() => {
+	// 	if (currentDetails.userProfile.theme === "night") {
+	// 		require("../styles/bootstrap-superhero.min.css")
+	// 	} else require("../styles/bootstrap-spacelab.min.css")
+	// })
 
 	// подсчёт количества тегов или записей активной секции
 	const countQualityItems = (
@@ -294,6 +301,7 @@ const App: React.FC<IAppProps> = props => {
 
 	return (
 		<div className="App">
+			<GetBootsrapStyle theme={currentDetails.userProfile.theme} />
 			<div className="container-fluid app-user">
 				<div className="row">
 					<UserPanel

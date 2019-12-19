@@ -1,17 +1,17 @@
 .App {
-  /* background-color: #282c34; */
+  /* background-color: #282c34;
+  color: white; */
   font-size: 16px;
-  color: white;
 }
 
 .App .top-panel li span, .App .app-side-tags li span{
   cursor: pointer;
 }
 
-.App .top-panel li span:hover, 
+/* .App .top-panel li span:hover, 
 .App .app-side-tags li span:hover{
   color: #ccc;
-}
+} */
 
 .app-user {
   position: fixed;
