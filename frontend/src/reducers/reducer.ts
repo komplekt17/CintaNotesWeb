@@ -523,6 +523,10 @@ const editingItem = (
 		arr[index].sectionId = params.sectionId
 		// присваиваем новое значение полю note.tagId
 		arr[index].tagId = params.tagId
+		// присваиваем новое значение полю note.tagId
+		arr[index].createdAt = params.createdAt
+		// присваиваем новое значение полю note.tagId
+		arr[index].updatedAt = params.updatedAt
 
 		return arr
 	}

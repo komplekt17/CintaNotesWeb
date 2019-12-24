@@ -43,11 +43,14 @@ import {
 	handlerThemeAction,
 } from "../actions"
 import { IAppProps } from "../types"
-// import "bootswatch/dist/superhero/bootstrap.min.css"
+import "bootswatch/dist/superhero/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
-import "../styles/App.css"
-import { css } from "@emotion/core"
 import { ScaleLoader } from "react-spinners"
+import { css } from "@emotion/core"
+import "../styles/App.css"
+
+import "draft-js/dist/Draft.css"
+import "draftail/dist/draftail.css"
 
 // for ScaleLoader from "react-spinners"
 const override = css`
