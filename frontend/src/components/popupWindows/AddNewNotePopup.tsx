@@ -1,21 +1,24 @@
 import * as React from "react"
+import $ from "jquery"
+import { EditorState, convertToRaw } from "draft-js"
 import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
-import { AddNoteTextEditor } from "../notesEditor"
-import $ from "jquery"
+import { DraftailEditor, BLOCK_TYPE, INLINE_STYLE } from "draftail"
+import {
+	BR_ICON,
+	UNDO_ICON,
+	REDO_ICON,
+	CustomIcon,
+	toHTML,
+} from "../notesEditor"
 
 interface IAddNewTagPopup {
-	sections: [];
 	tags: Array<{
 		id: string,
 		nameTag: string,
 		sectionId: string,
 		userId: string,
 	}>;
-	handlerCurrentValue: (name: string, value: string) => void;
-	currentEditedNote: {
-		text: string,
-	};
 	addNewNote: (newNote: {
 		header: any,
 		text: any,
@@ -30,14 +33,11 @@ interface IAddNewTagPopup {
 }
 
 export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
-	const {
-		tags,
-		addNewNote,
-		namePopup,
-		currentEditedNote,
-		handlerCurrentValue,
-		userProfile,
-	} = props
+	const { tags, addNewNote, namePopup, userProfile } = props
+
+	const [editorState, setEditorState] = React.useState(
+		EditorState.createEmpty()
+	)
 
 	const { lang, id } = userProfile
 
@@ -106,19 +106,86 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 
 							<div className="form-label-group">
 								<label htmlFor="addTextNote">Text Note</label>
-								<AddNoteTextEditor handlerCurrentValue={handlerCurrentValue} />
-							</div>
-							{/*
-							<div className="form-label-group">
-								<label htmlFor="addTextNote">Text Note</label>
-								<textarea
-									id="addTextNote"
-									className="form-control"
-									aria-describedby="formAddNote"
+								<DraftailEditor
+									editorState={editorState}
+									onChange={setEditorState}
+									blockTypes={[
+										{ type: BLOCK_TYPE.UNSTYLED },
+										{ type: BLOCK_TYPE.HEADER_ONE },
+										{ type: BLOCK_TYPE.HEADER_TWO },
+										{ type: BLOCK_TYPE.HEADER_THREE },
+										{ type: BLOCK_TYPE.HEADER_FOUR },
+										{ type: BLOCK_TYPE.HEADER_FIVE },
+										{ type: BLOCK_TYPE.HEADER_SIX },
+										{
+											type: BLOCK_TYPE.UNORDERED_LIST_ITEM,
+											icon: <CustomIcon icon="fa-list-ul" />,
+										},
+										{
+											type: BLOCK_TYPE.ORDERED_LIST_ITEM,
+											icon: <CustomIcon icon="fa-list-ol" />,
+										},
+										{ type: BLOCK_TYPE.CODE },
+									]}
+									inlineStyles={[
+										{
+											type: INLINE_STYLE.BOLD,
+											icon: <CustomIcon icon="fa-bold" />,
+										},
+										{
+											type: INLINE_STYLE.ITALIC,
+											icon: <CustomIcon icon="fa-italic" />,
+										},
+										{
+											type: INLINE_STYLE.UNDERLINE,
+											icon: <CustomIcon icon="fa-underline" />,
+										},
+										{
+											type: INLINE_STYLE.STRIKETHROUGH,
+											icon: <CustomIcon icon="fa-strikethrough" />,
+										},
+										{
+											type: INLINE_STYLE.CODE,
+											icon: <CustomIcon icon="fa-code" />,
+										},
+										{
+											type: INLINE_STYLE.MARK,
+											icon: <CustomIcon icon="fa-highlighter" />,
+										},
+										{
+											type: INLINE_STYLE.SMALL,
+											icon: <CustomIcon icon="fa-text-height" />,
+											description: "Mono Space",
+										},
+										{
+											type: INLINE_STYLE.SAMPLE,
+											icon: <CustomIcon icon="fa-font" />,
+										},
+										{ type: INLINE_STYLE.KEYBOARD },
+										{
+											type: INLINE_STYLE.SUPERSCRIPT,
+											icon: <CustomIcon icon="fa-superscript" />,
+										},
+										{
+											type: INLINE_STYLE.SUBSCRIPT,
+											icon: <CustomIcon icon="fa-subscript" />,
+										},
+									]}
+									enableHorizontalRule={{ description: "Horizontal rule" }}
+									enableLineBreak={{
+										description: "Soft line break",
+										icon: BR_ICON,
+									}}
+									showUndoControl={{
+										description: "Undo last change",
+										icon: UNDO_ICON,
+									}}
+									showRedoControl={{
+										description: "Redo last change",
+										icon: REDO_ICON,
+									}}
 								/>
-								<div className="invalid-feedback">Some text</div>
 							</div>
-							*/}
 
 							<div className="form-label-group">
 								<label htmlFor="addNoteTagId">Select Tag</label>
@@ -160,8 +227,9 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 						<div className="modal-footer">
 							<button
 								onClick={() => {
+									$("#modal-addNote").modal("hide")
 									const header = $("#addHeaderNote").val()
-									// const text = $("#addTextNote").val()
+									const text = toHTML(convertToRaw(editorState.getCurrentContent()))
 									// const sectionId = $("#addNoteSectionId").val()
 									const tagId = $("#addNoteTagId").val()
 									const remarks = $("#addRemarksNote").val()
@@ -169,7 +237,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									if (header !== "") {
 										const newNote = {
 											header,
-											text: currentEditedNote.text,
+											text,
 											remarks,
 											link,
 											sectionId: getSectionIdtag(tagId),
@@ -178,10 +246,10 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 										}
 										addNewNote(newNote)
 										$("#addHeaderNote").val("")
-										// $("#addTextNote").val("")
 										$("#addRemarksNote").val("")
 										$("#addLinkNote").val("")
-										handlerCurrentValue("buttonEditNote", "")
+										// очищаем поле редактора
+										setEditorState(EditorState.createEmpty())
 									}
 								}}
 								type="button"

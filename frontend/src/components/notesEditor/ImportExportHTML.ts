@@ -1,4 +1,6 @@
 import { BLOCK_TYPE, ENTITY_TYPE } from "draftail"
+import { convertToHTML } from "draft-convert"
+import { convertFromRaw } from "draft-js"
 
 // FOR EXPORT
 const exporterConfig = {
@@ -72,4 +74,8 @@ const importerConfig = {
 	},
 }
 
-export { exporterConfig, importerConfig }
+// for export text note toHTML
+const toHTML = (raw: any): string =>
+	raw ? convertToHTML(exporterConfig)(convertFromRaw(raw)) : ""
+
+export { exporterConfig, importerConfig, toHTML }

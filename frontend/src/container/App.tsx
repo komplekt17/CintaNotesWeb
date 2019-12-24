@@ -97,6 +97,9 @@ const App: React.FC<IAppProps> = props => {
 		loading,
 	} = store
 
+	// https://stackoverflow.com/questions/49935614/extract-css-from-scss-and-deferred-lazy-load-in-react-app
+	// https://stackoverflow.com/questions/55679111/webpack-4-create-multiple-theme-css-files?rq=1
+
 	// useEffect(() => {
 	// 	if (currentDetails.userProfile.theme === "night") {
 	// 		require("../styles/bootstrap-superhero.min.css")
@@ -378,12 +381,9 @@ const App: React.FC<IAppProps> = props => {
 			/>
 			<AddNewNotePopup
 				tags={tags}
-				sections={sections}
 				addNewNote={addNewNoteToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
-				currentEditedNote={currentDetails.note}
-				handlerCurrentValue={handlerCurrentValueToApp}
 			/>
 			<EditSectionPopup
 				editSection={editSectionToApp}
@@ -401,7 +401,6 @@ const App: React.FC<IAppProps> = props => {
 				lang={currentDetails.userProfile.lang}
 			/>
 			<EditNotePopup
-				sections={sections}
 				tags={tags}
 				editNote={editNoteToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
