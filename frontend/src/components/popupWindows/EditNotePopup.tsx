@@ -1,9 +1,17 @@
 import * as React from "react"
+import $ from "jquery"
+import { EditorState, ContentState, convertToRaw, convertFromHTML, } from "draft-js"
 import { CONSTANTS } from "../../constants"
-import { EditNoteTextEditor } from "../notesEditor"
+import { DraftailEditor, BLOCK_TYPE, INLINE_STYLE } from "draftail"
+import {
+	BR_ICON,
+	UNDO_ICON,
+	REDO_ICON,
+	CustomIcon,
+	toHTML,
+} from "../notesEditor"
 
 interface IEditNoteProps {
-	sections: [];
 	tags: Array<{
 		id: string,
 		nameTag: string,
@@ -34,13 +42,13 @@ interface IEditNoteProps {
 	namePopup: string;
 	lang: string;
 }
+
 export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 	const {
 		editNote,
 		handlerCurrentValue,
 		currentEditedNote,
 		namePopup,
-    // sections,
 		tags,
 		lang
 	} = props
@@ -50,32 +58,39 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
     header,
     text,
     remarks,
-    link, 
-    // sectionId, 
+    link,
 		tagId, 
-		userId } = currentEditedNote
-		
+		userId } = currentEditedNote;
+
+	const [editorState, setEditorState] = 
+  React.useState(EditorState.createEmpty())
+
+  const getContentFromHTML = (stringHTML:string): any => {
+    const blocksFromHTML = convertFromHTML(stringHTML);
+    const content = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks
+    );
+    return content
+  }
+
+ React.useEffect (() => {
+  	if(text !==""){
+			setEditorState(
+      	EditorState.createWithContent(
+      		getContentFromHTML(text)
+    		)
+      );
+	  }
+	}, [text]);
+
 		// получаем SectionId из tags[] по tagId из notes[] 
 		const getSectionIdtag = (tagId:string): string =>{
 			let noteTagSectionId = "0"
 			for(let i=0;i<tags.length;i++){
 				if(tags[i].id === tagId ) noteTagSectionId = tags[i].sectionId
 			}
-			
 			return noteTagSectionId
 		}
-
-	// let sectionsList: any = ""
-
-	// if (sections && sections.length !== 0) {
-	// 	sectionsList = sections.map((item: any, index: number) => {
-	// 		return (
-	// 			<option key={index} className={item.sectionId} value={item.id}>
-	// 				{item.nameSection}
-	// 			</option>
-	// 		)
-	// 	})
-	// }
 
 	let tagsList: any = ""
 
@@ -137,44 +152,86 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 
 							<div className="form-label-group">
 								<label htmlFor="editTextNote">Text Note</label>
-								<EditNoteTextEditor
-									handlerCurrentValue={handlerCurrentValue}
-									textEditedNote={text}
+								<DraftailEditor
+									editorState={editorState}
+									onChange={setEditorState}
+									blockTypes={[
+										{ type: BLOCK_TYPE.UNSTYLED },
+										{ type: BLOCK_TYPE.HEADER_ONE },
+										{ type: BLOCK_TYPE.HEADER_TWO },
+										{ type: BLOCK_TYPE.HEADER_THREE },
+										{ type: BLOCK_TYPE.HEADER_FOUR },
+										{ type: BLOCK_TYPE.HEADER_FIVE },
+										{ type: BLOCK_TYPE.HEADER_SIX },
+										{
+											type: BLOCK_TYPE.UNORDERED_LIST_ITEM,
+											icon: <CustomIcon icon="fa-list-ul" />,
+										},
+										{
+											type: BLOCK_TYPE.ORDERED_LIST_ITEM,
+											icon: <CustomIcon icon="fa-list-ol" />,
+										},
+										{ type: BLOCK_TYPE.CODE },
+									]}
+									inlineStyles={[
+										{
+											type: INLINE_STYLE.BOLD,
+											icon: <CustomIcon icon="fa-bold" />,
+										},
+										{
+											type: INLINE_STYLE.ITALIC,
+											icon: <CustomIcon icon="fa-italic" />,
+										},
+										{
+											type: INLINE_STYLE.UNDERLINE,
+											icon: <CustomIcon icon="fa-underline" />,
+										},
+										{
+											type: INLINE_STYLE.STRIKETHROUGH,
+											icon: <CustomIcon icon="fa-strikethrough" />,
+										},
+										{
+											type: INLINE_STYLE.CODE,
+											icon: <CustomIcon icon="fa-code" />,
+										},
+										{
+											type: INLINE_STYLE.MARK,
+											icon: <CustomIcon icon="fa-highlighter" />,
+										},
+										{
+											type: INLINE_STYLE.SMALL,
+											icon: <CustomIcon icon="fa-text-height" />,
+											description: "Mono Space",
+										},
+										{
+											type: INLINE_STYLE.SAMPLE,
+											icon: <CustomIcon icon="fa-font" />,
+										},
+										{ type: INLINE_STYLE.KEYBOARD },
+										{
+											type: INLINE_STYLE.SUPERSCRIPT,
+											icon: <CustomIcon icon="fa-superscript" />,
+										},
+										{
+											type: INLINE_STYLE.SUBSCRIPT,
+											icon: <CustomIcon icon="fa-subscript" />,
+										},
+									]}
+									enableHorizontalRule={{ description: "Horizontal rule" }}
+									enableLineBreak={{
+										description: "Soft line break",
+										icon: BR_ICON,
+									}}
+									showUndoControl={{
+										description: "Undo last change",
+										icon: UNDO_ICON,
+									}}
+									showRedoControl={{
+										description: "Redo last change",
+										icon: REDO_ICON,
+									}}
 								/>
 							</div>
-							{/*
-							<div className="form-label-group">
-								<label htmlFor="editTextNote">Text Note</label>
-								<textarea
-									id="editTextNote"
-									value={text}
-									className="form-control"
-									aria-describedby="formEditNote"
-									onChange={ev => {
-										handlerCurrentValue(ev.target.id, ev.target.value)
-									}}
-								></textarea>
-								<div className="invalid-feedback">Some text</div>
-							</div>
-
-						 <div className="form-label-group">
-								<label htmlFor="editNoteSectionId">Select Section</label>
-								<select
-									value={sectionId == null ? "" : sectionId}
-									onChange={ev => {
-										handlerCurrentValue(ev.target.id, ev.target.value)
-									}}
-									id="editNoteSectionId"
-									className="form-control"
-									aria-describedby="formEditNote"
-								>
-									{sectionsList}
-									<option value="0">All</option>
-								</select>
-								<div className="invalid-feedback">
-									Please select a tag Note
-								</div>
-							</div> */}
 
 							<div className="form-label-group">
 								<label htmlFor="editNoteTagId">Select Tag</label>
@@ -231,17 +288,24 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 						<div className="modal-footer"> 
 							<button
 								onClick={() => {
+									$("#modal-editNote").modal("hide")
 									if (header !== "") {
 										const editedNote = {
                       id, 
-											header, text, remarks, link, 
+											header, 
+											text: toHTML(convertToRaw(editorState.getCurrentContent())), 
+											remarks, 
+											link, 
 											sectionId: getSectionIdtag(tagId), 
 											tagId, userId 
 										}
+                    // отправляем editedNote в store
 										editNote(editedNote)
 										// очищаем поля currentDetails.note,
 										// action.name === buttonEditNote
 										handlerCurrentValue("buttonEditNote", "")
+                    // очищаем поле редактора
+                    setEditorState(EditorState.createEmpty());
 									}
 								}}
 								type="button"
