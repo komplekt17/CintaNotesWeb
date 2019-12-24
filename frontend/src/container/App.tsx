@@ -103,12 +103,6 @@ const App: React.FC<IAppProps> = props => {
 	// https://stackoverflow.com/questions/49935614/extract-css-from-scss-and-deferred-lazy-load-in-react-app
 	// https://stackoverflow.com/questions/55679111/webpack-4-create-multiple-theme-css-files?rq=1
 
-	// useEffect(() => {
-	// 	if (currentDetails.userProfile.theme === "night") {
-	// 		require("../styles/bootstrap-superhero.min.css")
-	// 	} else require("../styles/bootstrap-spacelab.min.css")
-	// })
-
 	// подсчёт количества тегов или записей активной секции
 	const countQualityItems = (
 		nameArray: string,
