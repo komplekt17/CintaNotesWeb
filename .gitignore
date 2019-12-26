@@ -10,6 +10,8 @@ frontend/package-lock.json
 frontend/public/images/
 note.zip
 /otherEditors
+#cintanotesweb_db.sql
+*.*sql
 
 
 # testing
