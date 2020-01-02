@@ -288,8 +288,8 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 						<div className="modal-footer"> 
 							<button
 								onClick={() => {
-									$("#modal-editNote").modal("hide")
-									if (header !== "") {
+									if (header !== "" && text !== "<p></p>") {
+										$("#modal-editNote").modal("hide")
 										const editedNote = {
                       id, 
 											header, 

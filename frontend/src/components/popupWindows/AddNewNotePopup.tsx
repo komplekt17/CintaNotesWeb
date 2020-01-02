@@ -227,14 +227,13 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 						<div className="modal-footer">
 							<button
 								onClick={() => {
-									$("#modal-addNote").modal("hide")
 									const header = $("#addHeaderNote").val()
 									const text = toHTML(convertToRaw(editorState.getCurrentContent()))
-									// const sectionId = $("#addNoteSectionId").val()
 									const tagId = $("#addNoteTagId").val()
 									const remarks = $("#addRemarksNote").val()
 									const link = $("#addLinkNote").val()
-									if (header !== "") {
+									if (header !== "" && text !== "<p></p>") {
+										$("#modal-addNote").modal("hide")
 										const newNote = {
 											header,
 											text,
