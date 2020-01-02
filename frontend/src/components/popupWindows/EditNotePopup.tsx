@@ -103,6 +103,12 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 			)
 		})
 	}
+	
+	// react editors examples
+	// https://github.com/thibaudcolas/draftail-playground
+	// https://draftjs.org/docs/getting-started
+	// https://reactjsexample.com/tag/editor/
+	// https://www.draftail.org/docs/importing-and-exporting-html
 
 	return (
 		<div

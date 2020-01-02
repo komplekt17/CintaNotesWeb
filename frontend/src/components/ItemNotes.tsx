@@ -36,11 +36,6 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 	let NotesList: any = (
 		<div className="col-12">{CONSTANTS[lang].ERROR_TEXT}</div>
 	)
-	// react editors examples
-	// https://github.com/thibaudcolas/draftail-playground
-	// https://draftjs.org/docs/getting-started
-	// https://reactjsexample.com/tag/editor/
-	// https://www.draftail.org/docs/importing-and-exporting-html
 
 	// получение nameTag из tags[]
 	const getNameTag = (tagIdfromNotes: string): string => {
@@ -50,20 +45,29 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 				nameTag = tags[i].nameTag
 			}
 		}
-
 		return nameTag
 	}
 
 	if (notes && notes.length !== 0) {
 		NotesList = notes.map((item: any, index: number) => {
 			return (
-				<div key={index} className="col-12 note">
+				<div key={index} className="col-12 note" id={item.id}>
 					<div className="note-header">{item.header}</div>
 					<div className="d-flex justify-content-between">
-						<div className="note-tag">
-							<span className="text-primary border-primary">
+						<div className="note-tag d-flex justify-content-between">
+							<div
+								className="text-primary pr-2"
+								onClick={() => {
+									$(`#${item.id} .arrow-switch`).toggleClass("d-none", 2000)
+									$(`#${item.id} .note-text`).toggleClass("note-text-short", 2000)
+								}}
+							>
+								<i className="arrow-switch d-none fas fa-angle-double-down" />
+								<i className="arrow-switch fas fa-angle-double-up" />
+							</div>
+							<div className="text-primary border-primary name-tag pl-2">
 								{getNameTag(item.tagId)}
-							</span>
+							</div>
 						</div>
 						<div className="note-date">
 							{item.updatedAt === item.createdAt ? (
@@ -79,7 +83,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 						</div>
 					</div>
 					<div
-						className="note-text"
+						className="note-text note-text-short p-2"
 						dangerouslySetInnerHTML={{ __html: item.text }}
 					/>
 					<div className="note-footer">

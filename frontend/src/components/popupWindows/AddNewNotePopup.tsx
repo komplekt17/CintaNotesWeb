@@ -63,6 +63,12 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 		})
 	}
 
+	// react editors examples
+	// https://github.com/thibaudcolas/draftail-playground
+	// https://draftjs.org/docs/getting-started
+	// https://reactjsexample.com/tag/editor/
+	// https://www.draftail.org/docs/importing-and-exporting-html
+
 	return (
 		<div
 			id="modal-addNote"

@@ -18,19 +18,19 @@
 .note-date {
   text-align: right;
 }
-.note-tag {
-  position: relative;
-  left: 50px;
-  width: 100px;
-}
-.note-tag span {
+
+.note-tag .name-tag {
   border: 1px solid;
   border-bottom: none;
+  border-right: none;
   border-top: none;
-  padding: 0px 5px;
 }
 
-.note-text {
-  min-height: 50px;
-  padding: 10px;
+.arrow-switch{
+  cursor: pointer;
+}
+
+.note-text-short {
+  overflow: hidden;
+  height: 70px;
 }
