@@ -8,10 +8,10 @@ const notesRouter = require('./routes/notes-router');
 const usersRouter = require('./routes/users-router');
 
 const yenv = require('yenv');
-const env = yenv('env.yaml', { env: 'production' });
+const env = yenv('env.yaml', { env: 'development' });
 
 const app = express();
-const port = env.NODE_PORT || 8080;
+const port = env.NODE_PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
