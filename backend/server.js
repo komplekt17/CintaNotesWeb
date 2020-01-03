@@ -15,7 +15,7 @@ const port = process.env.NODE_PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_TYPE === 'production') {
 	// Exprees will serve up production assets
 	app.use(express.static('client/build'));
 }
