@@ -10,7 +10,7 @@ const usersRouter = require('./routes/users-router');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.SERVER_PORT || 5000;
+const port = process.env.NODE_PORT || 8080;
 
 app.use(cors());
 app.use(express.json());

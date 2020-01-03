@@ -5,8 +5,8 @@ require('dotenv').config();
 // определяем объект Sequelize
 const sequelize = new Sequelize(
 	process.env.DATABASE_NAME,
-	process.env.USER,
-	process.env.PASS,
+	process.env.DATABASE_USER,
+	process.env.DATABASE_PASS,
 	{
 		// host: process.env.LOCAL_URI,
 		host: process.env.HOSTING_URI,
