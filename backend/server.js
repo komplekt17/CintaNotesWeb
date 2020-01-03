@@ -7,24 +7,19 @@ const tagsRouter = require('./routes/tags-router');
 const notesRouter = require('./routes/notes-router');
 const usersRouter = require('./routes/users-router');
 
-require('dotenv').config();
+const yenv = require('yenv');
+const env = yenv('env.yaml', { env: 'production' });
 
 const app = express();
-const port = process.env.NODE_PORT || 8080;
+const port = env.NODE_PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
 
-if (process.env.NODE_TYPE === 'production') {
+if (env.TYPE_ENV === 'production') {
 	// Exprees will serve up production assets
 	app.use(express.static('client/build'));
 }
-
-// Express serve up index.html file if it doesn't recognize route
-// const path = require('path');
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-// });
 
 app.use('/sections', sectionsRouter);
 app.use('/tags', tagsRouter);

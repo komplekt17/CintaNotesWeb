@@ -1,17 +1,17 @@
 const Sequelize = require('sequelize');
 
-require('dotenv').config();
+const yenv = require('yenv');
+const env = yenv('env.yaml', { env: 'production' });
 
 // определяем объект Sequelize
 const sequelize = new Sequelize(
-	process.env.DATABASE_NAME,
-	process.env.DATABASE_USER,
-	process.env.DATABASE_PASS,
+	env.DATABASE_NAME,
+	env.DATABASE_USER,
+	env.DATABASE_PASS,
 	{
-		// host: process.env.LOCAL_URI,
-		host: process.env.HOSTING_URI,
-		port: process.env.DATABASE_PORT,
-		dialect: process.env.DATABASE_DIALECT,
+		host: env.HOSTING_URI,
+		port: env.DATABASE_PORT,
+		dialect: env.DATABASE_DIALECT,
 		logging: false
 	}
 );
