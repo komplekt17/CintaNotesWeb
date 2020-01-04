@@ -9,7 +9,8 @@ const Section = require('../models/sections-model');
 const Tag = require('../models/tags-model');
 const Note = require('../models/notes-model');
 
-require('dotenv').config();
+const yenv = require('yenv');
+const env = yenv('env.yaml', { env: 'production' });
 
 // Хешируем пароль
 const getHashPassUser = pass => {
@@ -52,21 +53,21 @@ const findByCredentials = async (userLogin, pass) => {
 // отправляем новый пароль на email user'a
 const sendNewPassword = (login, pass) => {
 	let mailOptions = {
-		from: process.env.SERVICE_USER,
+		from: env.SERVICE_USER,
 		to: login,
 		subject: 'Reset your account password',
-		html: `<h4><b>Resetting Password on ${process.env.SITE_NAME}</b></h4>
+		html: `<h4><b>Resetting Password on ${env.SITE_NAME}</b></h4>
 					<p>your temporary password - ${pass}</p>
-					<p>--${process.env.SITE_NAME} Team</p>`
+					<p>--${env.SITE_NAME} Team</p>`
 	};
 
 	var transporter = nodemailer.createTransport({
-		host: process.env.SERVICE_HOST,
+		host: env.SERVICE_HOST,
 		port: 465,
 		secure: true, // true for 465, false for other ports
 		auth: {
-			user: process.env.SERVICE_USER,
-			pass: process.env.SERVICE_PASS
+			user: env.SERVICE_USER,
+			pass: env.SERVICE_PASS
 		}
 	});
 
@@ -179,7 +180,7 @@ router.route('/enter').post(async (req, res) => {
 				tags,
 				notes,
 				typeMsg: 'success',
-				message: 'Welcome to CintaNotesWeb!'
+				message: `Welcome to ${env.SITE_NAME}!`
 			};
 
 			return res.status(201).send(data);
