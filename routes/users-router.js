@@ -21,7 +21,7 @@ const getHashPassUser = pass => {
 // Генерируем авторизационный токен для пользователя
 const generateAuthToken = async () => {
 	const user = this;
-	const token = await jwt.sign({ id: user.id }, process.env.JWT_KEY);
+	const token = await jwt.sign({ id: user.id }, env.JWT_KEY);
 
 	return token;
 };

@@ -11,7 +11,7 @@ const yenv = require('yenv');
 const env = yenv('env.yaml', { env: 'development' });
 
 const app = express();
-const port = env.NODE_PORT || 5000;
+const port = env.NODE_PORT;
 
 app.use(cors());
 app.use(express.json());
