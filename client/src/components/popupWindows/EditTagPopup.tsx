@@ -77,7 +77,9 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 					>
 						<div className="modal-body">
 							<div className="form-label-group">
-								<label htmlFor="editNameTag">Name Tag</label>
+								<label htmlFor="editNameTag">
+									{CONSTANTS[lang].NAME_TAG}
+								</label>
 								<input
 									id="editNameTag"
 									type="text"
@@ -93,7 +95,9 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="editTagSectionId">Select Cathegorie</label>
+								<label htmlFor="editTagSectionId">
+									{CONSTANTS[lang].SELECT_SECTION}
+								</label>
 								<select
 									value={sectionId == null ? "" : sectionId}
 									onChange={ev => {

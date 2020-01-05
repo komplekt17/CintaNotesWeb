@@ -49,7 +49,7 @@ export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
 							onSubmit={ev => ev.preventDefault()}
 						>
 							<div className="form-label-group">
-								<label htmlFor="inputEmail">Email address</label>
+								<label htmlFor="inputEmail">{CONSTANTS[lang].ENTER_EMAIL}</label>
 								<input
 									type="email"
 									id="inputEmail"
@@ -64,7 +64,7 @@ export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="inputPassword">enter Password</label>
+								<label htmlFor="inputPassword">{CONSTANTS[lang].ENTER_PASS}</label>
 								<input
 									type="password"
 									id="inputPassword"
@@ -78,7 +78,9 @@ export const AddNewUserPopup: React.FC<IAddUserProps> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="repeatPassword">repeat Password</label>
+								<label htmlFor="repeatPassword">
+									{CONSTANTS[lang].REPEAT_PASS}
+								</label>
 								<input
 									type="password"
 									id="repeatPassword"

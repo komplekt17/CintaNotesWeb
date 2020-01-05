@@ -7,7 +7,6 @@ const SERVER_URI = "http://localhost:5000"
 const CONSTANTS: IConstants = {
 	ru: {
 		ERROR_TEXT: "Нет элементов для отображения",
-		AUTH_BUTTON_TEXT: "Вам необходимо зарегистрироваться",
 		FEEDBACK_EMAIL: "Введите ваш емайл (мин 4 символа)",
 		FEEDBACK_PASS:
 			"Введите пароль (мин 6 символов - только латиница и цифры)",
@@ -16,6 +15,21 @@ const CONSTANTS: IConstants = {
 			"Введите название (мин 3 символа - только латиница и цифры)",
 		FEEDBACK_TEXT_REMOVE: "Точно удалить",
 		FEEDBACK_HEADER_REMOVE: "Удаление",
+
+		NAME_HEADER_NOTE: "Заголовок заметки",
+		TEXT_NOTE: "Текст заметки",
+		SELECT_TAG: "Выбирите категорию",
+		REMARK_NOTE: "Примечание",
+		LINK_NOTE: "Ссылки",
+		NAME_TAG: "Название категории",
+		SELECT_SECTION: "Выберите раздел",
+		NAME_SECTION: "Название раздела",
+		ENTER_EMAIL: "Введите ваш email",
+		ENTER_PASS: "Введите пароль",
+		REPEAT_PASS: "Повторите пароль",
+		ENTER_OLD_PASS: "Введите старый Пароль",
+		ENTER_NEW_PASS: "Введите новый пароль",
+		REPEAT_NEW_PASS: "Повторите новый пароль",
 
 		HEADER_CREATE_USER: "Создание Пользователя",
 		HEADER_CHANGE_PASS: "Смена Пароля",
@@ -42,6 +56,7 @@ const CONSTANTS: IConstants = {
 		BUTTON_SAVE: "Сохранить",
 		BUTTON_REMOVE: "Удалить",
 		BUTTON_RESET: "Сбросить Пароль",
+		AUTH_BUTTON_TEXT: "Вам необходимо зарегистрироваться",
 
 		ITEMS_ALL: "Всего записей",
 		ITEMS_NOTAG: "Записей без тега",
@@ -56,7 +71,6 @@ const CONSTANTS: IConstants = {
 	},
 	en: {
 		ERROR_TEXT: "no items to render",
-		AUTH_BUTTON_TEXT: "You're need registered",
 		FEEDBACK_EMAIL: "Please enter a email (min 4 symbols)",
 		FEEDBACK_PASS:
 			"Please enter a password (min 6 symbols - lowercase/uppercase only latin letters and numbers)",
@@ -65,6 +79,21 @@ const CONSTANTS: IConstants = {
 			"Please enter a page name (minimum 3 symbols, only digits or letters)",
 		FEEDBACK_TEXT_REMOVE: "Are you sure to delete this",
 		FEEDBACK_HEADER_REMOVE: "Removing",
+
+		NAME_HEADER_NOTE: "Name note header",
+		TEXT_NOTE: "Text Note",
+		SELECT_TAG: "Select Tag",
+		REMARK_NOTE: "Remarks",
+		LINK_NOTE: "Links",
+		NAME_TAG: "Name Tag",
+		SELECT_SECTION: "Select Section",
+		NAME_SECTION: "Name Section",
+		ENTER_EMAIL: "Enter your email",
+		ENTER_PASS: "Enter password",
+		REPEAT_PASS: "Repeat password",
+		ENTER_OLD_PASS: "Enter old password",
+		ENTER_NEW_PASS: "Enter new password",
+		REPEAT_NEW_PASS: "Repeat new password",
 
 		HEADER_CREATE_USER: "Creating New User",
 		HEADER_CHANGE_PASS: "Changing User Password",
@@ -91,6 +120,7 @@ const CONSTANTS: IConstants = {
 		BUTTON_SAVE: "Save",
 		BUTTON_REMOVE: "Remove",
 		BUTTON_RESET: "Reset Password",
+		AUTH_BUTTON_TEXT: "You're need registered",
 
 		ITEMS_ALL: "All",
 		ITEMS_NOTAG: "Untagged",

@@ -52,7 +52,9 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 					>
 						<div className="modal-body">
 							<div className="form-label-group">
-								<label htmlFor="addNameSection">Name Section</label>
+								<label htmlFor="addNameSection">
+									{CONSTANTS[lang].NAME_SECTION}
+								</label>
 								<input
 									id="addNameSection"
 									type="text"

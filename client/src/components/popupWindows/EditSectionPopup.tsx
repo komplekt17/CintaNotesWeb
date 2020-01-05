@@ -59,7 +59,9 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 					>
 						<div className="modal-body">
 							<div className="form-label-group">
-								<label htmlFor="editNameSection">Name Section</label>
+								<label htmlFor="editNameSection">
+									{CONSTANTS[lang].NAME_SECTION}
+								</label>
 								<input
 									id="editNameSection"
 									type="text"

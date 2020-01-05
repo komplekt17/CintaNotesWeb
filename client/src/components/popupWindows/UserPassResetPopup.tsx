@@ -41,7 +41,7 @@ export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
 							onSubmit={ev => ev.preventDefault()}
 						>
 							<div className="form-label-group">
-								<label htmlFor="inputLogin">enter your Email</label>
+								<label htmlFor="inputLogin">{CONSTANTS[lang].ENTER_EMAIL}</label>
 								<input
 									type="text"
 									id="inputLogin"

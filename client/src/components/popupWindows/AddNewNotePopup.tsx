@@ -101,7 +101,9 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 					>
 						<div className="modal-body">
 							<div className="form-label-group">
-								<label htmlFor="addHeaderNote">Header Note</label>
+								<label htmlFor="addHeaderNote">
+									{CONSTANTS[lang].NAME_HEADER_NOTE}
+								</label>
 								<input
 									id="addHeaderNote"
 									type="text"
@@ -113,7 +115,9 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="addTextNote">Text Note</label>
+								<label htmlFor="addTextNote">
+									{CONSTANTS[lang].TEXT_NOTE}
+								</label>
 								<DraftailEditor
 									editorState={editorState}
 									onChange={setEditorState}
@@ -196,7 +200,9 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="addNoteTagId">Select Tag</label>
+								<label htmlFor="addNoteTagId">
+									{CONSTANTS[lang].SELECT_TAG}
+								</label>
 								<select
 									id="addNoteTagId"
 									className="form-control"
@@ -209,7 +215,9 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="addRemarksNote">Remarks Note</label>
+								<label htmlFor="addRemarksNote">
+									{CONSTANTS[lang].REMARK_NOTE}
+								</label>
 								<input
 									id="addRemarksNote"
 									type="text"
@@ -221,7 +229,9 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="addLinkNote">Link Note</label>
+								<label htmlFor="addLinkNote">
+									{CONSTANTS[lang].LINK_NOTE}
+								</label>
 								<input
 									id="addLinkNote"
 									type="text"

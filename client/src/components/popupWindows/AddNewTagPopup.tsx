@@ -62,7 +62,9 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 					>
 						<div className="modal-body">
 							<div className="form-label-group">
-								<label htmlFor="addNameTag">Name Tag</label>
+								<label htmlFor="addNameTag">
+									{CONSTANTS[lang].NAME_TAG}
+								</label>
 								<input
 									id="addNameTag"
 									type="text"
@@ -73,7 +75,9 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 							<div className="form-label-group">
-								<label htmlFor="addTagSectionId">Select Section</label>
+								<label htmlFor="addTagSectionId">
+									{CONSTANTS[lang].SELECT_SECTION}
+								</label>
 								<select
 									id="addTagSectionId"
 									className="form-control"

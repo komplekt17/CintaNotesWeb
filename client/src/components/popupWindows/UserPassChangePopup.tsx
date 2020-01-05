@@ -47,7 +47,9 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 							onSubmit={ev => ev.preventDefault()}
 						>
 							<div className="form-label-group">
-								<label htmlFor="inputOldPass">enter Old Password</label>
+								<label htmlFor="inputOldPass">
+									{CONSTANTS[lang].ENTER_OLD_PASS}
+								</label>
 								<input
 									type="password"
 									id="inputOldPass"
@@ -62,7 +64,9 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="inputNewPass">enter New Password</label>
+								<label htmlFor="inputNewPass">
+									{CONSTANTS[lang].ENTER_NEW_PASS}
+								</label>
 								<input
 									type="password"
 									id="inputNewPass"
@@ -76,7 +80,9 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="repeatNewPass">repeat New Password</label>
+								<label htmlFor="repeatNewPass">
+									{CONSTANTS[lang].REPEAT_NEW_PASS}
+								</label>
 								<input
 									type="password"
 									id="repeatNewPass"
