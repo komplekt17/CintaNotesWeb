@@ -365,24 +365,28 @@ const App: React.FC<IAppProps> = props => {
 				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewSectionPopup
+				auth={auth}
 				addNewSection={addNewSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewTagPopup
+				auth={auth}
 				sections={sections}
 				addNewTag={addNewTagToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewNotePopup
+				auth={auth}
 				tags={tags}
 				addNewNote={addNewNoteToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
 			/>
 			<EditSectionPopup
+				auth={auth}
 				editSection={editSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedSection={currentDetails.section}
@@ -390,6 +394,7 @@ const App: React.FC<IAppProps> = props => {
 				lang={currentDetails.userProfile.lang}
 			/>
 			<EditTagPopup
+				auth={auth}
 				sections={sections}
 				editTag={editTagToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
@@ -398,6 +403,7 @@ const App: React.FC<IAppProps> = props => {
 				lang={currentDetails.userProfile.lang}
 			/>
 			<EditNotePopup
+				auth={auth}
 				tags={tags}
 				editNote={editNoteToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
@@ -406,6 +412,7 @@ const App: React.FC<IAppProps> = props => {
 				lang={currentDetails.userProfile.lang}
 			/>
 			<RemoveItemPopup
+				auth={auth}
 				removeSection={removeSectionToApp}
 				removeTag={removeTagToApp}
 				removeNote={removeNoteToApp}
@@ -525,7 +532,4 @@ const mapDispatchToProps = (dispatch: any) => {
 	}
 }
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

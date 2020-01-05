@@ -1,4 +1,5 @@
 import * as React from "react"
+import { AuthFalseButton } from "../popupWindows"
 import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
 import $ from "jquery"
@@ -12,10 +13,11 @@ interface IAddNewTagPopup {
 	}) => void;
 	namePopup: string;
 	userProfile: IUserProfile;
+	auth: boolean;
 }
 
 export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
-	const { sections, addNewTag, namePopup, userProfile } = props
+	const { sections, addNewTag, namePopup, userProfile, auth } = props
 	const { lang, id } = userProfile
 
 	let sectionsList: any = ""
@@ -83,28 +85,36 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 								<div className="invalid-feedback">Please select a section</div>
 							</div>
 						</div>
-						<div className="modal-footer">
-							<button
-								onClick={() => {
-									const nameTag = $("#addNameTag").val()
-									const sectionId = $("#addTagSectionId").val()
-									if (nameTag !== "" && sectionId !== "") {
-										const newTag = {
-											nameTag,
-											sectionId,
-											userId: id,
+						{auth ? (
+							<div className="modal-footer">
+								<button
+									onClick={() => {
+										const nameTag = $("#addNameTag").val()
+										const sectionId = $("#addTagSectionId").val()
+										if (nameTag !== "" && sectionId !== "") {
+											const newTag = {
+												nameTag,
+												sectionId,
+												userId: id,
+											}
+											addNewTag(newTag)
+											$("#addNameTag").val("")
+											$("#addTagSectionId").val("")
 										}
-										addNewTag(newTag)
-										$("#addNameTag").val("")
-										$("#addTagSectionId").val("")
-									}
-								}}
-								type="button"
-								className="btn btn-info btn-block mt-3"
-							>
-								{CONSTANTS[lang].BUTTON_CREATE}
-							</button>
-						</div>
+									}}
+									type="button"
+									className="btn btn-info btn-block mt-3"
+								>
+									{CONSTANTS[lang].BUTTON_CREATE}
+								</button>
+							</div>
+						) : (
+							<AuthFalseButton
+								colorButton="info"
+								nameButton={CONSTANTS[lang].BUTTON_CREATE}
+								lang={lang}
+							/>
+						)}
 					</form>
 				</div>
 			</div>

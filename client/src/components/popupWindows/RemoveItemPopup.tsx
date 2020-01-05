@@ -1,5 +1,6 @@
 import * as React from "react"
 import { CONSTANTS } from "../../constants"
+import { AuthFalseButton } from "../popupWindows"
 import $ from "jquery"
 
 interface IRemoveItemProps {
@@ -11,6 +12,7 @@ interface IRemoveItemProps {
 	namePopup: string;
 	lang: string;
 	removableItemId: string;
+	auth: boolean;
 }
 
 export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
@@ -23,6 +25,7 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 		handlerCurrentValue,
 		resetHighlightItem,
 		lang,
+		auth,
 	} = props
 
 	let header = namePopup
@@ -71,38 +74,46 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 							{CONSTANTS[lang].FEEDBACK_TEXT_REMOVE} {text}?
 						</p>
 					</div>
-					<div className="modal-footer">
-						<button
-							onClick={() => {
-								if (namePopup === "Section") {
-									removeSection(removableItemId)
-									// сбрасываем подсветку текущей section
-									// подсвечиваем section All
-									resetHighlightItem($(".section-panel ul"), "clearItems")
-									// очищаем поле id в currentDetails.section,
-									// action.name === buttonRemoveSection
-									handlerCurrentValue("buttonRemoveSection", "")
-								} else if (namePopup === "Tag") {
-									removeTag(removableItemId)
-									// сбрасываем подсветку текущего tag
-									// подсвечиваем tag All
-									resetHighlightItem($(".app-side-tags ul"), "clearItems")
-									// очищаем поле id в currentDetails.tag,
-									// action.name === buttonRemoveTag
-									handlerCurrentValue("buttonRemoveTag", "")
-								} else if (namePopup === "Note") {
-									removeNote(removableItemId)
-									// очищаем поле id в currentDetails.note,
-									// action.name === buttonRemoveNote
-									handlerCurrentValue("buttonRemoveNote", "")
-								}
-							}}
-							type="button"
-							className="btn btn-danger btn-block mt-3"
-						>
-							{CONSTANTS[lang].BUTTON_REMOVE}
-						</button>
-					</div>
+					{auth ? (
+						<div className="modal-footer">
+							<button
+								onClick={() => {
+									if (namePopup === "Section") {
+										removeSection(removableItemId)
+										// сбрасываем подсветку текущей section
+										// подсвечиваем section All
+										resetHighlightItem($(".section-panel ul"), "clearItems")
+										// очищаем поле id в currentDetails.section,
+										// action.name === buttonRemoveSection
+										handlerCurrentValue("buttonRemoveSection", "")
+									} else if (namePopup === "Tag") {
+										removeTag(removableItemId)
+										// сбрасываем подсветку текущего tag
+										// подсвечиваем tag All
+										resetHighlightItem($(".app-side-tags ul"), "clearItems")
+										// очищаем поле id в currentDetails.tag,
+										// action.name === buttonRemoveTag
+										handlerCurrentValue("buttonRemoveTag", "")
+									} else if (namePopup === "Note") {
+										removeNote(removableItemId)
+										// очищаем поле id в currentDetails.note,
+										// action.name === buttonRemoveNote
+										handlerCurrentValue("buttonRemoveNote", "")
+									}
+								}}
+								type="button"
+								className="btn btn-danger btn-block mt-3"
+							>
+								{CONSTANTS[lang].BUTTON_REMOVE}
+							</button>
+						</div>
+					) : (
+						<AuthFalseButton
+							colorButton="danger"
+							nameButton={CONSTANTS[lang].BUTTON_REMOVE}
+							lang={lang}
+						/>
+					)}
 				</div>
 			</div>
 		</div>

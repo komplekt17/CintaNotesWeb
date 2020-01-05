@@ -1,4 +1,5 @@
 import * as React from "react"
+import { AuthFalseButton } from "../popupWindows"
 import { CONSTANTS } from "../../constants"
 
 interface IEditTagProps {
@@ -18,6 +19,7 @@ interface IEditTagProps {
 	}
 	namePopup: string;
 	lang: string;
+	auth: boolean;
 }
 
 export const EditTagPopup: React.FC<IEditTagProps> = props => {
@@ -27,7 +29,8 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 		currentEditedTag,
 		namePopup,
 		lang,
-		sections
+		sections,
+		auth,
 	} = props
 
 	const {id, nameTag, sectionId, userId} = currentEditedTag
@@ -108,6 +111,7 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 								</div>
 							</div>
 						</div>
+					{auth ? (
 						<div className="modal-footer"> 
 							<button
 								onClick={() => {
@@ -130,6 +134,13 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 								{CONSTANTS[lang].BUTTON_SAVE}
 							</button>
 						</div>
+					) : (
+						<AuthFalseButton
+							colorButton="success"
+							nameButton={CONSTANTS[lang].BUTTON_SAVE}
+							lang={lang}
+						/>
+					)}
 					</form>
 				</div>
 			</div>

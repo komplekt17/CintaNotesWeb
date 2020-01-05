@@ -1,4 +1,5 @@
 import * as React from "react"
+import { AuthFalseButton } from "../popupWindows"
 import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
 import $ from "jquery"
@@ -8,6 +9,7 @@ interface IAddSectionProps {
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	namePopup: string;
 	userProfile: IUserProfile;
+	auth: boolean;
 }
 export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 	const {
@@ -15,6 +17,7 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 		handlerCurrentValue,
 		namePopup,
 		userProfile,
+		auth,
 	} = props
 
 	const { lang, id } = userProfile
@@ -60,28 +63,36 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 						</div>
-						<div className="modal-footer">
-							<button
-								onClick={() => {
-									const nameSection = $("#addNameSection").val()
-									if (nameSection !== "") {
-										const newSection = {
-											nameSection,
-											userId: id,
+						{auth ? (
+							<div className="modal-footer">
+								<button
+									onClick={() => {
+										const nameSection = $("#addNameSection").val()
+										if (nameSection !== "") {
+											const newSection = {
+												nameSection,
+												userId: id,
+											}
+											addNewSection(newSection)
+											// очищаем поле addNameSection,
+											// action.name === buttonAddSection
+											handlerCurrentValue("buttonAddSection", "")
+											$("#addNameSection").val("")
 										}
-										addNewSection(newSection)
-										// очищаем поле addNameSection,
-										// action.name === buttonAddSection
-										handlerCurrentValue("buttonAddSection", "")
-										$("#addNameSection").val("")
-									}
-								}}
-								type="button"
-								className="btn btn-info btn-block mt-3"
-							>
-								{CONSTANTS[lang].BUTTON_CREATE}
-							</button>
-						</div>
+									}}
+									type="button"
+									className="btn btn-info btn-block mt-3"
+								>
+									{CONSTANTS[lang].BUTTON_CREATE}
+								</button>
+							</div>
+						) : (
+							<AuthFalseButton
+								colorButton="info"
+								nameButton={CONSTANTS[lang].BUTTON_CREATE}
+								lang={lang}
+							/>
+						)}
 					</form>
 				</div>
 			</div>

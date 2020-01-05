@@ -1,4 +1,5 @@
 import * as React from "react"
+import { AuthFalseButton } from "../popupWindows"
 import $ from "jquery"
 import { EditorState, convertToRaw } from "draft-js"
 import { IUserProfile } from "../../types"
@@ -30,10 +31,11 @@ interface IAddNewTagPopup {
 	}) => void;
 	namePopup: string;
 	userProfile: IUserProfile;
+	auth: boolean;
 }
 
 export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
-	const { tags, addNewNote, namePopup, userProfile } = props
+	const { tags, addNewNote, namePopup, userProfile, auth } = props
 
 	const [editorState, setEditorState] = React.useState(
 		EditorState.createEmpty()
@@ -230,39 +232,49 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 						</div>
-						<div className="modal-footer">
-							<button
-								onClick={() => {
-									const header = $("#addHeaderNote").val()
-									const text = toHTML(convertToRaw(editorState.getCurrentContent()))
-									const tagId = $("#addNoteTagId").val()
-									const remarks = $("#addRemarksNote").val()
-									const link = $("#addLinkNote").val()
-									if (header !== "" && text !== "<p></p>") {
-										$("#modal-addNote").modal("hide")
-										const newNote = {
-											header,
-											text,
-											remarks,
-											link,
-											sectionId: getSectionIdtag(tagId),
-											tagId,
-											userId: id,
+						{auth ? (
+							<div className="modal-footer">
+								<button
+									onClick={() => {
+										const header = $("#addHeaderNote").val()
+										const text = toHTML(
+											convertToRaw(editorState.getCurrentContent())
+										)
+										const tagId = $("#addNoteTagId").val()
+										const remarks = $("#addRemarksNote").val()
+										const link = $("#addLinkNote").val()
+										if (header !== "" && text !== "<p></p>") {
+											$("#modal-addNote").modal("hide")
+											const newNote = {
+												header,
+												text,
+												remarks,
+												link,
+												sectionId: getSectionIdtag(tagId),
+												tagId,
+												userId: id,
+											}
+											addNewNote(newNote)
+											$("#addHeaderNote").val("")
+											$("#addRemarksNote").val("")
+											$("#addLinkNote").val("")
+											// очищаем поле редактора
+											setEditorState(EditorState.createEmpty())
 										}
-										addNewNote(newNote)
-										$("#addHeaderNote").val("")
-										$("#addRemarksNote").val("")
-										$("#addLinkNote").val("")
-										// очищаем поле редактора
-										setEditorState(EditorState.createEmpty())
-									}
-								}}
-								type="button"
-								className="btn btn-info btn-block mt-3"
-							>
-								{CONSTANTS[lang].BUTTON_CREATE}
-							</button>
-						</div>
+									}}
+									type="button"
+									className="btn btn-info btn-block mt-3"
+								>
+									{CONSTANTS[lang].BUTTON_CREATE}
+								</button>
+							</div>
+						) : (
+							<AuthFalseButton
+								colorButton="info"
+								nameButton={CONSTANTS[lang].BUTTON_CREATE}
+								lang={lang}
+							/>
+						)}
 					</form>
 				</div>
 			</div>

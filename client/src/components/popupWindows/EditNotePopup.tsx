@@ -1,4 +1,5 @@
 import * as React from "react"
+import { AuthFalseButton } from "../popupWindows"
 import $ from "jquery"
 import { EditorState, ContentState, convertToRaw, convertFromHTML, } from "draft-js"
 import { CONSTANTS } from "../../constants"
@@ -41,6 +42,7 @@ interface IEditNoteProps {
 	}
 	namePopup: string;
 	lang: string;
+	auth: boolean;
 }
 
 export const EditNotePopup: React.FC<IEditNoteProps> = props => {
@@ -50,7 +52,8 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 		currentEditedNote,
 		namePopup,
 		tags,
-		lang
+		lang,
+		auth,
 	} = props
 
 	const {
@@ -291,6 +294,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 						</div>
 
 						</div>
+					{auth ? (
 						<div className="modal-footer"> 
 							<button
 								onClick={() => {
@@ -320,6 +324,13 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 								{CONSTANTS[lang].BUTTON_SAVE}
 							</button>
 						</div>
+					) : (
+						<AuthFalseButton
+							colorButton="success"
+							nameButton={CONSTANTS[lang].BUTTON_SAVE}
+							lang={lang}
+						/>
+					)}
 					</form>
 				</div>
 			</div>

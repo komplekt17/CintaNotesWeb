@@ -7,6 +7,7 @@ const SERVER_URI = "http://localhost:5000"
 const CONSTANTS: IConstants = {
 	ru: {
 		ERROR_TEXT: "Нет элементов для отображения",
+		AUTH_BUTTON_TEXT: "Вам необходимо зарегистрироваться",
 		FEEDBACK_EMAIL: "Введите ваш емайл (мин 4 символа)",
 		FEEDBACK_PASS:
 			"Введите пароль (мин 6 символов - только латиница и цифры)",
@@ -55,6 +56,7 @@ const CONSTANTS: IConstants = {
 	},
 	en: {
 		ERROR_TEXT: "no items to render",
+		AUTH_BUTTON_TEXT: "You're need registered",
 		FEEDBACK_EMAIL: "Please enter a email (min 4 symbols)",
 		FEEDBACK_PASS:
 			"Please enter a password (min 6 symbols - lowercase/uppercase only latin letters and numbers)",
