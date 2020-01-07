@@ -38,6 +38,7 @@ export const initialState = {
 			lang: "en",
 			theme: "night", // or light
 		},
+		searchDetails: {searchSort: "", searchText: ""}
 	},
 	sections: [
 		{ id: "1", nameSection: "Tab-1", userId: "1" },
@@ -382,6 +383,18 @@ const handlerCurrentDetails = (
 	else if (name === "userTheme") {
 		// обновляем поле theme
 		obj = getNewObjDetails(obj, "userProfile", "theme", value)
+	}
+
+	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.searchDetails -------
+
+	// сохранение значения поля searchText
+	else if (name === "searchText") {
+		obj = getNewObjDetails(obj, "searchDetails", "searchText", value)
+	}
+
+	// сохранение значения поля searchSort
+	else if (name === "searchSort") {
+		obj = getNewObjDetails(obj, "searchDetails", "searchSort", value)
 	}
 
 	return obj

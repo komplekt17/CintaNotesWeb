@@ -38,6 +38,7 @@ export interface ICurrentDetails {
 	tag: ITags;
 	note: INotes;
 	userProfile: IUserProfile;
+	searchDetails: { searchSort: string, searchText: string };
 }
 
 export interface IState {

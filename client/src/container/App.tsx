@@ -342,7 +342,9 @@ const App: React.FC<IAppProps> = props => {
 						/>
 					</nav>
 					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
-						<SearchPanel lang={currentDetails.userProfile.lang} />
+						<SearchPanel 
+							lang={currentDetails.userProfile.lang}
+							handlerCurrentValue={handlerCurrentValueToApp} />
 						<StatisticInfoPanel
 							sections={sections}
 							filters={filters}
