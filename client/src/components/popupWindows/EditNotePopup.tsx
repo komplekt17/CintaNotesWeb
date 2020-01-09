@@ -96,9 +96,17 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 		}
 
 	let tagsList: any = ""
+	
+	// получаем сортированный array tags[]
+	const NewArr = tags.sort((a, b) => {
+		if (a.nameTag < b.nameTag) {
+			return -1
+		}
+		return 0
+	})
 
-	if (tags && tags.length !== 0) {
-		tagsList = tags.map((item: any, index: number) => {
+	if (NewArr && NewArr.length !== 0) {
+		tagsList = NewArr.map((item: any, index: number) => {
 			return (
 				<option key={index} className={item.tagId} value={item.id}>
 					{item.nameTag}

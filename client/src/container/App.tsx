@@ -199,36 +199,61 @@ const App: React.FC<IAppProps> = props => {
 		arr: Array<{
 			id: string,
 			sectionId: string,
-			tagId?: string,
 			userId: string,
+			tagId?: string,
+			nameTag?: any,
+			header?: any,
+			text?: any,
 		}>,
-		filters: { sections: string, tags: string }
+		filters: { sections: string, tags: string },
+		searchText?: any,
+		searchSort?: any
 	): any => {
 		// фильтрация массива notes[]
 		if (typeArray === "notesArr") {
-			// 1. получаем массив notes[] отфильтрованный по Section
-			const notesFilterdBySection = arr.filter(item => {
-				let qqq
-				if (filters.sections === "All") qqq = arr
-				else if (filters.sections === item.sectionId) {
-					qqq = item.sectionId
+			// если поисковая строка пустая
+			if (searchText === "") {
+				// 1. получаем массив notes[] отфильтрованный по Section
+				const notesFilterdBySection = arr.filter(item => {
+					let qqq
+					if (filters.sections === "All") qqq = arr
+					else if (filters.sections === item.sectionId) {
+						qqq = item.sectionId
+					}
+					return qqq
+				})
+				// 2. получаем массив notes[]
+				// отфильтрованный и по Section, и по Tag
+				const notesFilterdByTag = notesFilterdBySection.filter(item => {
+					let qqq
+					if (filters.tags === "All") {
+						qqq = notesFilterdBySection
+					} else if (filters.tags === "Untagged" && item.tagId === "0") {
+						qqq = item.tagId
+					} else if (filters.tags === item.tagId) {
+						qqq = item.tagId
+					}
+					return qqq
+				})
+				return notesFilterdByTag
+			}
+			// если поисковая строка НЕ пустая
+			else {
+				// сортировка поиска по text`у
+				if (searchSort === "text") {
+					return arr.filter(item => {
+						return item.text.toLowerCase().indexOf(searchText.toLowerCase()) > -1
+					})
 				}
-				return qqq
-			})
-			// 2. получаем массив notes[]
-			// отфильтрованный и по Section, и по Tag
-			const notesFilterdByTag = notesFilterdBySection.filter(item => {
-				let qqq
-				if (filters.tags === "All") {
-					qqq = notesFilterdBySection
-				} else if (filters.tags === "Untagged" && item.tagId === "0") {
-					qqq = item.tagId
-				} else if (filters.tags === item.tagId) {
-					qqq = item.tagId
+				// сортировка поиска по header`у
+				else {
+					return arr.filter(item => {
+						return (
+							item.header.toLowerCase().indexOf(searchText.toLowerCase()) > -1
+						)
+					})
 				}
-				return qqq
-			})
-			return notesFilterdByTag
+			}
 		}
 		// фильтрация массива tags[]
 		else if (typeArray === "tagsArr") {
@@ -241,7 +266,15 @@ const App: React.FC<IAppProps> = props => {
 				}
 				return qqq
 			})
-			return tagesFilterdBySection
+			// получаем сортированный array tags[]
+			const newArr = tagesFilterdBySection.sort((a, b) => {
+				if (a.nameTag < b.nameTag) {
+					return -1
+				}
+				return 0
+			})
+
+			return newArr
 		}
 	}
 
@@ -342,9 +375,10 @@ const App: React.FC<IAppProps> = props => {
 						/>
 					</nav>
 					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
-						<SearchPanel 
+						<SearchPanel
 							lang={currentDetails.userProfile.lang}
-							handlerCurrentValue={handlerCurrentValueToApp} />
+							handlerCurrentValue={handlerCurrentValueToApp}
+						/>
 						<StatisticInfoPanel
 							sections={sections}
 							filters={filters}
@@ -352,9 +386,15 @@ const App: React.FC<IAppProps> = props => {
 							lang={currentDetails.userProfile.lang}
 						/>
 						<ItemNotes
-							tags={tags}
+							tags={getFiltredArray("tagsArr", tags, filters)}
 							lang={currentDetails.userProfile.lang}
-							notes={getFiltredArray("notesArr", notes, filters)}
+							notes={getFiltredArray(
+								"notesArr",
+								notes,
+								filters,
+								currentDetails.searchDetails.searchText,
+								currentDetails.searchDetails.searchSort
+							)}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
 						/>
@@ -382,7 +422,7 @@ const App: React.FC<IAppProps> = props => {
 			/>
 			<AddNewNotePopup
 				auth={auth}
-				tags={tags}
+				tags={getFiltredArray("tagsArr", tags, filters)}
 				addNewNote={addNewNoteToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}

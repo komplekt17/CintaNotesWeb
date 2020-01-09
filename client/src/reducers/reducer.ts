@@ -38,7 +38,7 @@ export const initialState = {
 			lang: "en",
 			theme: "night", // or light
 		},
-		searchDetails: {searchSort: "", searchText: ""}
+		searchDetails: { searchSort: "header", searchText: "" },
 	},
 	sections: [
 		{ id: "1", nameSection: "Tab-1", userId: "1" },
