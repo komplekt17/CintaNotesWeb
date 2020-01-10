@@ -31,6 +31,9 @@ const CONSTANTS: IConstants = {
 		ENTER_NEW_PASS: "Введите новый пароль",
 		REPEAT_NEW_PASS: "Повторите новый пароль",
 
+		SEARCH_TEXT: "по тексту",
+		SEARCH_HEADER: "по заголовку",
+
 		HEADER_CREATE_USER: "Создание Пользователя",
 		HEADER_CHANGE_PASS: "Смена Пароля",
 		HEADER_RESET_PASS: "Сброс Пароля",
@@ -94,6 +97,9 @@ const CONSTANTS: IConstants = {
 		ENTER_OLD_PASS: "Enter old password",
 		ENTER_NEW_PASS: "Enter new password",
 		REPEAT_NEW_PASS: "Repeat new password",
+
+		SEARCH_TEXT: "search by text",
+		SEARCH_HEADER: "search by header",
 
 		HEADER_CREATE_USER: "Creating New User",
 		HEADER_CHANGE_PASS: "Changing User Password",

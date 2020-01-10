@@ -2,7 +2,6 @@ import React from "react"
 import $ from "jquery"
 import { connect } from "react-redux"
 import {
-	GetBootsrapStyle,
 	UserPanel,
 	SectionsPanel,
 	SideBarTags,
@@ -47,7 +46,7 @@ import "bootswatch/dist/superhero/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
 import { ScaleLoader } from "react-spinners"
 import { css } from "@emotion/core"
-import "../styles/App.css"
+import "../styles/App.sass"
 
 import "draft-js/dist/Draft.css"
 import "draftail/dist/draftail.css"
@@ -278,6 +277,8 @@ const App: React.FC<IAppProps> = props => {
 		}
 	}
 
+	const theme = currentDetails.userProfile.theme
+
 	// сброс подсветки у соседей и подсветка active section/tag
 	const resetHighlightItem = (elem: any, nameElem: string): void => {
 		// подсветка active section/tag
@@ -289,18 +290,18 @@ const App: React.FC<IAppProps> = props => {
 			// console.log(elem)
 			for (let i = 0; i < elems.length; i++) {
 				// удаляем все подсветки тегов
-				$(elems[i]).removeClass("item-active")
+				$(elems[i]).removeClass(`item-active-${theme}`)
 			}
 			$(elem)
 				.parent()
-				.addClass("item-active")
+				.addClass(`item-active-${theme}`)
 		}
 		// сброс подсветки item "All" при remove/edit sections/tags
 		else if (nameElem === "clearItems") {
 			const elems = elem.children()
 			for (let i = 0; i < elems.length; i++) {
 				// удаляем все подсветки тегов/секций
-				$(elems[i]).removeClass("item-active")
+				$(elems[i]).removeClass(`item-active-${theme}`)
 			}
 			// если родитель elems содержит .nav-tabs
 			if (
@@ -309,12 +310,12 @@ const App: React.FC<IAppProps> = props => {
 					.hasClass("nav-tabs")
 			) {
 				// подсвечиваем первый элемент списка sections - item All
-				$(elems[0]).addClass("item-active")
+				$(elems[0]).addClass(`item-active-${theme}`)
 			}
 			// если родитель elems НЕ содержит .nav-tabs
 			else {
 				// подсвечиваем второй элемент списка tags - item All
-				$(elems[1]).addClass("item-active")
+				$(elems[1]).addClass(`item-active-${theme}`)
 			}
 		}
 	}
@@ -333,24 +334,26 @@ const App: React.FC<IAppProps> = props => {
 	}
 
 	return (
-		<div className="App">
-			<GetBootsrapStyle theme={currentDetails.userProfile.theme} />
-			<div className="container-fluid app-user">
+		<div className={`App-${theme}`}>
+			<div className={`container-fluid app-user-${theme}`}>
 				<div className="row">
 					<UserPanel
 						auth={auth}
+						theme={theme}
 						changeStatusLogin={changeStatusLoginToApp}
 						userProfile={currentDetails.userProfile}
 						getDataByLogin={getDataByLoginToApp}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
 						handlerLang={handlerLangToApp}
 						handlerTheme={handlerThemeToApp}
+						resetHighlightItem={resetHighlightItem}
 					/>
 				</div>
 			</div>
-			<div className="container-fluid app-header">
+			<div className={`container-fluid app-header-${theme}`}>
 				<div className="row">
 					<SectionsPanel
+						theme={theme}
 						sections={sections}
 						lang={currentDetails.userProfile.lang}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
@@ -362,8 +365,11 @@ const App: React.FC<IAppProps> = props => {
 			</div>
 			<div className="container-fluid">
 				<div className="row">
-					<nav className="col-md-3 col-lg-3 d-none d-md-block app-side-tags fixed-top">
+					<nav
+						className={`col-md-3 col-lg-3 d-none d-md-block app-side-tags-${theme} fixed-top`}
+					>
 						<SideBarTags
+							theme={theme}
 							tags={getFiltredArray("tagsArr", tags, filters)}
 							lang={currentDetails.userProfile.lang}
 							filters={filters}
@@ -376,16 +382,19 @@ const App: React.FC<IAppProps> = props => {
 					</nav>
 					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
 						<SearchPanel
+							theme={theme}
 							lang={currentDetails.userProfile.lang}
 							handlerCurrentValue={handlerCurrentValueToApp}
 						/>
 						<StatisticInfoPanel
+							theme={theme}
 							sections={sections}
 							filters={filters}
 							countQualityItems={countQualityItems}
 							lang={currentDetails.userProfile.lang}
 						/>
 						<ItemNotes
+							theme={theme}
 							tags={getFiltredArray("tagsArr", tags, filters)}
 							lang={currentDetails.userProfile.lang}
 							notes={getFiltredArray(

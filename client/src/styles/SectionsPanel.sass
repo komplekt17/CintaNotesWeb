@@ -1,0 +1,35 @@
+@import settings
+  
+.top-panel
+  display: flex
+  justify-content: space-between
+
+.section-tab-night span
+  color: $fc-night !important
+
+.section-tab-night:hover
+  background-color: $bg-night-hover
+
+.item-active-night
+  background-color: $bg-night-hover
+
+.section-tab-light span
+  color: $fc-light !important
+
+.section-tab-light:hover
+  background-color: $bg-light-hover
+
+.item-active-light
+  background-color: $bg-light-hover
+
+.section-tab-light, .section-tab-night
+  cursor: pointer
+
+.section-tab-light .fa-edit, .section-tab-light .fa-trash-alt,
+.section-tab-night .fa-edit, .section-tab-night .fa-trash-alt
+  opacity: 0
+  transition: ease-in-out opacity .5s
+
+.section-tab-light:hover .fa-edit, .section-tab-light:hover .fa-trash-alt,
+.section-tab-night:hover .fa-edit, .section-tab-night:hover .fa-trash-alt
+  opacity: 1

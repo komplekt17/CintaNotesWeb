@@ -1,0 +1,32 @@
+@import settings
+  
+.app-side-tags-night, 
+.app-side-tags-light
+  margin-top: 87px
+  position: sticky
+
+.tags-item
+  cursor: pointer
+
+.tags-item-active-night
+  background-color: $bg-night
+
+.tags-item-active-light
+  background-color: $bg-light
+
+.app-side-tags-night .nav-item:hover .name_tag-btns,
+.app-side-tags-light .nav-item:hover .name_tag-btns
+  display: block
+
+.app-side-tags-night .tags-item:hover
+  background-color: $bg-night-hover
+
+.app-side-tags-light .tags-item:hover
+  background-color: $bg-light-hover
+
+.app-side-tags-night .nav-item:hover .name_tag-qwt,
+.app-side-tags-light .nav-item:hover .name_tag-qwt
+  display: none
+
+.name_tag-btns 
+  display: none

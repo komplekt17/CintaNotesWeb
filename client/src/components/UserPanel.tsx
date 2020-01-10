@@ -3,14 +3,16 @@ import { IUserProfile } from "../types"
 import $ from "jquery"
 import { CONSTANTS } from "../constants"
 
-import "../styles/UserPanel.css"
+import "../styles/UserPanel.sass"
 
 interface IUserPanelProps {
 	auth: boolean;
+	theme: string;
 	userProfile: IUserProfile;
 	changeStatusLogin: (token: string) => void;
 	getDataByLogin: (user: { login: any, pass: any }) => void;
 	handlerHeaderPopup: (name: string) => void;
+	resetHighlightItem: (elem: any, nameElem: string) => void;
 	handlerLang: (lang: string) => void;
 	handlerTheme: (lang: string) => void;
 }
@@ -18,13 +20,21 @@ interface IUserPanelProps {
 export const UserPanel: React.FC<IUserPanelProps> = props => {
 	const {
 		auth,
+		theme,
 		userProfile,
 		changeStatusLogin,
 		getDataByLogin,
+		// resetHighlightItem,
 		handlerHeaderPopup,
 		handlerLang,
 		handlerTheme,
 	} = props
+
+	// изменение background-body
+	const changeBGbody = (theme: string): void => {
+		if (theme === "light") $("body").css("background-color", "#2B3E50")
+		else $("body").css("background-color", "#ccc")
+	}
 
 	const { lang, login, token } = userProfile
 
@@ -32,19 +42,23 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 		<>
 			<li className="nav-item">
 				<span
-					className="nav-link item-theme d-none"
+					className="nav-link item-theme"
 					onClick={() => {
 						$(".item-theme").toggleClass("d-none")
 						handlerTheme("light")
+						// resetHighlightItem($(`.app-side-tags-${theme} ul`), "clearItems")
+						changeBGbody(theme)
 					}}
 				>
 					<i className="fas fa-sun" />
 				</span>
 				<span
-					className="nav-link item-theme"
+					className="nav-link item-theme d-none"
 					onClick={() => {
 						$(".item-theme").toggleClass("d-none")
 						handlerTheme("night")
+						// resetHighlightItem($(`.app-side-tags-${theme} ul`), "clearItems")
+						changeBGbody(theme)
 					}}
 				>
 					<i className="far fa-moon" />

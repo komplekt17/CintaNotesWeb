@@ -6,10 +6,11 @@ interface IStatisticInfoPanelProps {
 	filters: { sections: string, tags: string };
 	countQualityItems: (nameArray: string, nameFilter: string) => number;
 	lang: string;
+	theme: string;
 }
 
 const StatisticInfoPanel: React.FC<IStatisticInfoPanelProps> = props => {
-	const { sections, filters, countQualityItems, lang } = props
+	const { sections, filters, countQualityItems, lang, theme } = props
 
 	// получение названия активной секции
 	const getNameActiveSection = (
@@ -20,16 +21,14 @@ const StatisticInfoPanel: React.FC<IStatisticInfoPanelProps> = props => {
 		if (filters.sections === "All") {
 			nameCurrentSection = CONSTANTS[lang].BUTTON_ALL
 		} else {
-			const index = sections.findIndex(
-				param => param.id === filters.sections
-			)
+			const index = sections.findIndex(param => param.id === filters.sections)
 			nameCurrentSection = sections[index].nameSection
 		}
 		return nameCurrentSection
 	}
 
 	return (
-		<div className="modul-data">
+		<div className={`modul-data-${theme}`}>
 			<ul className="nav">
 				<li className="nav-item">
 					<span className="nav-link">

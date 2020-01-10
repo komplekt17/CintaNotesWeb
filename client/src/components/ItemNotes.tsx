@@ -2,12 +2,13 @@ import * as React from "react"
 import $ from "jquery"
 import { INotes, ITags } from "../types"
 import { CONSTANTS } from "../constants"
-import "../styles/ItemNotes.css"
+import "../styles/ItemNotes.sass"
 
 interface INoteItemProps {
 	tags: ITags[];
 	notes: INotes[];
 	lang: string;
+	theme: string;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 }
@@ -17,6 +18,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		tags,
 		notes,
 		lang,
+		theme,
 		handlerHeaderPopup,
 		handlerCurrentValue,
 	} = props
@@ -52,7 +54,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		NotesList = notes.map((item: any, index: number) => {
 			return (
 				<div key={index} className="col-12 note" id={item.id}>
-					<div className="note-header">{item.header}</div>
+					<div className={`note-header-${theme}`}>{item.header}</div>
 					<div className="d-flex justify-content-between">
 						<div className="note-tag d-flex justify-content-between">
 							<div

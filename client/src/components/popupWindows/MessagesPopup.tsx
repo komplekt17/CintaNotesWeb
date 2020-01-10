@@ -1,5 +1,5 @@
 import * as React from "react"
-import "../../styles/MessagesPopup.css"
+import "../../styles/MessagesPopup.sass"
 
 interface IMessagesPopupProps {
 	category: string;

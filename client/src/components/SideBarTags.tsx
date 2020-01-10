@@ -2,7 +2,7 @@ import * as React from "react"
 import { CONSTANTS } from "../constants"
 import $ from "jquery"
 
-import "../styles/SideBarTag.css"
+import "../styles/SideBarTag.sass"
 
 interface ISideBarTagsProps {
 	tags: Array<{
@@ -12,6 +12,7 @@ interface ISideBarTagsProps {
 		userId: string,
 	}>;
 	lang: string;
+	theme: string;
 	filters: { sections: string, tags: string };
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
@@ -24,6 +25,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 	const {
 		tags,
 		lang,
+		theme,
 		filters,
 		handlerHeaderPopup,
 		handlerCurrentValue,
@@ -107,7 +109,9 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					</button>
 				</span>
 			</li>
-			<li className="nav-item d-flex tags-item justify-content-between item-active">
+			<li
+				className={`nav-item d-flex tags-item justify-content-between item-active-${theme}`}
+			>
 				<span
 					className="nav-link"
 					onClick={ev => {

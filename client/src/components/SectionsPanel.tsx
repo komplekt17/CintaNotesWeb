@@ -1,11 +1,12 @@
 import * as React from "react"
 import $ from "jquery"
 import { CONSTANTS } from "../constants"
-import "../styles/SectionsPanel.css"
+import "../styles/SectionsPanel.sass"
 
 interface ISectionsPanelProps {
 	sections: [];
 	lang: string;
+	theme: string;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
@@ -16,6 +17,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 	const {
 		sections,
 		lang,
+		theme,
 		handlerHeaderPopup,
 		handlerCurrentValue,
 		handlerValueFilters,
@@ -29,12 +31,12 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 			return (
 				<li
 					key={index}
-					className="nav-item section-tab"
+					className={`nav-item section-tab-${theme}`}
 					onClick={ev => {
 						let elem = $(ev.target)
 						if ($(elem).hasClass("fas")) elem = $(elem).parent()
 						resetHighlightItem(elem, "")
-						resetHighlightItem($(".app-side-tags ul"), "clearItems")
+						resetHighlightItem($(`.app-side-tags-${theme} ul`), "clearItems")
 						handlerValueFilters("filterSection", item.id)
 					}}
 				>
@@ -70,12 +72,12 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 		<div className="col-12 top-panel">
 			<div className="section-panel">
 				<ul className="nav nav-tabs">
-					<li className="nav-item section-tab item-active">
+					<li className={`nav-item section-tab-${theme} item-active-${theme}`}>
 						<span
 							className="nav-link"
 							onClick={ev => {
 								resetHighlightItem(ev.target, "")
-								resetHighlightItem($(".app-side-tags ul"), "clearItems")
+								resetHighlightItem($(`.app-side-tags-${theme} ul`), "clearItems")
 								handlerValueFilters("filterSection", "All")
 							}}
 						>
@@ -83,7 +85,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						</span>
 					</li>
 					{listSections}
-					<li className="nav-item section-tab">
+					<li className={`nav-item section-tab-${theme}`}>
 						<span
 							className="nav-link"
 							onClick={() => {
