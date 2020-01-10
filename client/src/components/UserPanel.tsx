@@ -24,7 +24,7 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 		userProfile,
 		changeStatusLogin,
 		getDataByLogin,
-		// resetHighlightItem,
+		resetHighlightItem,
 		handlerHeaderPopup,
 		handlerLang,
 		handlerTheme,
@@ -46,7 +46,7 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 					onClick={() => {
 						$(".item-theme").toggleClass("d-none")
 						handlerTheme("light")
-						// resetHighlightItem($(`.app-side-tags-${theme} ul`), "clearItems")
+						resetHighlightItem($(`.app-side-tags ul`), "clearItems")
 						changeBGbody(theme)
 					}}
 				>
@@ -57,7 +57,7 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 					onClick={() => {
 						$(".item-theme").toggleClass("d-none")
 						handlerTheme("night")
-						// resetHighlightItem($(`.app-side-tags-${theme} ul`), "clearItems")
+						resetHighlightItem($(`.app-side-tags ul`), "clearItems")
 						changeBGbody(theme)
 					}}
 				>

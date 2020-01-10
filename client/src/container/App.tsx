@@ -301,7 +301,8 @@ const App: React.FC<IAppProps> = props => {
 			const elems = elem.children()
 			for (let i = 0; i < elems.length; i++) {
 				// удаляем все подсветки тегов/секций
-				$(elems[i]).removeClass(`item-active-${theme}`)
+				$(elems[i]).removeClass(`item-active-night`)
+				$(elems[i]).removeClass(`item-active-light`)
 			}
 			// если родитель elems содержит .nav-tabs
 			if (
@@ -366,7 +367,7 @@ const App: React.FC<IAppProps> = props => {
 			<div className="container-fluid">
 				<div className="row">
 					<nav
-						className={`col-md-3 col-lg-3 d-none d-md-block app-side-tags-${theme} fixed-top`}
+						className={`col-md-3 col-lg-3 d-none d-md-block app-side-tags app-side-tags-${theme} fixed-top`}
 					>
 						<SideBarTags
 							theme={theme}

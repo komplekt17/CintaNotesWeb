@@ -787,6 +787,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		case "HANDLER_USER_THEME_ACTION":
 			return {
 				...state,
+				filters: { sections: "All", tags: "All" },
 				currentDetails: handlerCurrentDetails(
 					state,
 					"userTheme",

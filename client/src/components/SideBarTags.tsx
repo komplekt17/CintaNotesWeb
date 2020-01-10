@@ -110,7 +110,10 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 				</span>
 			</li>
 			<li
-				className={`nav-item d-flex tags-item justify-content-between item-active-${theme}`}
+				className={`
+				nav-item d-flex 
+				tags-item justify-content-between 
+				item-active-${theme}`}
 			>
 				<span
 					className="nav-link"

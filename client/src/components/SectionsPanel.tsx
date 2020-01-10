@@ -36,7 +36,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						let elem = $(ev.target)
 						if ($(elem).hasClass("fas")) elem = $(elem).parent()
 						resetHighlightItem(elem, "")
-						resetHighlightItem($(`.app-side-tags-${theme} ul`), "clearItems")
+						resetHighlightItem($(`.app-side-tags ul`), "clearItems")
 						handlerValueFilters("filterSection", item.id)
 					}}
 				>
@@ -77,7 +77,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 							className="nav-link"
 							onClick={ev => {
 								resetHighlightItem(ev.target, "")
-								resetHighlightItem($(`.app-side-tags-${theme} ul`), "clearItems")
+								resetHighlightItem($(`.app-side-tags ul`), "clearItems")
 								handlerValueFilters("filterSection", "All")
 							}}
 						>
