@@ -367,7 +367,7 @@ const App: React.FC<IAppProps> = props => {
 			<div className="container-fluid">
 				<div className="row">
 					<nav
-						className={`col-md-3 col-lg-3 d-none d-md-block app-side-tags app-side-tags-${theme} fixed-top`}
+						className={`col-md-3 col-lg-3 d-none d-md-block app-side-tags app-side-tags-${theme}`}
 					>
 						<SideBarTags
 							theme={theme}
