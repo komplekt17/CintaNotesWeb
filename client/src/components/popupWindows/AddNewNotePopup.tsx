@@ -247,9 +247,10 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 								<button
 									onClick={() => {
 										const header = $("#addHeaderNote").val()
-										const text = toHTML(
-											convertToRaw(editorState.getCurrentContent())
-										)
+										const content = convertToRaw(
+											editorState.getCurrentContent()
+										);
+										const text = toHTML(content)
 										const tagId = $("#addNoteTagId").val()
 										const remarks = $("#addRemarksNote").val()
 										const link = $("#addLinkNote").val()

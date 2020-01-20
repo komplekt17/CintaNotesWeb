@@ -1,7 +1,7 @@
 import * as React from "react"
 import { AuthFalseButton } from "../popupWindows"
 import $ from "jquery"
-import { EditorState, ContentState, convertToRaw, convertFromHTML, } from "draft-js"
+import { EditorState, ContentState, convertToRaw, convertFromHTML } from "draft-js"
 import { CONSTANTS } from "../../constants"
 import { DraftailEditor, BLOCK_TYPE, INLINE_STYLE } from "draftail"
 import {
@@ -9,7 +9,7 @@ import {
 	UNDO_ICON,
 	REDO_ICON,
 	CustomIcon,
-	toHTML,
+	toHTML
 } from "../notesEditor"
 
 interface IEditNoteProps {
@@ -318,21 +318,25 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 								onClick={() => {
 									if (header !== "" && text !== "<p></p>") {
 										$("#modal-editNote").modal("hide")
+										const content = convertToRaw(
+											editorState.getCurrentContent()
+										);
 										const editedNote = {
                       id, 
 											header, 
-											text: toHTML(convertToRaw(editorState.getCurrentContent())), 
+											text: toHTML(content), 
 											remarks, 
 											link, 
 											sectionId: getSectionIdtag(tagId), 
-											tagId, userId 
+											tagId, 
+											userId 
 										}
                     // отправляем editedNote в store
 										editNote(editedNote)
 										// очищаем поля currentDetails.note,
 										// action.name === buttonEditNote
 										handlerCurrentValue("buttonEditNote", "")
-                    // очищаем поле редактора
+                    // очищаем поле редактора, сбрасываем state
                     setEditorState(EditorState.createEmpty());
 									}
 								}}
