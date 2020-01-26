@@ -55,10 +55,10 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 			return (
 				<div key={index} className="col-12 note" id={item.id}>
 					<div className={`note-header-${theme}`}>{item.header}</div>
-					<div className="d-flex justify-content-between">
-						<div className="note-tag d-flex justify-content-between">
-							<div
-								className="text-primary pr-2"
+					<div className="note-info">
+						<div className="note-tag">
+							<span
+								className="text-primary"
 								onClick={() => {
 									$(`#${item.id} .arrow-switch`).toggleClass("d-none", 2000)
 									$(`#${item.id} .note-text`).toggleClass("note-text-short", 2000)
@@ -66,10 +66,10 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 							>
 								<i className="arrow-switch d-none fas fa-angle-double-down" />
 								<i className="arrow-switch fas fa-angle-double-up" />
-							</div>
-							<div className="text-primary border-primary name-tag pl-2">
+							</span>
+							<span className="text-primary name-tag pl-2">
 								{getNameTag(item.tagId)}
-							</div>
+							</span>
 						</div>
 						<div className="note-date">
 							{item.updatedAt === item.createdAt ? (
@@ -77,11 +77,14 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 							) : (
 								<span>
 									<i className="far fa-calendar-alt text-primary" title="updated" />
-									{"   " + getDateNormed(item.updatedAt) + "   |   "}
+									{"   " + getDateNormed(item.updatedAt)}
+									<span className="date-devision"> | </span>
 								</span>
 							)}
-							<i className="fas fa-calendar-alt text-info" title="created" />
-							{"   " + getDateNormed(item.createdAt)}
+							<span>
+								<i className="fas fa-calendar-alt text-info" title="created" />
+								{"   " + getDateNormed(item.createdAt)}
+							</span>
 						</div>
 					</div>
 					<div
@@ -89,7 +92,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 						dangerouslySetInnerHTML={{ __html: item.text }}
 					/>
 					<div className="note-footer">
-						<div className="note-date">
+						<div className="note-button">
 							<span
 								className="text-success"
 								onClick={() => {

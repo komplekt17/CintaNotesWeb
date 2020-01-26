@@ -14,6 +14,10 @@
   font-weight: bold
   padding: 5px 10px
 
+.note-info
+  display: flex
+  justify-content: space-between
+
 .note-footer 
   font-weight: bold
   padding: 5px 10px
@@ -21,14 +25,8 @@
 .note-footer span 
   cursor: pointer
   
-.note-date 
+.note-date, .note-button 
   text-align: right
-
-.note-tag .name-tag 
-  border: 1px solid
-  border-bottom: none
-  border-right: none
-  border-top: none
 
 .arrow-switch
   cursor: pointer
@@ -36,3 +34,13 @@
 .note-text-short 
   overflow: hidden
   height: 70px
+
+@media (max-width: 510px)
+
+  .note-date
+    display: flex
+    flex-flow: column
+    // text-align: left
+
+  .date-devision
+    display: none
