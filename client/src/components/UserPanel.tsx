@@ -38,7 +38,7 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 
 	const { lang, login, token } = userProfile
 
-	const leftNavBar = (
+	const languageBar = (
 		<>
 			<li className="nav-item">
 				<span
@@ -92,7 +92,12 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 			{auth ? ( // если user авторизован
 				<div className="container-fluid auth-true">
 					<div className="collapse navbar-collapse justify-content-between">
-						<ul className="navbar-nav">{leftNavBar}</ul>
+						<ul className="navbar-nav">
+							<li>
+								<span className="nav-link">S</span>
+							</li>
+							{languageBar}
+						</ul>
 						<ul className="navbar-nav">
 							<li className="nav-item dropdown">
 								<span
@@ -137,7 +142,7 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 				<div className="container-fluid auth-false">
 					<div className="collapse navbar-collapse justify-content-between">
 						<ul className="navbar-nav">
-							{leftNavBar}
+							{languageBar}
 							<li className="nav-item">
 								<span
 									className="nav-link"
@@ -214,6 +219,17 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 								</div>
 							</div>
 						</form>
+						<i
+							onClick={() => {
+								$("#modal-mobileAuth").modal("show")
+								handlerHeaderPopup(CONSTANTS[lang].HEADER_AUTH)
+							}}
+							id="mobileHeader"
+							data-toggle="tooltip"
+							data-placement="bottom"
+							title="Login"
+							className="fas fa-sign-in-alt"
+						/>
 					</div>
 				</div>
 			)}

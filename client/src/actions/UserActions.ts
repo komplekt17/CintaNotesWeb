@@ -7,7 +7,7 @@ const getDataByLoginAction = (objUser: {
 	login: string,
 	pass: string,
 }) => {
-	// console.log(objUser)
+	$("#modal-mobileAuth").modal("hide")
 	return (dispatch: {
 		(arg0: { type: string }): void,
 		(arg0: { type: string, result: any }): void,

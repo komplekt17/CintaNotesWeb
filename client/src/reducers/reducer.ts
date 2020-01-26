@@ -61,7 +61,7 @@ export const initialState = {
 			sectionId: "1",
 			tagId: "1",
 			userId: "1",
-			createdAt: "2019-12-15T08:46:08.000Z",
+			createdAt: "2019-12-11T08:46:08.000Z",
 			updatedAt: "2019-12-15T08:46:08.000Z",
 		},
 		{

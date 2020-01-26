@@ -18,6 +18,7 @@ import {
 	RemoveItemPopup,
 	UserPassResetPopup,
 	UserPassChangePopup,
+	UserMobileAuthPopup,
 	MessagesPopup,
 } from "../components"
 import {
@@ -483,6 +484,11 @@ const App: React.FC<IAppProps> = props => {
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
 				updateUserPass={updateUserPassToApp}
+			/>
+			<UserMobileAuthPopup
+				namePopup={namePopup}
+				getDataByLogin={getDataByLoginToApp}
+				lang={currentDetails.userProfile.lang}
 			/>
 			<MessagesPopup
 				category={messagePopup.category}

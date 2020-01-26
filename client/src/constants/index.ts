@@ -30,6 +30,7 @@ const CONSTANTS: IConstants = {
 		ENTER_OLD_PASS: "Введите старый Пароль",
 		ENTER_NEW_PASS: "Введите новый пароль",
 		REPEAT_NEW_PASS: "Повторите новый пароль",
+		HEADER_AUTH: "Авторизация",
 
 		SEARCH_TEXT: "по тексту",
 		SEARCH_HEADER: "по заголовку",
@@ -52,8 +53,8 @@ const CONSTANTS: IConstants = {
 
 		BUTTON_LOGIN: "Войти",
 		BUTTON_ALL: "Все",
-		BUTTON_ADD_TAG: "Добавить Тег",
-		BUTTON_ADD_NOTE: "Добавить Запись",
+		BUTTON_ADD_TAG: "+Тег",
+		BUTTON_ADD_NOTE: "+Запись",
 		BUTTON_SEARCH: "Найти",
 		BUTTON_CREATE: "Создать",
 		BUTTON_SAVE: "Сохранить",
@@ -104,6 +105,7 @@ const CONSTANTS: IConstants = {
 		HEADER_CREATE_USER: "Creating New User",
 		HEADER_CHANGE_PASS: "Changing User Password",
 		HEADER_RESET_PASS: "Reseting User Password",
+		HEADER_AUTH: "Authorization",
 
 		HEADER_ADD_SECTION: "Adding New Section",
 		HEADER_EDIT_SECTION: "Editing Section",
@@ -119,8 +121,8 @@ const CONSTANTS: IConstants = {
 
 		BUTTON_LOGIN: "LogIn",
 		BUTTON_ALL: "All",
-		BUTTON_ADD_TAG: "Add Tag",
-		BUTTON_ADD_NOTE: "Add Note",
+		BUTTON_ADD_TAG: "+T",
+		BUTTON_ADD_NOTE: "+N",
 		BUTTON_SEARCH: "Search",
 		BUTTON_CREATE: "Create",
 		BUTTON_SAVE: "Save",
