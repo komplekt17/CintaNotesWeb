@@ -1,5 +1,6 @@
 import * as React from "react"
 import { CONSTANTS } from "../constants"
+import "../styles/StatisticInfoPanel.sass"
 
 interface IStatisticInfoPanelProps {
 	sections: [];
@@ -29,26 +30,47 @@ const StatisticInfoPanel: React.FC<IStatisticInfoPanelProps> = props => {
 
 	return (
 		<div className={`modul-data-${theme}`}>
-			<ul className="nav">
-				<li className="nav-item">
-					<span className="nav-link">
-						{CONSTANTS[lang].ITEMS_ACTIVE_SECTION}:{" "}
-						{getNameActiveSection(sections, filters)}
-					</span>
-				</li>
-				<li className="nav-item">
-					<span className="nav-link">
-						{CONSTANTS[lang].ITEMS_TAGS}:{" "}
-						{countQualityItems("statTags", filters.sections)}
-					</span>
-				</li>
-				<li className="nav-item">
-					<span className="nav-link">
-						{CONSTANTS[lang].ITEMS_NOTES}:{" "}
-						{countQualityItems("statNotes", filters.sections)}
-					</span>
-				</li>
-			</ul>
+			<div className="stat-info">
+				<ul className="nav stat-info">
+					<li className="nav-item">
+						<span className="nav-link">
+							{CONSTANTS[lang].ITEMS_ACTIVE_SECTION}:{" "}
+							{getNameActiveSection(sections, filters)}
+						</span>
+					</li>
+					<li className="nav-item">
+						<span className="nav-link">
+							{CONSTANTS[lang].ITEMS_TAGS}:{" "}
+							{countQualityItems("statTags", filters.sections)}
+						</span>
+					</li>
+					<li className="nav-item">
+						<span className="nav-link">
+							{CONSTANTS[lang].ITEMS_NOTES}:{" "}
+							{countQualityItems("statNotes", filters.sections)}
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div className="stat-info-mobile">
+				<ul className="nav">
+					<li className="nav-item">
+						<span className="nav-link">
+							S: {getNameActiveSection(sections, filters)}
+						</span>
+					</li>
+					<li className="nav-item">
+						<span className="nav-link">
+							T: {countQualityItems("statTags", filters.sections)}
+						</span>
+					</li>
+					<li className="nav-item">
+						<span className="nav-link">
+							N: {countQualityItems("statNotes", filters.sections)}
+						</span>
+					</li>
+				</ul>
+			</div>
 		</div>
 	)
 }
