@@ -99,8 +99,8 @@ const CONSTANTS: IConstants = {
 		ENTER_NEW_PASS: "Enter new password",
 		REPEAT_NEW_PASS: "Repeat new password",
 
-		SEARCH_TEXT: "search by text",
-		SEARCH_HEADER: "search by header",
+		SEARCH_TEXT: "by text",
+		SEARCH_HEADER: "by header",
 
 		HEADER_CREATE_USER: "Creating New User",
 		HEADER_CHANGE_PASS: "Changing User Password",
