@@ -5,6 +5,8 @@ import "../styles/slick-theme.sass"
 // import "slick-carousel/slick/slick.scss"
 // import "slick-carousel/slick/slick-theme.scss"
 
+// https://react-slick.neostack.com/docs/example/custom-arrows/
+
 interface ISectionSliderProps {
 	infinite: boolean;
 	slidesToShow: number;
