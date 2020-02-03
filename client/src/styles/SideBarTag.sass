@@ -4,8 +4,19 @@
   position: fixed !important
   top: 87px !important
 
+.app-side-tags-mobile
+  display: none
+
 .tags-item
   cursor: pointer
+
+.app-side-tags-night
+  background-color: $bg-night
+  color: $fc-night
+
+.app-side-tags-light
+  background-color: $bg-light
+  color: $fc-light
 
 .tags-item-active-night
   background-color: $bg-night
@@ -29,3 +40,16 @@
 
 .name_tag-btns 
   display: none
+
+@media (max-width: 768px)
+
+  .app-side-tags
+    display: none
+
+  .app-side-tags-mobile
+    display: block;
+    width: 270px !important;
+    height: 100%;
+    border-right: 2px solid #863c8391;
+    z-index: 3;
+    position: fixed !important

@@ -37,7 +37,6 @@
 		"react-router-dom": "^4.2.2",
 		"react-router-redux": "^4.0.8",
 		"react-scripts": "^3.3.0",
-		"react-shadow-scroll": "^0.5.1",
 		"react-slick": "^0.25.2",
 		"react-spinners": "^0.6.1",
 		"redux": "^4.0.5",

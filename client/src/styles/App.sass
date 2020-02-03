@@ -41,6 +41,25 @@
 .modal-content
   color: $fc-night !important 
 
+.switcher-tags
+  display: none;
+  z-index: 3;
+  top: 60%;
+  cursor: pointer;
+  font-size: 1.5em;
+  border-radius: 0 50% 50% 0;
+
+.switcher-tags i
+  padding: 10px;
+
+.switcher-tags-light
+  background-color: $switcher-tags-bg-night;
+  color: $fc-night;
+
+.switcher-tags-night
+  background-color: $switcher-tags-bg-light;
+  color: $fc-light;
+
 .parent-loader
   background-color: rgba(27, 85, 41, 0.3);
   width: 100%;
@@ -50,3 +69,9 @@
   left: 0;
   overflow: auto;
   z-index: 100;
+
+@media (max-width: 768px)
+
+  .switcher-tags
+    position: fixed;
+    display: block;

@@ -368,7 +368,8 @@ const App: React.FC<IAppProps> = props => {
 			<div className="container-fluid">
 				<div className="row">
 					<nav
-						className={`col-md-3 col-lg-3 d-none d-md-block app-side-tags app-side-tags-${theme}`}
+						id="side-tags"
+						className={`col-md-4 col-lg-3 app-side-tags app-side-tags-${theme}`}
 					>
 						<SideBarTags
 							theme={theme}
@@ -382,7 +383,18 @@ const App: React.FC<IAppProps> = props => {
 							countQualityItems={countQualityItems}
 						/>
 					</nav>
-					<main className="col-md-9 ml-sm-auto col-lg-9 px-4 app-content">
+					<div
+						className={`switcher-tags switcher-tags-${theme}`}
+						onClick={() => {
+							$(`.tags-switch`).toggleClass("d-none")
+							$(`#side-tags`).toggleClass("app-side-tags")
+							$(`#side-tags`).toggleClass("app-side-tags-mobile")
+						}}
+					>
+						<i className="tags-switch d-none fas fa-angle-double-left" />
+						<i className="tags-switch fas fa-angle-double-right" />
+					</div>
+					<main className="col-md-8 ml-sm-auto col-lg-9 px-4 app-content">
 						<SearchPanel
 							theme={theme}
 							lang={currentDetails.userProfile.lang}
