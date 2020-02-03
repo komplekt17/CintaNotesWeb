@@ -1,6 +1,8 @@
 import * as React from "react"
 import { CONSTANTS } from "../constants"
 import $ from "jquery"
+import Scrollbar from "react-scrollbars-custom"
+// https://github.com/xobotyi/react-scrollbars-custom/tree/master
 
 import "../styles/SideBarTag.sass"
 
@@ -19,6 +21,7 @@ interface ISideBarTagsProps {
 	handlerValueFilters: (filter: string, id: string) => void;
 	resetHighlightItem: (elem: any, nameElem: string) => void;
 	countQualityItems: (nameArray: string, nameFilter: string) => number;
+	heightDisplay: number;
 }
 
 export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
@@ -27,6 +30,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 		lang,
 		theme,
 		filters,
+		heightDisplay,
 		handlerHeaderPopup,
 		handlerCurrentValue,
 		resetHighlightItem,
@@ -109,44 +113,46 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					</button>
 				</span>
 			</li>
-			<li
-				className={`
+			<Scrollbar style={{ height: heightDisplay - 100 }}>
+				<li
+					className={`
 				nav-item d-flex 
 				tags-item justify-content-between 
 				item-active-${theme}`}
-			>
-				<span
-					className="nav-link"
-					onClick={ev => {
-						resetHighlightItem(ev.target, "")
-						handlerValueFilters("filterTag", "All")
-					}}
 				>
-					{CONSTANTS[lang].ITEMS_ALL}
-				</span>
-				<span className="nav-link">
-					{countQualityItems("tagBarNotes", "All")}
-				</span>
-			</li>
-			{filters.sections === "All" ? (
-				<li className="nav-item d-flex tags-item justify-content-between">
 					<span
 						className="nav-link"
 						onClick={ev => {
 							resetHighlightItem(ev.target, "")
-							handlerValueFilters("filterTag", "Untagged")
+							handlerValueFilters("filterTag", "All")
 						}}
 					>
-						{CONSTANTS[lang].ITEMS_NOTAG}
+						{CONSTANTS[lang].ITEMS_ALL}
 					</span>
 					<span className="nav-link">
-						{countQualityItems("tagBarNotes", "Untagged")}
+						{countQualityItems("tagBarNotes", "All")}
 					</span>
 				</li>
-			) : (
-				""
-			)}
-			{listTags}
+				{filters.sections === "All" ? (
+					<li className="nav-item d-flex tags-item justify-content-between">
+						<span
+							className="nav-link"
+							onClick={ev => {
+								resetHighlightItem(ev.target, "")
+								handlerValueFilters("filterTag", "Untagged")
+							}}
+						>
+							{CONSTANTS[lang].ITEMS_NOTAG}
+						</span>
+						<span className="nav-link">
+							{countQualityItems("tagBarNotes", "Untagged")}
+						</span>
+					</li>
+				) : (
+					""
+				)}
+				{listTags}
+			</Scrollbar>
 		</ul>
 	)
 }

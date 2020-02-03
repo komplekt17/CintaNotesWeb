@@ -1,8 +1,9 @@
 import * as React from "react"
 import $ from "jquery"
 import { CONSTANTS } from "../constants"
-import { SectionSlider } from "./SectionSlider"
 import "../styles/SectionsPanel.sass"
+import { SectionSlider } from "./SectionSlider"
+// https://github.com/xobotyi/react-scrollbars-custom/tree/master
 
 interface ISectionsPanelProps {
 	sections: [];
@@ -12,6 +13,7 @@ interface ISectionsPanelProps {
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
 	resetHighlightItem: (elem: any, nameElem: string) => void;
+	widthDisplay: number;
 }
 
 export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
@@ -23,6 +25,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 		handlerCurrentValue,
 		handlerValueFilters,
 		resetHighlightItem,
+		widthDisplay,
 	} = props
 
 	let listSections: any = ""
@@ -30,7 +33,6 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 	let infinite: boolean = true
 	let slidesToShow: number = 1
 	let slidesToScroll: number = 1
-	const widthDisplay: number = document.documentElement.clientWidth
 
 	if (widthDisplay > 768 && sections.length > 4) {
 		slidesToShow = 3

@@ -47,7 +47,7 @@ export const UserMobileAuthPopup: React.FC<IUserMobileAuthProps> = props => {
 									type="text"
 									id="mobileUserLogin"
 									className="form-control"
-									placeholder="enter your@mail.ru"
+									placeholder="your@mail.ru"
 									required
 								/>
 								<div className="invalid-feedback">

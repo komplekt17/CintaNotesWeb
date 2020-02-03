@@ -188,7 +188,7 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 										id="userLogin"
 										type="text"
 										className="form-control-sm"
-										placeholder="enter your@mail.ru"
+										placeholder="your@mail.ru"
 									/>
 								</div>
 								<div className="col">

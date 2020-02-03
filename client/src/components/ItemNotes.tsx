@@ -3,6 +3,7 @@ import $ from "jquery"
 import { INotes, ITags } from "../types"
 import { CONSTANTS } from "../constants"
 import "../styles/ItemNotes.sass"
+import Scrollbar from "react-scrollbars-custom"
 
 interface INoteItemProps {
 	tags: ITags[];
@@ -11,6 +12,7 @@ interface INoteItemProps {
 	theme: string;
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
+	heightDisplay: number;
 }
 
 const ItemNotes: React.FC<INoteItemProps> = props => {
@@ -19,6 +21,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		notes,
 		lang,
 		theme,
+		heightDisplay,
 		handlerHeaderPopup,
 		handlerCurrentValue,
 	} = props
@@ -122,7 +125,11 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 			)
 		})
 	}
-	return <>{NotesList}</>
+	return (
+		<Scrollbar style={{ height: heightDisplay - 100 }}>
+			{NotesList}
+		</Scrollbar>
+	)
 }
 
 export { ItemNotes }

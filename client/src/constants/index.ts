@@ -121,8 +121,8 @@ const CONSTANTS: IConstants = {
 
 		BUTTON_LOGIN: "LogIn",
 		BUTTON_ALL: "All",
-		BUTTON_ADD_TAG: "+T",
-		BUTTON_ADD_NOTE: "+N",
+		BUTTON_ADD_TAG: "+Tag",
+		BUTTON_ADD_NOTE: "+Note",
 		BUTTON_SEARCH: "Search",
 		BUTTON_CREATE: "Create",
 		BUTTON_SAVE: "Save",

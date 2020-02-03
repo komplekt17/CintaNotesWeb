@@ -279,6 +279,8 @@ const App: React.FC<IAppProps> = props => {
 	}
 
 	const theme = currentDetails.userProfile.theme
+	const widthDisplay = document.documentElement.clientWidth
+	const heightDisplay = document.documentElement.clientHeight
 
 	// сброс подсветки у соседей и подсветка active section/tag
 	const resetHighlightItem = (elem: any, nameElem: string): void => {
@@ -357,6 +359,7 @@ const App: React.FC<IAppProps> = props => {
 					<SectionsPanel
 						theme={theme}
 						sections={sections}
+						widthDisplay={widthDisplay}
 						lang={currentDetails.userProfile.lang}
 						handlerHeaderPopup={handlerHeaderPopupToApp}
 						handlerCurrentValue={handlerCurrentValueToApp}
@@ -373,9 +376,10 @@ const App: React.FC<IAppProps> = props => {
 					>
 						<SideBarTags
 							theme={theme}
-							tags={getFiltredArray("tagsArr", tags, filters)}
-							lang={currentDetails.userProfile.lang}
 							filters={filters}
+							tags={getFiltredArray("tagsArr", tags, filters)}
+							heightDisplay={heightDisplay}
+							lang={currentDetails.userProfile.lang}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
 							handlerValueFilters={handlerValueFiltersToApp}
@@ -409,6 +413,7 @@ const App: React.FC<IAppProps> = props => {
 						/>
 						<ItemNotes
 							theme={theme}
+							heightDisplay={heightDisplay}
 							tags={getFiltredArray("tagsArr", tags, filters)}
 							lang={currentDetails.userProfile.lang}
 							notes={getFiltredArray(
