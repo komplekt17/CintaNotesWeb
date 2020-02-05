@@ -12,7 +12,7 @@ interface ISectionsPanelProps {
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (nameInput: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
-	resetHighlightItem: (elem: any, nameElem: string) => void;
+	resetHighlightItem: (clickedElem: any, elems: any, name: string) => void;
 	widthDisplay: number;
 }
 
@@ -62,8 +62,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 					onClick={ev => {
 						let elem = $(ev.target)
 						if ($(elem).hasClass("fas")) elem = $(elem).parent()
-						resetHighlightItem(elem, "")
-						resetHighlightItem($(`.app-side-tags ul`), "clearItems")
+						resetHighlightItem(elem, $(".section-panel .nav-item"), "clearItems")
 						handlerValueFilters("filterSection", item.id)
 					}}
 				>
@@ -98,7 +97,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 	return (
 		<div className="col-12 top-panel">
 			{!isSliderShow ? (
-				<div className="section-panel">
+				<div className="section-panel section-panel-nocarousel">
 					<div className="nav nav-tabs">
 						<div
 							className={`nav-item section-tab-${theme} item-active-${theme}`}
@@ -106,8 +105,11 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 							<span
 								className="nav-link"
 								onClick={ev => {
-									resetHighlightItem(ev.target, "")
-									resetHighlightItem($(`.app-side-tags ul`), "clearItems")
+									resetHighlightItem(
+										ev.target,
+										$(".section-panel .nav-item"),
+										"clearItems"
+									)
 									handlerValueFilters("filterSection", "All")
 								}}
 							>
@@ -129,7 +131,7 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 					</div>
 				</div>
 			) : (
-				<div className="section-panel-carousel">
+				<div className="section-panel section-panel-carousel">
 					<div className="nav nav-tabs">
 						<div
 							className={`nav-item section-tab-${theme} item-active-${theme}`}
@@ -137,9 +139,11 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 							<span
 								className="nav-link"
 								onClick={ev => {
-									console.log(ev.target)
-									resetHighlightItem(ev.target, "")
-									resetHighlightItem($(`.app-side-tags ul`), "clearItems")
+									resetHighlightItem(
+										ev.target,
+										$(".section-panel .nav-item"),
+										"clearItems"
+									)
 									handlerValueFilters("filterSection", "All")
 								}}
 							>

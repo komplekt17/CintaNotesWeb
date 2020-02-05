@@ -19,7 +19,7 @@ interface ISideBarTagsProps {
 	handlerHeaderPopup: (name: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
 	handlerValueFilters: (filter: string, id: string) => void;
-	resetHighlightItem: (elem: any, nameElem: string) => void;
+	resetHighlightItem: (clickedElem: any, elems: any, name: string) => void;
 	countQualityItems: (nameArray: string, nameFilter: string) => number;
 	heightDisplay: number;
 }
@@ -44,6 +44,9 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 		</li>
 	)
 
+	let classNameThemeButton = ""
+	if (theme === "night") classNameThemeButton = "-outline"
+
 	if (tags && tags.length !== 0) {
 		listTags = tags.map((item: any, index: number) => {
 			return (
@@ -54,7 +57,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					<span
 						className="nav-link name_tag"
 						onClick={ev => {
-							resetHighlightItem(ev.target, "")
+							resetHighlightItem(ev.target, $("#side-tags .nav-item"), "")
 							handlerValueFilters("filterTag", item.id)
 						}}
 					>
@@ -91,14 +94,14 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 	}
 	return (
 		<ul className="nav flex-column">
-			<li className="nav-item d-flex justify-content-between">
+			<li className="nav-item">
 				<span className="nav-link">
 					<button
 						onClick={() => {
 							handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_TAG)
 							$("#modal-addTag").modal("show")
 						}}
-						className="btn btn-outline-success btn-sm"
+						className={`btn btn${classNameThemeButton}-success btn-sm`}
 					>
 						{CONSTANTS[lang].BUTTON_ADD_TAG}
 					</button>
@@ -107,7 +110,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 							handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_NOTE)
 							$("#modal-addNote").modal("show")
 						}}
-						className="btn btn-outline-info btn-sm rounded"
+						className={`btn btn${classNameThemeButton}-info btn-sm`}
 					>
 						{CONSTANTS[lang].BUTTON_ADD_NOTE}
 					</button>
@@ -123,7 +126,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 					<span
 						className="nav-link"
 						onClick={ev => {
-							resetHighlightItem(ev.target, "")
+							resetHighlightItem(ev.target, $("#side-tags .nav-item"), "")
 							handlerValueFilters("filterTag", "All")
 						}}
 					>
@@ -138,7 +141,7 @@ export const SideBarTags: React.FC<ISideBarTagsProps> = props => {
 						<span
 							className="nav-link"
 							onClick={ev => {
-								resetHighlightItem(ev.target, "")
+								resetHighlightItem(ev.target, $("#side-tags .nav-item"), "")
 								handlerValueFilters("filterTag", "Untagged")
 							}}
 						>

@@ -7,6 +7,7 @@ import {
 	SideBarTags,
 	SearchPanel,
 	StatisticInfoPanel,
+	SwitcherTags,
 	ItemNotes,
 	AddNewUserPopup,
 	AddNewSectionPopup,
@@ -283,33 +284,31 @@ const App: React.FC<IAppProps> = props => {
 	const heightDisplay = document.documentElement.clientHeight
 
 	// сброс подсветки у соседей и подсветка active section/tag
-	const resetHighlightItem = (elem: any, nameElem: string): void => {
-		// подсветка active section/tag
-		if (nameElem === "") {
-			const elems = $(elem)
-				.parent()
-				.parent()
-				.children()
-			// console.log(elem)
-			for (let i = 0; i < elems.length; i++) {
-				// удаляем все подсветки тегов
-				$(elems[i]).removeClass(`item-active-${theme}`)
-			}
-			$(elem)
-				.parent()
-				.addClass(`item-active-${theme}`)
-		}
-		// сброс подсветки item "All" при remove/edit sections/tags
-		else if (nameElem === "clearItems") {
-			const elems = elem.children()
+	const resetHighlightItem = (
+		clickedElem: any,
+		elems: any,
+		name: string
+	): void => {
+		if (name === "") {
 			for (let i = 0; i < elems.length; i++) {
 				// удаляем все подсветки тегов/секций
 				$(elems[i]).removeClass(`item-active-night`)
 				$(elems[i]).removeClass(`item-active-light`)
 			}
+			// подсветка active section/tag
+			$(clickedElem)
+				.parent()
+				.addClass(`item-active-${theme}`)
+		} else if (name === "clearItems") {
+			for (let i = 0; i < elems.length; i++) {
+				// удаляем все подсветки тегов/секций
+				$(elems[i]).removeClass(`item-active-night`)
+				$(elems[i]).removeClass(`item-active-light`)
+			}
+		} else if (name === "removeItems") {
 			// если родитель elems содержит .nav-tabs
 			if (
-				$(elems)
+				$(elems[0])
 					.parent()
 					.hasClass("nav-tabs")
 			) {
@@ -387,17 +386,7 @@ const App: React.FC<IAppProps> = props => {
 							countQualityItems={countQualityItems}
 						/>
 					</nav>
-					<div
-						className={`switcher-tags switcher-tags-${theme}`}
-						onClick={() => {
-							$(`.tags-switch`).toggleClass("d-none")
-							$(`#side-tags`).toggleClass("app-side-tags")
-							$(`#side-tags`).toggleClass("app-side-tags-mobile")
-						}}
-					>
-						<i className="tags-switch d-none fas fa-angle-double-left" />
-						<i className="tags-switch fas fa-angle-double-right" />
-					</div>
+					<SwitcherTags theme={theme} />
 					<main className="col-md-8 ml-sm-auto col-lg-9 px-4 app-content">
 						<SearchPanel
 							theme={theme}

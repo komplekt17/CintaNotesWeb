@@ -8,7 +8,7 @@ interface IRemoveItemProps {
 	removeTag: (tagId: string) => void;
 	removeNote: (noteId: string) => void;
 	handlerCurrentValue: (name: string, value: string) => void;
-	resetHighlightItem: (elem: any, nameElem: string) => void;
+	resetHighlightItem: (clickedElem: any, elems: any, name: string) => void;
 	namePopup: string;
 	lang: string;
 	removableItemId: string;
@@ -82,7 +82,12 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 										removeSection(removableItemId)
 										// сбрасываем подсветку текущей section
 										// подсвечиваем section All
-										resetHighlightItem($(".section-panel ul"), "clearItems")
+										resetHighlightItem("", $("#side-tags .nav-item"), "removeItems")
+										resetHighlightItem(
+											"",
+											$(".section-panel .nav-item"),
+											"removeItems"
+										)
 										// очищаем поле id в currentDetails.section,
 										// action.name === buttonRemoveSection
 										handlerCurrentValue("buttonRemoveSection", "")
@@ -90,7 +95,12 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 										removeTag(removableItemId)
 										// сбрасываем подсветку текущего tag
 										// подсвечиваем tag All
-										resetHighlightItem($(".app-side-tags ul"), "clearItems")
+										resetHighlightItem("", $("#side-tags .nav-item"), "removeItems")
+										resetHighlightItem(
+											"",
+											$(".section-panel .nav-item"),
+											"removeItems"
+										)
 										// очищаем поле id в currentDetails.tag,
 										// action.name === buttonRemoveTag
 										handlerCurrentValue("buttonRemoveTag", "")

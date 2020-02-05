@@ -12,7 +12,7 @@ interface IUserPanelProps {
 	changeStatusLogin: (token: string) => void;
 	getDataByLogin: (user: { login: any, pass: any }) => void;
 	handlerHeaderPopup: (name: string) => void;
-	resetHighlightItem: (elem: any, nameElem: string) => void;
+	resetHighlightItem: (clickedElem: any, elems: any, name: string) => void;
 	handlerLang: (lang: string) => void;
 	handlerTheme: (lang: string) => void;
 }
@@ -46,7 +46,8 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 					onClick={() => {
 						$(".item-theme").toggleClass("d-none")
 						handlerTheme("light")
-						resetHighlightItem($(`.app-side-tags ul`), "clearItems")
+						resetHighlightItem("", $("#side-tags .nav-item"), "clearItems")
+						resetHighlightItem("", $(".section-panel .nav-item"), "clearItems")
 						changeBGbody(theme)
 					}}
 				>
@@ -57,7 +58,8 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 					onClick={() => {
 						$(".item-theme").toggleClass("d-none")
 						handlerTheme("night")
-						resetHighlightItem($(`.app-side-tags ul`), "clearItems")
+						resetHighlightItem("", $("#side-tags .nav-item"), "clearItems")
+						resetHighlightItem("", $(".section-panel .nav-item"), "clearItems")
 						changeBGbody(theme)
 					}}
 				>
@@ -92,12 +94,7 @@ export const UserPanel: React.FC<IUserPanelProps> = props => {
 			{auth ? ( // если user авторизован
 				<div className="container-fluid auth-true">
 					<div className="collapse navbar-collapse justify-content-between">
-						<ul className="navbar-nav">
-							<li>
-								<span className="nav-link">S</span>
-							</li>
-							{languageBar}
-						</ul>
+						<ul className="navbar-nav">{languageBar}</ul>
 						<ul className="navbar-nav">
 							<li className="nav-item dropdown">
 								<span
