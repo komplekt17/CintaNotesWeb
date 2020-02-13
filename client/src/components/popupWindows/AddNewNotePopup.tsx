@@ -115,9 +115,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="addTextNote">
-									{CONSTANTS[lang].TEXT_NOTE}
-								</label>
+								<label htmlFor="addTextNote">{CONSTANTS[lang].TEXT_NOTE}</label>
 								<DraftailEditor
 									editorState={editorState}
 									onChange={setEditorState}
@@ -137,7 +135,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 											type: BLOCK_TYPE.ORDERED_LIST_ITEM,
 											icon: <CustomIcon icon="fa-list-ol" />,
 										},
-										{ type: BLOCK_TYPE.CODE },
+										// { type: BLOCK_TYPE.CODE },
 									]}
 									inlineStyles={[
 										{
@@ -200,9 +198,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="addNoteTagId">
-									{CONSTANTS[lang].SELECT_TAG}
-								</label>
+								<label htmlFor="addNoteTagId">{CONSTANTS[lang].SELECT_TAG}</label>
 								<select
 									id="addNoteTagId"
 									className="form-control"
@@ -229,9 +225,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="addLinkNote">
-									{CONSTANTS[lang].LINK_NOTE}
-								</label>
+								<label htmlFor="addLinkNote">{CONSTANTS[lang].LINK_NOTE}</label>
 								<input
 									id="addLinkNote"
 									type="text"
@@ -247,9 +241,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 								<button
 									onClick={() => {
 										const header = $("#addHeaderNote").val()
-										const content = convertToRaw(
-											editorState.getCurrentContent()
-										);
+										const content = convertToRaw(editorState.getCurrentContent())
 										const text = toHTML(content)
 										const tagId = $("#addNoteTagId").val()
 										const remarks = $("#addRemarksNote").val()

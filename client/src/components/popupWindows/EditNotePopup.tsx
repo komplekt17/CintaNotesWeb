@@ -192,7 +192,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 											type: BLOCK_TYPE.ORDERED_LIST_ITEM,
 											icon: <CustomIcon icon="fa-list-ol" />,
 										},
-										{ type: BLOCK_TYPE.CODE },
+										// { type: BLOCK_TYPE.CODE },
 									]}
 									inlineStyles={[
 										{

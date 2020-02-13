@@ -126,7 +126,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		})
 	}
 	return (
-		<Scrollbar style={{ height: heightDisplay - 100 }}>
+		<Scrollbar style={{ height: heightDisplay - 180 }}>
 			{NotesList}
 		</Scrollbar>
 	)
