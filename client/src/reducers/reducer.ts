@@ -74,7 +74,7 @@ export const initialState = {
 			sectionId: "1",
 			tagId: "1",
 			userId: "1",
-			createdAt: "2019-12-15T08:46:08.000Z",
+			createdAt: "2019-12-12T08:46:08.000Z",
 			updatedAt: "2019-12-15T08:46:08.000Z",
 		},
 		{
@@ -87,7 +87,7 @@ export const initialState = {
 			sectionId: "2",
 			tagId: "2",
 			userId: "1",
-			createdAt: "2019-12-15T08:46:08.000Z",
+			createdAt: "2019-12-11T08:46:08.000Z",
 			updatedAt: "2019-12-15T08:46:08.000Z",
 		},
 		{
@@ -100,7 +100,7 @@ export const initialState = {
 			sectionId: "2",
 			tagId: "2",
 			userId: "1",
-			createdAt: "2019-12-15T08:46:08.000Z",
+			createdAt: "2019-12-14T08:46:08.000Z",
 			updatedAt: "2019-12-15T08:46:08.000Z",
 		},
 		{
@@ -113,7 +113,7 @@ export const initialState = {
 			sectionId: "3",
 			tagId: "3",
 			userId: "1",
-			createdAt: "2019-12-15T08:46:08.000Z",
+			createdAt: "2019-12-11T08:46:08.000Z",
 			updatedAt: "2019-12-15T08:46:08.000Z",
 		},
 		{
@@ -126,7 +126,7 @@ export const initialState = {
 			sectionId: "3",
 			tagId: "3",
 			userId: "1",
-			createdAt: "2019-12-15T08:46:08.000Z",
+			createdAt: "2019-12-16T08:46:08.000Z",
 			updatedAt: "2019-12-15T08:46:08.000Z",
 		},
 		{
@@ -139,7 +139,7 @@ export const initialState = {
 			sectionId: "0",
 			tagId: "0",
 			userId: "1",
-			createdAt: "2019-12-15T08:46:08.000Z",
+			createdAt: "2019-12-14T08:46:08.000Z",
 			updatedAt: "2019-12-15T08:46:08.000Z",
 		},
 		{
@@ -152,7 +152,7 @@ export const initialState = {
 			sectionId: "0",
 			tagId: "0",
 			userId: "1",
-			createdAt: "2019-12-15T08:46:08.000Z",
+			createdAt: "2019-12-12T08:46:08.000Z",
 			updatedAt: "2019-12-15T08:46:08.000Z",
 		},
 	],
