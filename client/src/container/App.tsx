@@ -205,6 +205,8 @@ const App: React.FC<IAppProps> = props => {
 			nameTag?: any,
 			header?: any,
 			text?: any,
+			createdAt?: any,
+			updatedAt?: any,
 		}>,
 		filters: { sections: string, tags: string },
 		searchText?: any,
@@ -214,8 +216,9 @@ const App: React.FC<IAppProps> = props => {
 		if (typeArray === "notesArr") {
 			// если поисковая строка пустая
 			if (searchText === "") {
-				// 1. получаем массив notes[] отфильтрованный по Section
-				const notesFilterdBySection = arr.filter(item => {
+				// 1. получаем массив notes[]
+				// отфильтрованный по Section
+				const notesFilteredBySection = arr.filter(item => {
 					let qqq
 					if (filters.sections === "All") qqq = arr
 					else if (filters.sections === item.sectionId) {
@@ -225,10 +228,10 @@ const App: React.FC<IAppProps> = props => {
 				})
 				// 2. получаем массив notes[]
 				// отфильтрованный и по Section, и по Tag
-				const notesFilterdByTag = notesFilterdBySection.filter(item => {
+				const notesFilteredByTag = notesFilteredBySection.filter(item => {
 					let qqq
 					if (filters.tags === "All") {
-						qqq = notesFilterdBySection
+						qqq = notesFilteredBySection
 					} else if (filters.tags === "Untagged" && item.tagId === "0") {
 						qqq = item.tagId
 					} else if (filters.tags === item.tagId) {
@@ -236,7 +239,16 @@ const App: React.FC<IAppProps> = props => {
 					}
 					return qqq
 				})
-				return notesFilterdByTag
+				// 3. получаем массив notes[]
+				// отсортированный по убыванию даты обновления
+				const notesSortedByDateUpdated = notesFilteredByTag.sort((a, b) => {
+					if (a.updatedAt > b.updatedAt) {
+						return -1
+					}
+					return 0
+				})
+
+				return notesSortedByDateUpdated
 			}
 			// если поисковая строка НЕ пустая
 			else {
@@ -305,6 +317,19 @@ const App: React.FC<IAppProps> = props => {
 				$(elems[i]).removeClass(`item-active-night`)
 				$(elems[i]).removeClass(`item-active-light`)
 			}
+			// подсвечиваем активную секцию
+			$(clickedElem)
+				.parent()
+				.addClass(`item-active-${theme}`)
+			// подсвечиваем тег All
+			const elemsArr = $("#side-tags .nav-item")
+			for (let i = 0; i < elems.length; i++) {
+				// удаляем все подсветки тегов/секций
+				$(elemsArr[i]).removeClass(`item-active-night`)
+				$(elemsArr[i]).removeClass(`item-active-light`)
+			}
+			// подсвечиваем второй элемент списка tags - item All
+			$(elemsArr[1]).addClass(`item-active-${theme}`)
 		} else if (name === "removeItems") {
 			// если родитель elems содержит .nav-tabs
 			if (
