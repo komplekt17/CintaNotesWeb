@@ -1,3 +1,9 @@
+# Version 1.2.1 from 08/03/2020
+
+- Добавлен вывод записей, отсортированных по убыванию даты изменения
+- Исправлена подсветка секций при переключении
+- Модифицирована темизация
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
