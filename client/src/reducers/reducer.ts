@@ -6,6 +6,7 @@ import {
 	ITags,
 	INotes,
 } from "../types"
+import { DELAY_MODAL_ALERT } from "../constants"
 
 export const initialState = {
 	auth: false,
@@ -635,6 +636,15 @@ const transplaceTags = (state: IState, idItem: string): ITags[] => {
 	return arr
 }
 
+// func скрытия всплывшего алерта
+// по типу toast materializecss
+const startModalAlert = (): void => {
+	$("#modal-alert").modal("show")
+	setTimeout((): void => {
+		$("#modal-alert").modal("hide")
+	}, DELAY_MODAL_ALERT)
+}
+
 export const Reducer = (state: IState = initialState, action: any) => {
 	switch (action.type) {
 		case "LOAD_REQUESTED_DATA_ACTION":
@@ -677,7 +687,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			//  action.result.typeMsg === "error"
 			else {
-				$("#modal-alert").modal("show")
+				startModalAlert()
 				return {
 					...state,
 					loading: false,
@@ -712,7 +722,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			// action.result.typeMsg === "error"
 			else {
-				$("#modal-alert").modal("show")
+				startModalAlert()
 				return {
 					...state,
 					loading: false,
@@ -725,7 +735,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "UPDATE_USER_PASS_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			return {
 				...state,
 				loading: false,
@@ -737,7 +747,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "RESET_PASSWORD_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			return {
 				...state,
 				loading: false,
@@ -804,7 +814,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= SECTIONS =======
 
 		case "ADD_NEW_SECTION_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			const addSectionParams = {
 				id: action.result.data.id,
 				nameSection: action.result.data.nameSection,
@@ -821,7 +831,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "EDIT_SECTION_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			const editSectionParams = {
 				id: action.result.data.id,
 				nameSection: action.result.data.nameSection,
@@ -838,7 +848,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "REMOVE_SECTION_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			return {
 				...state,
 				sections: removingItem(state, "Section", action.result.data.id),
@@ -854,7 +864,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		// ======= TAGS =======
 		case "ADD_NEW_TAG_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			const addTagParams = {
 				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
@@ -872,7 +882,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "EDIT_TAG_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			const editTagParams = {
 				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
@@ -891,7 +901,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "REMOVE_TAG_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			return {
 				...state,
 				tags: removingItem(state, "Tag", action.result.data.id),
@@ -905,7 +915,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		// ======= NOTES =======
 		case "ADD_NEW_NOTE_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			const addNoteParams = {
 				id: action.result.data.id,
 				header: action.result.data.header,
@@ -927,7 +937,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "EDIT_NOTE_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			const editNoteParams = {
 				id: action.result.data.id,
 				header: action.result.data.header,
@@ -949,7 +959,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 
 		case "REMOVE_NOTE_ACTION":
-			$("#modal-alert").modal("show")
+			startModalAlert()
 			return {
 				...state,
 				notes: removingItem(state, "Note", action.result.data.id),
