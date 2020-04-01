@@ -4,6 +4,8 @@
 - Исправлена подсветка секций при переключении
 - Модифицирована темизация
 
+![](cnw.gif)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
