@@ -4,7 +4,7 @@
 - Исправлена подсветка секций при переключении
 - Модифицирована темизация
 
-![](https://github.com/komplekt17/Edu_Projects/blob/master/gifs/cnw.gif)
+![](https://github.com/komplekt17/Test-Tasks/blob/master/gifs/cnw.gif)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
