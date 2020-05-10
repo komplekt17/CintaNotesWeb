@@ -57,8 +57,8 @@ export const initialState = {
 			header: "aud-1",
 			text:
 				"<h3>txt-aud-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "",
-			link: "",
+			remarks: "aud-1, aud-1",
+			link: "https://google.com",
 			sectionId: "1",
 			tagId: "1",
 			userId: "1",
@@ -83,8 +83,8 @@ export const initialState = {
 			header: "web-1",
 			text:
 				"<h3>txt-web-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "",
-			link: "",
+			remarks: "web-1, web-1",
+			link: "https://ya.ru",
 			sectionId: "2",
 			tagId: "2",
 			userId: "1",

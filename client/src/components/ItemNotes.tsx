@@ -57,7 +57,17 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		NotesList = notes.map((item: any, index: number) => {
 			return (
 				<div key={index} className="col-12 note" id={item.id}>
-					<div className={`note-header-${theme}`}>{item.header}</div>
+					{item.link === "" ? (
+						<div className={`note-header-${theme}`}>{item.header}</div>
+					) : (
+						<div className={`note-header-${theme}`}>
+							<a href={item.link} target="_blank">
+								<i className="fas fa-reply" />
+							</a>{" "}
+							{item.header}
+						</div>
+					)}
+
 					<div className="note-info">
 						<div className="note-tag">
 							<span
@@ -95,6 +105,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 						dangerouslySetInnerHTML={{ __html: item.text }}
 					/>
 					<div className="note-footer">
+						<div className="note-tags text-info">{item.remarks}</div>
 						<div className="note-button">
 							<span
 								className="text-success"
