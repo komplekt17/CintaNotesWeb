@@ -5,6 +5,7 @@ interface IConstants {
 }
 const SERVER_URI = "http://localhost:5000"
 const DELAY_MODAL_ALERT = 5000
+const NAME_LOCAL_STORAGE = "data"
 const CONSTANTS: IConstants = {
 	ru: {
 		ERROR_TEXT: "Нет элементов для отображения",
@@ -144,4 +145,4 @@ const CONSTANTS: IConstants = {
 	},
 }
 
-export { CONSTANTS, SERVER_URI, DELAY_MODAL_ALERT }
+export { CONSTANTS, SERVER_URI, DELAY_MODAL_ALERT, NAME_LOCAL_STORAGE }
