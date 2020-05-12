@@ -61,7 +61,7 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 						<div className={`note-header-${theme}`}>{item.header}</div>
 					) : (
 						<div className={`note-header-${theme}`}>
-							<a href={item.link} target="_blank">
+							<a href={item.link} target="_blank" rel="noopener noreferrer">
 								<i className="fas fa-reply" />
 							</a>{" "}
 							{item.header}
