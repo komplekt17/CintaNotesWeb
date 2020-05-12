@@ -34,4 +34,4 @@ sequelize
 			console.log(`Server is running on port: ${port}`);
 		});
 	})
-	.catch(`${err}: Could not connect to server`);
+	.catch((err) => `${err}: Could not connect to server`);
