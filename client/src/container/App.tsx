@@ -21,7 +21,7 @@ import {
 	UserPassChangePopup,
 	UserMobileAuthPopup,
 	MessagesPopup,
-	// HelloPage,
+	HelloPage,
 } from "../components"
 import {
 	getDataByLoginAction,
@@ -451,7 +451,7 @@ const App: React.FC<IAppProps> = props => {
 					</div>
 				) : (
 					<div className="row">
-						{/* <HelloPage lang={currentDetails.userProfile.lang} /> */}
+						<HelloPage lang={currentDetails.userProfile.lang} />
 					</div>
 				)}
 			</div>
