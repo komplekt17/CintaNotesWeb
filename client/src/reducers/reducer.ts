@@ -7,6 +7,7 @@ import {
 	INotes,
 } from "../types"
 import { DELAY_MODAL_ALERT, NAME_LOCAL_STORAGE } from "../constants"
+import { getDataLocalStorage } from "../common"
 
 export const initialState = {
 	auth: false,
@@ -192,6 +193,18 @@ const handlerCurrentDetails = (
 ): ICurrentDetails => {
 	// console.log(name, value)
 	let obj = state.currentDetails
+	let sections = state.sections.slice()
+	let tags = state.tags.slice()
+	let notes = state.notes.slice()
+
+	// получаем данные из localStorage
+	const data = getDataLocalStorage()
+
+	if (data !== null) {
+		sections = data.sections
+		tags = data.tags
+		notes = data.notes
+	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.section -------
 
@@ -205,18 +218,20 @@ const handlerCurrentDetails = (
 		name === "saveIdRemovedSection" ||
 		name === "saveIdEditedSection"
 	) {
-		// находим по id данные удаляемой или редактируемой section
-		const arr = state.sections.slice()
 		// получаем index элемента массива sections с id === value
-		const index = arr.findIndex(param => param.id === value)
+		const index = sections.findIndex(param => param.id === value)
 		// получаем значения свойств найденного section'а
-		const nameSection = arr[index].nameSection
-		const userId = arr[index].userId
+		const nameSection = sections[index].nameSection
+		const userId = sections[index].userId
+
 		// сохраняем значения полей найденного section'а
 		// в currentDitails.section
 		obj = getNewObjDetails(obj, "section", "id", value)
 		obj = getNewObjDetails(obj, "section", "nameSection", nameSection)
 		obj = getNewObjDetails(obj, "section", "userId", userId)
+
+		// сохраняем в localStorage в currentDitails.section
+		manageDataLocalStorage("getEditableSection", sections[index])
 	}
 	// очищаем поля section'а в currentDitails.section,
 	// если Section added, edited or removed
@@ -236,18 +251,21 @@ const handlerCurrentDetails = (
 	else if (name === "saveIdEditedTag") {
 		// сохраняем id редактируемого tag'а
 		obj = getNewObjDetails(obj, "tag", "id", value)
-		// находим по id данные редактируемого tag'а
-		const arr = state.tags.slice()
+
 		// получаем index элемента массива tags с id === value
-		const index = arr.findIndex(param => param.id === value)
+		const index = tags.findIndex(param => param.id === value)
 		// получаем значения свойства найденного tag'а
-		const nameTag = arr[index].nameTag
-		const sectionId = arr[index].sectionId
-		const userId = arr[index].userId
+		const nameTag = tags[index].nameTag
+		const sectionId = tags[index].sectionId
+		const userId = tags[index].userId
+
 		// сохраняем значения полей найденного tag'а в currentDitails.tag
 		obj = getNewObjDetails(obj, "tag", "nameTag", nameTag)
 		obj = getNewObjDetails(obj, "tag", "sectionId", sectionId)
 		obj = getNewObjDetails(obj, "tag", "userId", userId)
+
+		// сохраняем в localStorage в currentDitails.tag
+		manageDataLocalStorage("getEditableTag", tags[index])
 	}
 
 	// сохраняем value input'a редактируемого поля nameTage
@@ -280,18 +298,18 @@ const handlerCurrentDetails = (
 	else if (name === "saveIdEditedNote") {
 		// сохраняем id редактируемой note'а
 		obj = getNewObjDetails(obj, "note", "id", value)
-		// находим по id данные редактируемой note'а
-		const arr = state.notes.slice()
+
 		// получаем index элемента массива notes с id === value
-		const index = arr.findIndex(param => param.id === value)
+		const index = notes.findIndex(param => param.id === value)
 		// получаем значения свойства найденного note'а
-		const header = arr[index].header
-		const text = arr[index].text
-		const remarks = arr[index].remarks
-		const link = arr[index].link
-		const sectionId = arr[index].sectionId
-		const tagId = arr[index].tagId
-		const userId = arr[index].userId
+		const header = notes[index].header
+		const text = notes[index].text
+		const remarks = notes[index].remarks
+		const link = notes[index].link
+		const sectionId = notes[index].sectionId
+		const tagId = notes[index].tagId
+		const userId = notes[index].userId
+
 		// сохраняем значения полей найденного note'а в currentDitails.note
 		obj = getNewObjDetails(obj, "note", "header", header)
 		obj = getNewObjDetails(obj, "note", "text", text)
@@ -300,6 +318,9 @@ const handlerCurrentDetails = (
 		obj = getNewObjDetails(obj, "note", "sectionId", sectionId)
 		obj = getNewObjDetails(obj, "note", "tagId", tagId)
 		obj = getNewObjDetails(obj, "note", "userId", userId)
+
+		// сохраняем в localStorage в currentDitails.note
+		manageDataLocalStorage("getEditableNote", notes[index])
 	}
 
 	// сохраняем value input'a редактируемого поля header
@@ -660,9 +681,9 @@ const manageDataLocalStorage = (
 	action?: any,
 	state?: any
 ): void => {
-	let data = null
-	const ls: null | string = localStorage.getItem(NAME_LOCAL_STORAGE)
-	if (typeof ls === "string") data = JSON.parse(ls)
+	// получаем данные из localStorage
+	const data = getDataLocalStorage()
+	// console.log(action)
 
 	if (nameData === "setAllData") {
 		console.log()
@@ -727,6 +748,21 @@ const manageDataLocalStorage = (
 				sections: editingItem(state, "editSection", editSectionParams),
 			})
 		)
+	} else if (nameData === "getEditableSection") {
+		localStorage.setItem(
+			NAME_LOCAL_STORAGE,
+			JSON.stringify({
+				...data,
+				currentDetails: {
+					...data.currentDetails,
+					section: {
+						id: action.id,
+						nameSection: action.nameSection,
+						userId: action.userId,
+					},
+				},
+			})
+		)
 	} else if (nameData === "removeSection") {
 		localStorage.setItem(
 			NAME_LOCAL_STORAGE,
@@ -768,6 +804,22 @@ const manageDataLocalStorage = (
 				...data,
 				tags: editingItem(state, "editTag", editTagParams),
 				notes: transplaceNotes(state, "editTag", action.result.data),
+			})
+		)
+	} else if (nameData === "getEditableTag") {
+		localStorage.setItem(
+			NAME_LOCAL_STORAGE,
+			JSON.stringify({
+				...data,
+				currentDetails: {
+					...data.currentDetails,
+					tag: {
+						id: action.id,
+						nameSection: action.nameTag,
+						sectionId: action.sectionId,
+						userId: action.userId,
+					},
+				},
 			})
 		)
 	} else if (nameData === "removeTag") {
@@ -817,6 +869,26 @@ const manageDataLocalStorage = (
 			JSON.stringify({
 				...data,
 				notes: editingItem(state, "editNote", editNoteParams),
+			})
+		)
+	} else if (nameData === "getEditableNote") {
+		localStorage.setItem(
+			NAME_LOCAL_STORAGE,
+			JSON.stringify({
+				...data,
+				currentDetails: {
+					...data.currentDetails,
+					note: {
+						id: action.id,
+						header: action.header,
+						text: action.text,
+						remarks: action.remarks,
+						link: action.link,
+						sectionId: action.sectionId,
+						tagId: action.tagId,
+						userId: action.userId,
+					},
+				},
 			})
 		)
 	} else if (nameData === "removeNote") {
@@ -894,7 +966,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 					currentDetails: handlerCurrentDetails(
 						state,
 						"userData",
-						action.result.data
+						action.result.user
 					),
 					sections: [],
 					tags: [],

@@ -21,6 +21,7 @@ import {
 	UserPassChangePopup,
 	UserMobileAuthPopup,
 	MessagesPopup,
+	// HelloPage,
 } from "../components"
 import {
 	getDataByLoginAction,
@@ -43,6 +44,7 @@ import {
 	handlerLangAction,
 	handlerThemeAction,
 } from "../actions"
+import { getDataLocalStorage } from "../common"
 import { IAppProps } from "../types"
 import "bootswatch/dist/superhero/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
@@ -89,17 +91,19 @@ const App: React.FC<IAppProps> = props => {
 		handlerThemeToApp,
 	} = props
 
-	const {
-		sections,
-		tags,
-		notes,
-		filters,
-		currentDetails,
-		messagePopup,
-		namePopup,
-		auth,
-		loading,
-	} = store
+	const { filters, messagePopup, namePopup, loading } = store
+	let { sections, tags, notes, currentDetails, auth } = store
+
+	// получаем данные из localStorage
+	const dataLocalStorage = getDataLocalStorage()
+
+	if (dataLocalStorage !== null) {
+		auth = dataLocalStorage.auth
+		currentDetails = dataLocalStorage.currentDetails
+		sections = dataLocalStorage.sections
+		tags = dataLocalStorage.tags
+		notes = dataLocalStorage.notes
+	}
 
 	// https://stackoverflow.com/questions/49935614/extract-css-from-scss-and-deferred-lazy-load-in-react-app
 	// https://stackoverflow.com/questions/55679111/webpack-4-create-multiple-theme-css-files?rq=1
@@ -380,68 +384,76 @@ const App: React.FC<IAppProps> = props => {
 			</div>
 			<div className={`container-fluid app-header-${theme}`}>
 				<div className="row">
-					<SectionsPanel
-						theme={theme}
-						sections={sections}
-						widthDisplay={widthDisplay}
-						lang={currentDetails.userProfile.lang}
-						handlerHeaderPopup={handlerHeaderPopupToApp}
-						handlerCurrentValue={handlerCurrentValueToApp}
-						handlerValueFilters={handlerValueFiltersToApp}
-						resetHighlightItem={resetHighlightItem}
-					/>
-				</div>
-			</div>
-			<div className="container-fluid">
-				<div className="row">
-					<nav
-						id="side-tags"
-						className={`col-md-4 col-lg-3 app-side-tags app-side-tags-${theme}`}
-					>
-						<SideBarTags
+					{auth ? (
+						<SectionsPanel
 							theme={theme}
-							filters={filters}
-							tags={getFiltredArray("tagsArr", tags, filters)}
-							heightDisplay={heightDisplay}
+							sections={sections}
+							widthDisplay={widthDisplay}
 							lang={currentDetails.userProfile.lang}
 							handlerHeaderPopup={handlerHeaderPopupToApp}
 							handlerCurrentValue={handlerCurrentValueToApp}
 							handlerValueFilters={handlerValueFiltersToApp}
 							resetHighlightItem={resetHighlightItem}
-							countQualityItems={countQualityItems}
 						/>
-					</nav>
-					<SwitcherTags theme={theme} />
-					<main className="col-md-8 ml-sm-auto col-lg-9 px-4 app-content">
-						<SearchPanel
-							theme={theme}
-							lang={currentDetails.userProfile.lang}
-							handlerCurrentValue={handlerCurrentValueToApp}
-						/>
-						<StatisticInfoPanel
-							theme={theme}
-							sections={sections}
-							filters={filters}
-							countQualityItems={countQualityItems}
-							lang={currentDetails.userProfile.lang}
-						/>
-						<ItemNotes
-							theme={theme}
-							heightDisplay={heightDisplay}
-							tags={getFiltredArray("tagsArr", tags, filters)}
-							lang={currentDetails.userProfile.lang}
-							notes={getFiltredArray(
-								"notesArr",
-								notes,
-								filters,
-								currentDetails.searchDetails.searchText,
-								currentDetails.searchDetails.searchSort
-							)}
-							handlerHeaderPopup={handlerHeaderPopupToApp}
-							handlerCurrentValue={handlerCurrentValueToApp}
-						/>
-					</main>
+					) : null}
 				</div>
+			</div>
+			<div className="container-fluid">
+				{auth ? (
+					<div className="row">
+						<nav
+							id="side-tags"
+							className={`col-md-4 col-lg-3 app-side-tags app-side-tags-${theme}`}
+						>
+							<SideBarTags
+								theme={theme}
+								filters={filters}
+								tags={getFiltredArray("tagsArr", tags, filters)}
+								heightDisplay={heightDisplay}
+								lang={currentDetails.userProfile.lang}
+								handlerHeaderPopup={handlerHeaderPopupToApp}
+								handlerCurrentValue={handlerCurrentValueToApp}
+								handlerValueFilters={handlerValueFiltersToApp}
+								resetHighlightItem={resetHighlightItem}
+								countQualityItems={countQualityItems}
+							/>
+						</nav>
+						<SwitcherTags theme={theme} />
+						<main className="col-md-8 ml-sm-auto col-lg-9 px-4 app-content">
+							<SearchPanel
+								theme={theme}
+								lang={currentDetails.userProfile.lang}
+								handlerCurrentValue={handlerCurrentValueToApp}
+							/>
+							<StatisticInfoPanel
+								theme={theme}
+								sections={sections}
+								filters={filters}
+								countQualityItems={countQualityItems}
+								lang={currentDetails.userProfile.lang}
+							/>
+							<ItemNotes
+								theme={theme}
+								heightDisplay={heightDisplay}
+								tags={getFiltredArray("tagsArr", tags, filters)}
+								lang={currentDetails.userProfile.lang}
+								notes={getFiltredArray(
+									"notesArr",
+									notes,
+									filters,
+									currentDetails.searchDetails.searchText,
+									currentDetails.searchDetails.searchSort
+								)}
+								handlerHeaderPopup={handlerHeaderPopupToApp}
+								handlerCurrentValue={handlerCurrentValueToApp}
+							/>
+						</main>
+					</div>
+				) : (
+					<div className="row">
+						{/* <HelloPage lang={currentDetails.userProfile.lang} /> */}
+					</div>
+				)}
 			</div>
 			<AddNewUserPopup
 				createNewUser={createNewUserToApp}
