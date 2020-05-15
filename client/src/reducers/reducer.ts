@@ -1,4 +1,3 @@
-import $ from "jquery"
 import {
 	ICurrentDetails,
 	IState,
@@ -6,8 +5,8 @@ import {
 	ITags,
 	INotes,
 } from "../types"
-import { DELAY_MODAL_ALERT, NAME_LOCAL_STORAGE } from "../constants"
-import { getDataLocalStorage } from "../common"
+import { NAME_LOCAL_STORAGE } from "../constants"
+import { getDataLocalStorage, startModalAlert } from "../common"
 
 export const initialState = {
 	auth: false,
@@ -33,7 +32,7 @@ export const initialState = {
 			updatedAt: "",
 		},
 		userProfile: {
-			id: "1",
+			id: "",
 			login: "",
 			token: "",
 			status: "user",
@@ -42,122 +41,9 @@ export const initialState = {
 		},
 		searchDetails: { searchSort: "header", searchText: "" },
 	},
-	sections: [
-		{ id: "1", nameSection: "Tab-1", userId: "1" },
-		{ id: "2", nameSection: "Tab-2", userId: "1" },
-		{ id: "3", nameSection: "Tab-3", userId: "1" },
-	],
-	tags: [
-		{ id: "1", nameTag: "audiobooks", userId: "1", sectionId: "1" },
-		{ id: "2", nameTag: "webgames", userId: "1", sectionId: "2" },
-		{ id: "3", nameTag: "programs", userId: "1", sectionId: "3" },
-	],
-	notes: [
-		{
-			id: "1",
-			header: "aud-1",
-			text:
-				"<h3>txt-aud-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "aud-1, aud-1",
-			link: "https://google.com",
-			sectionId: "1",
-			tagId: "1",
-			userId: "1",
-			createdAt: "2019-12-11T08:46:08.000Z",
-			updatedAt: "2019-12-15T08:46:08.000Z",
-		},
-		{
-			id: "2",
-			header: "aud-2",
-			text:
-				"<h3>txt-aud-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "",
-			link: "",
-			sectionId: "1",
-			tagId: "1",
-			userId: "1",
-			createdAt: "2019-12-12T08:46:08.000Z",
-			updatedAt: "2019-12-15T08:46:08.000Z",
-		},
-		{
-			id: "3",
-			header: "web-1",
-			text:
-				"<h3>txt-web-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "web-1, web-1",
-			link: "https://ya.ru",
-			sectionId: "2",
-			tagId: "2",
-			userId: "1",
-			createdAt: "2019-12-11T08:46:08.000Z",
-			updatedAt: "2019-12-15T08:46:08.000Z",
-		},
-		{
-			id: "4",
-			header: "web-2",
-			text:
-				"<h3>txt-web-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "",
-			link: "",
-			sectionId: "2",
-			tagId: "2",
-			userId: "1",
-			createdAt: "2019-12-14T08:46:08.000Z",
-			updatedAt: "2019-12-15T08:46:08.000Z",
-		},
-		{
-			id: "5",
-			header: "pro-1",
-			text:
-				"<h3>txt-pro-1.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "",
-			link: "",
-			sectionId: "3",
-			tagId: "3",
-			userId: "1",
-			createdAt: "2019-12-11T08:46:08.000Z",
-			updatedAt: "2019-12-15T08:46:08.000Z",
-		},
-		{
-			id: "6",
-			header: "pro-2",
-			text:
-				"<h3>txt-pro-2.</h3> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "",
-			link: "",
-			sectionId: "3",
-			tagId: "3",
-			userId: "1",
-			createdAt: "2019-12-16T08:46:08.000Z",
-			updatedAt: "2019-12-15T08:46:08.000Z",
-		},
-		{
-			id: "7",
-			header: "Untagged-2",
-			text:
-				"<h4>Untagged-2.</h4> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "",
-			link: "",
-			sectionId: "0",
-			tagId: "0",
-			userId: "1",
-			createdAt: "2019-12-14T08:46:08.000Z",
-			updatedAt: "2019-12-15T08:46:08.000Z",
-		},
-		{
-			id: "8",
-			header: "Untagged-3",
-			text:
-				"<h4>Untagged-3.</h4> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum at, itaque error perferendis necessitatibus. At ut dolorum velit, officiis rerum vel impedit repellendus consequatur doloribus rem beatae! Illo, delectus!</p>",
-			remarks: "",
-			link: "",
-			sectionId: "0",
-			tagId: "0",
-			userId: "1",
-			createdAt: "2019-12-12T08:46:08.000Z",
-			updatedAt: "2019-12-15T08:46:08.000Z",
-		},
-	],
+	sections: [],
+	tags: [],
+	notes: [],
 }
 
 // обработчик значений фильтров
@@ -399,12 +285,18 @@ const handlerCurrentDetails = (
 	else if (name === "userLang") {
 		// обновляем поле lang
 		obj = getNewObjDetails(obj, "userProfile", "lang", value)
+
+		// сохраняем в localStorage в currentDitails.userProfile.lang
+		if (data !== null) manageDataLocalStorage("editUserData", value)
 	}
 
 	// смена интерфейса темы User'а при клике moon/sun
 	else if (name === "userTheme") {
 		// обновляем поле theme
 		obj = getNewObjDetails(obj, "userProfile", "theme", value)
+
+		// сохраняем в localStorage в currentDitails.userProfile.theme
+		if (data !== null) manageDataLocalStorage("editUserData", value)
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.searchDetails -------
@@ -666,15 +558,6 @@ const transplaceTags = (state: IState, idItem: string): ITags[] => {
 	return arr
 }
 
-// func скрытия всплывшего алерта
-// по типу toast materializecss
-const startModalAlert = (): void => {
-	$("#modal-alert").modal("show")
-	setTimeout((): void => {
-		$("#modal-alert").modal("hide")
-	}, DELAY_MODAL_ALERT)
-}
-
 // установка данных в localStorage
 const manageDataLocalStorage = (
 	nameData: string,
@@ -683,7 +566,6 @@ const manageDataLocalStorage = (
 ): void => {
 	// получаем данные из localStorage
 	const data = getDataLocalStorage()
-	// console.log(action)
 
 	if (nameData === "setAllData") {
 		console.log()
@@ -718,6 +600,39 @@ const manageDataLocalStorage = (
 				notes: "",
 			})
 		)
+	} else if (nameData === "editUserData") {
+		// for currentDetails.userProfile.lang
+		if (action === "en" || action === "ru") {
+			localStorage.setItem(
+				NAME_LOCAL_STORAGE,
+				JSON.stringify({
+					...data,
+					currentDetails: {
+						...data.currentDetails,
+						userProfile: {
+							...data.currentDetails.userProfile,
+							lang: action,
+						},
+					},
+				})
+			)
+		}
+		// for currentDetails.userProfile.theme
+		else {
+			localStorage.setItem(
+				NAME_LOCAL_STORAGE,
+				JSON.stringify({
+					...data,
+					currentDetails: {
+						...data.currentDetails,
+						userProfile: {
+							...data.currentDetails.userProfile,
+							theme: action,
+						},
+					},
+				})
+			)
+		}
 	} else if (nameData === "addSection") {
 		const addSectionParams = {
 			id: action.result.data.id,
@@ -1029,6 +944,9 @@ export const Reducer = (state: IState = initialState, action: any) => {
 					category: action.result.typeMsg,
 					message: action.result.message,
 				},
+				sections: [],
+				tags: [],
+				notes: [],
 			}
 
 		case "HANDLER_VALUE_INPUTS_ACTION":
@@ -1045,6 +963,10 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			return {
 				...state,
 				namePopup: action.header,
+				messagePopup: {
+					category: action.category,
+					message: action.message,
+				},
 			}
 
 		case "HANDLER_LANG_LOCAL_ACTION":

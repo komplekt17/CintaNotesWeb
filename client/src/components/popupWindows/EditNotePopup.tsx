@@ -1,5 +1,4 @@
 import * as React from "react"
-import { AuthFalseButton } from "../popupWindows"
 import $ from "jquery"
 import { EditorState, ContentState, convertToRaw, convertFromHTML } from "draft-js"
 import { CONSTANTS } from "../../constants"
@@ -42,7 +41,6 @@ interface IEditNoteProps {
 	}
 	namePopup: string;
 	lang: string;
-	auth: boolean;
 }
 
 export const EditNotePopup: React.FC<IEditNoteProps> = props => {
@@ -53,7 +51,6 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 		namePopup,
 		tags,
 		lang,
-		auth,
 	} = props
 
 	const {
@@ -150,7 +147,6 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 						noValidate
 					>
 						<div className="modal-body">
-
 							<div className="form-label-group">
 								<label htmlFor="editHeaderNote">
 									{CONSTANTS[lang].NAME_HEADER_NOTE}
@@ -275,7 +271,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 								</div>
 							</div>
 
-						<div className="form-label-group">
+							<div className="form-label-group">
 							<label htmlFor="editRemarksNote">
 								{CONSTANTS[lang].REMARK_NOTE}
 							</label>
@@ -293,7 +289,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 							<div className="invalid-feedback">Some text</div>
 						</div>
 
-						<div className="form-label-group">
+							<div className="form-label-group">
 							<label htmlFor="editLinkNote">
 									{CONSTANTS[lang].LINK_NOTE}
 								</label>
@@ -310,9 +306,8 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 							/>
 							<div className="invalid-feedback">Some text</div>
 						</div>
-
 						</div>
-					{auth ? (
+
 						<div className="modal-footer"> 
 							<button
 								onClick={() => {
@@ -346,13 +341,6 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 								{CONSTANTS[lang].BUTTON_SAVE}
 							</button>
 						</div>
-					) : (
-						<AuthFalseButton
-							colorButton="success"
-							nameButton={CONSTANTS[lang].BUTTON_SAVE}
-							lang={lang}
-						/>
-					)}
 					</form>
 				</div>
 			</div>

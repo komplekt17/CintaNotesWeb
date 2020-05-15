@@ -1,5 +1,4 @@
 import * as React from "react"
-import { AuthFalseButton } from "../popupWindows"
 import { CONSTANTS } from "../../constants"
 
 interface IEditSectionProps {
@@ -16,7 +15,6 @@ interface IEditSectionProps {
 	};
 	namePopup: string;
 	lang: string;
-	auth: boolean;
 }
 export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 	const {
@@ -25,7 +23,6 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 		currentEditedSection,
 		namePopup,
 		lang,
-		auth,
 	} = props
 
 	const { id, nameSection, userId } = currentEditedSection
@@ -76,35 +73,27 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 						</div>
-						{auth ? (
-							<div className="modal-footer">
-								<button
-									onClick={() => {
-										if (nameSection !== "") {
-											const editedSection = {
-												id,
-												nameSection,
-												userId,
-											}
-											editSection(editedSection)
-											// очищаем поля currentDetails.section,
-											// action.name === buttonEditSection
-											handlerCurrentValue("buttonEditSection", "")
+						<div className="modal-footer">
+							<button
+								onClick={() => {
+									if (nameSection !== "") {
+										const editedSection = {
+											id,
+											nameSection,
+											userId,
 										}
-									}}
-									type="button"
-									className="btn btn-success btn-block mt-3"
-								>
-									{CONSTANTS[lang].BUTTON_SAVE}
-								</button>
-							</div>
-						) : (
-							<AuthFalseButton
-								colorButton="success"
-								nameButton={CONSTANTS[lang].BUTTON_SAVE}
-								lang={lang}
-							/>
-						)}
+										editSection(editedSection)
+										// очищаем поля currentDetails.section,
+										// action.name === buttonEditSection
+										handlerCurrentValue("buttonEditSection", "")
+									}
+								}}
+								type="button"
+								className="btn btn-success btn-block mt-3"
+							>
+								{CONSTANTS[lang].BUTTON_SAVE}
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>

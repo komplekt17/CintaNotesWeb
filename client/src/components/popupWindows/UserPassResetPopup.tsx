@@ -1,15 +1,21 @@
 import * as React from "react"
 import $ from "jquery"
-import { CONSTANTS } from "../../constants"
+import { CONSTANTS, DEMO_LOGIN } from "../../constants"
+import { startModalAlert } from "../../common"
 
 interface IUserPassResetProps {
 	namePopup: string;
 	lang: string;
 	resetPassword: (userLogin: any) => void;
+	handlerHeaderPopup: (
+		name: string,
+		category?: string,
+		message?: string
+	) => void;
 }
 
 export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
-	const { namePopup, lang, resetPassword } = props
+	const { namePopup, lang, resetPassword, handlerHeaderPopup } = props
 
 	return (
 		<div
@@ -59,9 +65,19 @@ export const UserPassResetPopup: React.FC<IUserPassResetProps> = props => {
 								onClick={() => {
 									const userLogin = $("#inputLogin").val()
 									if (userLogin !== "") {
-										resetPassword(userLogin)
+										if (userLogin === DEMO_LOGIN) {
+											handlerHeaderPopup(
+												"Alert",
+												"error",
+												CONSTANTS[lang].AUTH_BUTTON_TEXT
+											)
+											$("#modal-resetPass").modal("hide")
+											startModalAlert()
+										} else {
+											resetPassword(userLogin)
+											$("#inputLogin").val("")
+										}
 									}
-									$("#inputLogin").val("")
 								}}
 								className="btn btn-info btn-block mt-3"
 								type="button"

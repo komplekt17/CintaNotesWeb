@@ -1,7 +1,7 @@
-import * as React from "react"
+import React, { useState } from "react"
 import { IUserProfile } from "../../types"
-import $ from "jquery"
-import { CONSTANTS } from "../../constants"
+import { AuthFalseButton } from "./AuthFalseButton"
+import { CONSTANTS, DEMO_LOGIN } from "../../constants"
 
 interface IUserPassChangeProps {
 	namePopup: string;
@@ -15,7 +15,19 @@ interface IUserPassChangeProps {
 
 export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 	const { namePopup, userProfile, updateUserPass } = props
-	const { lang, token } = userProfile
+	const { login, lang, token } = userProfile
+
+	const initialForm: any = {
+		inputOldPass: "",
+		inputNewPass: "",
+		repeatNewPass: "",
+	}
+	const [fields, setFields] = useState(initialForm)
+	const { inputOldPass, inputNewPass, repeatNewPass } = fields
+
+	const handlerFields = (event: any): void => {
+		setFields({ ...fields, [event.target.id]: event.target.value })
+	}
 
 	return (
 		<div
@@ -53,6 +65,8 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 								<input
 									type="password"
 									id="inputOldPass"
+									value={inputOldPass}
+									onChange={event => handlerFields(event)}
 									className="form-control"
 									placeholder="enter Old Password"
 									required
@@ -70,6 +84,8 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 								<input
 									type="password"
 									id="inputNewPass"
+									value={inputNewPass}
+									onChange={event => handlerFields(event)}
 									className="form-control"
 									placeholder="enter New Password"
 									required
@@ -86,6 +102,8 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 								<input
 									type="password"
 									id="repeatNewPass"
+									value={repeatNewPass}
+									onChange={event => handlerFields(event)}
 									className="form-control"
 									placeholder="repeat New Password"
 									required
@@ -95,32 +113,39 @@ export const UserPassChangePopup: React.FC<IUserPassChangeProps> = props => {
 								</div>
 							</div>
 
-							<button
-								onClick={() => {
-									const inputOldPass = $("#inputOldPass").val()
-									const inputNewPass = $("#inputNewPass").val()
-									const repeat = $("#repeatNewPass").val()
-									if (
-										inputOldPass !== "" &&
-										inputNewPass !== "" &&
-										inputNewPass === repeat
-									) {
+							{login !== DEMO_LOGIN ? (
+								<button
+									disabled={
+										inputOldPass === "" ||
+										inputNewPass === "" ||
+										inputNewPass !== repeatNewPass
+									}
+									onClick={() => {
 										const objUser = {
 											inputOldPass,
 											inputNewPass,
 											token,
 										}
 										updateUserPass(objUser)
-										$("#inputOldPass").val("")
-										$("#inputNewPass").val("")
-										$("#repeatNewPass").val("")
-									}
-								}}
-								className="btn btn-info btn-block mt-3"
-								type="button"
-							>
-								{CONSTANTS[lang].BUTTON_SAVE}
-							</button>
+										setFields({
+											...fields,
+											inputOldPass: "",
+											inputNewPass: "",
+											repeatNewPass: "",
+										})
+									}}
+									className="btn btn-info btn-block mt-3"
+									type="button"
+								>
+									{CONSTANTS[lang].BUTTON_SAVE}
+								</button>
+							) : (
+								<AuthFalseButton
+									colorButton="success"
+									nameButton={CONSTANTS[lang].BUTTON_SAVE}
+									lang={lang}
+								/>
+							)}
 						</form>
 					</div>
 				</div>

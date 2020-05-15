@@ -64,7 +64,7 @@ const CONSTANTS: IConstants = {
 		BUTTON_SAVE: "Сохранить",
 		BUTTON_REMOVE: "Удалить",
 		BUTTON_RESET: "Сбросить Пароль",
-		AUTH_BUTTON_TEXT: "Вам необходимо зарегистрироваться",
+		AUTH_BUTTON_TEXT: "Это демонстрационный режим",
 
 		ITEMS_ALL: "Всего записей",
 		ITEMS_NOTAG: "Записей без тега",
@@ -132,7 +132,7 @@ const CONSTANTS: IConstants = {
 		BUTTON_SAVE: "Save",
 		BUTTON_REMOVE: "Remove",
 		BUTTON_RESET: "Reset Password",
-		AUTH_BUTTON_TEXT: "You're need registered",
+		AUTH_BUTTON_TEXT: "You can not do it. This is demo mode",
 
 		ITEMS_ALL: "All",
 		ITEMS_NOTAG: "Untagged",

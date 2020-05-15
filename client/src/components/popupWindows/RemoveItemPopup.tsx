@@ -1,6 +1,7 @@
 import * as React from "react"
-import { CONSTANTS } from "../../constants"
+import { CONSTANTS, DEMO_LOGIN } from "../../constants"
 import { AuthFalseButton } from "../popupWindows"
+import { IUserProfile } from "../../types"
 import $ from "jquery"
 
 interface IRemoveItemProps {
@@ -10,9 +11,8 @@ interface IRemoveItemProps {
 	handlerCurrentValue: (name: string, value: string) => void;
 	resetHighlightItem: (clickedElem: any, elems: any, name: string) => void;
 	namePopup: string;
-	lang: string;
 	removableItemId: string;
-	auth: boolean;
+	userProfile: IUserProfile;
 }
 
 export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
@@ -24,9 +24,10 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 		removableItemId,
 		handlerCurrentValue,
 		resetHighlightItem,
-		lang,
-		auth,
+		userProfile,
 	} = props
+
+	const { lang, login } = userProfile
 
 	let header = namePopup
 	let text = namePopup
@@ -74,7 +75,7 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 							{CONSTANTS[lang].FEEDBACK_TEXT_REMOVE} {text}?
 						</p>
 					</div>
-					{auth ? (
+					{login !== DEMO_LOGIN ? (
 						<div className="modal-footer">
 							<button
 								onClick={() => {

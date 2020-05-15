@@ -7,11 +7,17 @@ const handlerCurrentValueAction = (name: string, value: string) => {
 	}
 }
 
-// обработка заголовков PopupWindows
-const handlerHeaderPopupAction = (header: string) => {
+// обработка заголовков PopupWindows and alerts in demoMode
+const handlerHeaderPopupAction = (
+	header: string,
+	category?: string,
+	message?: string
+) => {
 	return {
 		type: "HANDLER_HEADER_POPUP_ACTION",
 		header,
+		category,
+		message,
 	}
 }
 

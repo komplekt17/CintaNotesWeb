@@ -461,28 +461,24 @@ const App: React.FC<IAppProps> = props => {
 				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewSectionPopup
-				auth={auth}
 				addNewSection={addNewSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewTagPopup
-				auth={auth}
 				sections={sections}
 				addNewTag={addNewTagToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
 			/>
 			<AddNewNotePopup
-				auth={auth}
 				tags={getFiltredArray("tagsArr", tags, filters)}
 				addNewNote={addNewNoteToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
 			/>
 			<EditSectionPopup
-				auth={auth}
 				editSection={editSectionToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedSection={currentDetails.section}
@@ -490,7 +486,6 @@ const App: React.FC<IAppProps> = props => {
 				lang={currentDetails.userProfile.lang}
 			/>
 			<EditTagPopup
-				auth={auth}
 				sections={sections}
 				editTag={editTagToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
@@ -499,7 +494,6 @@ const App: React.FC<IAppProps> = props => {
 				lang={currentDetails.userProfile.lang}
 			/>
 			<EditNotePopup
-				auth={auth}
 				tags={tags}
 				editNote={editNoteToApp}
 				handlerCurrentValue={handlerCurrentValueToApp}
@@ -508,7 +502,6 @@ const App: React.FC<IAppProps> = props => {
 				lang={currentDetails.userProfile.lang}
 			/>
 			<RemoveItemPopup
-				auth={auth}
 				removeSection={removeSectionToApp}
 				removeTag={removeTagToApp}
 				removeNote={removeNoteToApp}
@@ -516,12 +509,13 @@ const App: React.FC<IAppProps> = props => {
 				namePopup={namePopup}
 				removableItemId={getRemovableItemId(namePopup)}
 				resetHighlightItem={resetHighlightItem}
-				lang={currentDetails.userProfile.lang}
+				userProfile={currentDetails.userProfile}
 			/>
 			<UserPassResetPopup
 				namePopup={namePopup}
 				resetPassword={resetPasswordToApp}
 				lang={currentDetails.userProfile.lang}
+				handlerHeaderPopup={handlerHeaderPopupToApp}
 			/>
 			<UserPassChangePopup
 				namePopup={namePopup}
@@ -552,9 +546,7 @@ const App: React.FC<IAppProps> = props => {
 						loading={loading}
 					/>
 				</div>
-			) : (
-				""
-			)}
+			) : null}
 		</div>
 	)
 }
@@ -578,8 +570,11 @@ const mapDispatchToProps = (dispatch: any) => {
 		}) => dispatch(updateUserPassAction(objUser)),
 		resetPasswordToApp: (userLogin: any) =>
 			dispatch(resetPasswordAction(userLogin)),
-		handlerHeaderPopupToApp: (header: string) =>
-			dispatch(handlerHeaderPopupAction(header)),
+		handlerHeaderPopupToApp: (
+			header: string,
+			category?: string,
+			message?: string
+		) => dispatch(handlerHeaderPopupAction(header, category, message)),
 		handlerCurrentValueToApp: (name: string, value: string) =>
 			dispatch(handlerCurrentValueAction(name, value)),
 		handlerValueFiltersToApp: (filter: string, id: string) =>

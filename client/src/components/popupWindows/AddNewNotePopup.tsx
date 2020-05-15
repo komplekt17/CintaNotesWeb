@@ -1,5 +1,4 @@
 import * as React from "react"
-import { AuthFalseButton } from "../popupWindows"
 import $ from "jquery"
 import { EditorState, convertToRaw } from "draft-js"
 import { IUserProfile } from "../../types"
@@ -31,11 +30,10 @@ interface IAddNewTagPopup {
 	}) => void;
 	namePopup: string;
 	userProfile: IUserProfile;
-	auth: boolean;
 }
 
 export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
-	const { tags, addNewNote, namePopup, userProfile, auth } = props
+	const { tags, addNewNote, namePopup, userProfile } = props
 
 	const [editorState, setEditorState] = React.useState(
 		EditorState.createEmpty()
@@ -236,48 +234,40 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 								<div className="invalid-feedback">Some text</div>
 							</div>
 						</div>
-						{auth ? (
-							<div className="modal-footer">
-								<button
-									onClick={() => {
-										const header = $("#addHeaderNote").val()
-										const content = convertToRaw(editorState.getCurrentContent())
-										const text = toHTML(content)
-										const tagId = $("#addNoteTagId").val()
-										const remarks = $("#addRemarksNote").val()
-										const link = $("#addLinkNote").val()
-										if (header !== "" && text !== "<p></p>") {
-											$("#modal-addNote").modal("hide")
-											const newNote = {
-												header,
-												text,
-												remarks,
-												link,
-												sectionId: getSectionIdtag(tagId),
-												tagId,
-												userId: id,
-											}
-											addNewNote(newNote)
-											$("#addHeaderNote").val("")
-											$("#addRemarksNote").val("")
-											$("#addLinkNote").val("")
-											// очищаем поле редактора
-											setEditorState(EditorState.createEmpty())
+						<div className="modal-footer">
+							<button
+								onClick={() => {
+									const header = $("#addHeaderNote").val()
+									const content = convertToRaw(editorState.getCurrentContent())
+									const text = toHTML(content)
+									const tagId = $("#addNoteTagId").val()
+									const remarks = $("#addRemarksNote").val()
+									const link = $("#addLinkNote").val()
+									if (header !== "" && text !== "<p></p>") {
+										$("#modal-addNote").modal("hide")
+										const newNote = {
+											header,
+											text,
+											remarks,
+											link,
+											sectionId: getSectionIdtag(tagId),
+											tagId,
+											userId: id,
 										}
-									}}
-									type="button"
-									className="btn btn-info btn-block mt-3"
-								>
-									{CONSTANTS[lang].BUTTON_CREATE}
-								</button>
-							</div>
-						) : (
-							<AuthFalseButton
-								colorButton="info"
-								nameButton={CONSTANTS[lang].BUTTON_CREATE}
-								lang={lang}
-							/>
-						)}
+										addNewNote(newNote)
+										$("#addHeaderNote").val("")
+										$("#addRemarksNote").val("")
+										$("#addLinkNote").val("")
+										// очищаем поле редактора
+										setEditorState(EditorState.createEmpty())
+									}
+								}}
+								type="button"
+								className="btn btn-info btn-block mt-3"
+							>
+								{CONSTANTS[lang].BUTTON_CREATE}
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>
