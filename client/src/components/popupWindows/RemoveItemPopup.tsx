@@ -8,7 +8,6 @@ interface IRemoveItemProps {
 	removeSection: (sectionId: string) => void;
 	removeTag: (tagId: string) => void;
 	removeNote: (noteId: string) => void;
-	handlerCurrentValue: (name: string, value: string) => void;
 	resetHighlightItem: (clickedElem: any, elems: any, name: string) => void;
 	namePopup: string;
 	removableItemId: string;
@@ -22,7 +21,6 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 		removeNote,
 		namePopup,
 		removableItemId,
-		handlerCurrentValue,
 		resetHighlightItem,
 		userProfile,
 	} = props
@@ -81,35 +79,24 @@ export const RemoveItemPopup: React.FC<IRemoveItemProps> = props => {
 								onClick={() => {
 									if (namePopup === "Section") {
 										removeSection(removableItemId)
-										// сбрасываем подсветку текущей section
-										// подсвечиваем section All
+										// сбрасываем подсветку текущей section и подсвечиваем section All
 										resetHighlightItem("", $("#side-tags .nav-item"), "removeItems")
 										resetHighlightItem(
 											"",
 											$(".section-panel .nav-item"),
 											"removeItems"
 										)
-										// очищаем поле id в currentDetails.section,
-										// action.name === buttonRemoveSection
-										handlerCurrentValue("buttonRemoveSection", "")
 									} else if (namePopup === "Tag") {
 										removeTag(removableItemId)
-										// сбрасываем подсветку текущего tag
-										// подсвечиваем tag All
+										// сбрасываем подсветку текущего tag и подсвечиваем tag All
 										resetHighlightItem("", $("#side-tags .nav-item"), "removeItems")
 										resetHighlightItem(
 											"",
 											$(".section-panel .nav-item"),
 											"removeItems"
 										)
-										// очищаем поле id в currentDetails.tag,
-										// action.name === buttonRemoveTag
-										handlerCurrentValue("buttonRemoveTag", "")
 									} else if (namePopup === "Note") {
 										removeNote(removableItemId)
-										// очищаем поле id в currentDetails.note,
-										// action.name === buttonRemoveNote
-										handlerCurrentValue("buttonRemoveNote", "")
 									}
 								}}
 								type="button"

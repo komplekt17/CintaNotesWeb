@@ -77,7 +77,6 @@ const handlerCurrentDetails = (
 	name: string,
 	value?: any
 ): ICurrentDetails => {
-	// console.log(name, value)
 	let obj = state.currentDetails
 	let sections = state.sections.slice()
 	let tags = state.tags.slice()
@@ -94,175 +93,63 @@ const handlerCurrentDetails = (
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.section -------
 
-	// сохраняем value input добавляемой или редактируемой section
-	if (name === "addNameSection" || name === "editNameSection") {
-		obj = getNewObjDetails(obj, "section", "nameSection", value)
-	}
-	// сохраняем данные удаляемой или редактируемой section
-	// в currentDitails.section
-	else if (
-		name === "saveIdRemovedSection" ||
-		name === "saveIdEditedSection"
-	) {
+	// сохраняем данные удаляемой или редактируемой section в currentDitails.section
+	if (name === "saveIdRemovedSection" || name === "saveIdEditedSection") {
 		// получаем index элемента массива sections с id === value
 		const index = sections.findIndex(param => param.id === value)
-		// получаем значения свойств найденного section'а
-		const nameSection = sections[index].nameSection
-		const userId = sections[index].userId
 
-		// сохраняем значения полей найденного section'а
-		// в currentDitails.section
-		obj = getNewObjDetails(obj, "section", "id", value)
-		obj = getNewObjDetails(obj, "section", "nameSection", nameSection)
-		obj = getNewObjDetails(obj, "section", "userId", userId)
+		// сохраняем значения полей найденного section'а в currentDitails.section
+		const sectionObj: any = sections[index]
+		// tslint:disable-next-line: forin
+		for (const key in sectionObj) {
+			obj = getNewObjDetails(obj, "section", key, sectionObj[key])
+		}
 
 		// сохраняем в localStorage в currentDitails.section
-		manageDataLocalStorage("getEditableSection", sections[index])
-	}
-	// очищаем поля section'а в currentDitails.section,
-	// если Section added, edited or removed
-	else if (
-		name === "buttonAddSection" ||
-		name === "buttonEditSection" ||
-		name === "buttonRemoveSection"
-	) {
-		obj = getNewObjDetails(obj, "section", "id", (value = ""))
-		obj = getNewObjDetails(obj, "section", "nameSection", (value = ""))
-		obj = getNewObjDetails(obj, "section", "userId", (value = ""))
+		manageDataLocalStorage("getEditableSection", sectionObj)
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.tag -------
 
-	// сохраняем данные редактируемого tag'а в currentDitails.tag
-	else if (name === "saveIdEditedTag") {
-		// сохраняем id редактируемого tag'а
-		obj = getNewObjDetails(obj, "tag", "id", value)
-
+	// сохраняем данные редактируемого или удаляемого tag'а в currentDitails.tag
+	else if (name === "saveIdEditedTag" || name === "saveIdRemovedTag") {
 		// получаем index элемента массива tags с id === value
 		const index = tags.findIndex(param => param.id === value)
-		// получаем значения свойства найденного tag'а
-		const nameTag = tags[index].nameTag
-		const sectionId = tags[index].sectionId
-		const userId = tags[index].userId
 
 		// сохраняем значения полей найденного tag'а в currentDitails.tag
-		obj = getNewObjDetails(obj, "tag", "nameTag", nameTag)
-		obj = getNewObjDetails(obj, "tag", "sectionId", sectionId)
-		obj = getNewObjDetails(obj, "tag", "userId", userId)
+		const tagObj: any = tags[index]
+		// tslint:disable-next-line: forin
+		for (const key in tagObj) {
+			obj = getNewObjDetails(obj, "tag", key, tagObj[key])
+		}
 
 		// сохраняем в localStorage в currentDitails.tag
-		manageDataLocalStorage("getEditableTag", tags[index])
-	}
-
-	// сохраняем value input'a редактируемого поля nameTage
-	else if (name === "editNameTag") {
-		obj = getNewObjDetails(obj, "tag", "nameTag", value)
-	}
-
-	// сохраняем value select'a редактируемого поля sectionId
-	else if (name === "editTagSectionId") {
-		obj = getNewObjDetails(obj, "tag", "sectionId", value)
-	}
-
-	// сохраняем id удаляемого tag
-	else if (name === "saveIdRemovedTag") {
-		obj = getNewObjDetails(obj, "tag", "id", value)
-	}
-
-	// очищаем поля tag'а в currentDitails.tag,
-	// когда tag removed или edited
-	else if (name === "buttonEditTag" || name === "buttonRemoveTag") {
-		obj = getNewObjDetails(obj, "tag", "id", (value = ""))
-		obj = getNewObjDetails(obj, "tag", "nameTag", (value = ""))
-		obj = getNewObjDetails(obj, "tag", "sectionId", (value = ""))
-		// obj = getNewObjDetails(obj, "tag", "userId", (value = ""))
+		manageDataLocalStorage("getEditableTag", tagObj)
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.note -------
 
 	// сохраняем данные редактируемого note'а в currentDitails.note
-	else if (name === "saveIdEditedNote") {
-		// сохраняем id редактируемой note'а
-		obj = getNewObjDetails(obj, "note", "id", value)
-
+	else if (name === "saveIdEditedNote" || name === "saveIdRemovedNote") {
 		// получаем index элемента массива notes с id === value
 		const index = notes.findIndex(param => param.id === value)
-		// получаем значения свойства найденного note'а
-		const header = notes[index].header
-		const text = notes[index].text
-		const remarks = notes[index].remarks
-		const link = notes[index].link
-		const sectionId = notes[index].sectionId
-		const tagId = notes[index].tagId
-		const userId = notes[index].userId
 
 		// сохраняем значения полей найденного note'а в currentDitails.note
-		obj = getNewObjDetails(obj, "note", "header", header)
-		obj = getNewObjDetails(obj, "note", "text", text)
-		obj = getNewObjDetails(obj, "note", "remarks", remarks)
-		obj = getNewObjDetails(obj, "note", "link", link)
-		obj = getNewObjDetails(obj, "note", "sectionId", sectionId)
-		obj = getNewObjDetails(obj, "note", "tagId", tagId)
-		obj = getNewObjDetails(obj, "note", "userId", userId)
+		const noteObj: any = notes[index]
+		// tslint:disable-next-line: forin
+		for (const key in noteObj) {
+			obj = getNewObjDetails(obj, "note", key, noteObj[key])
+		}
 
 		// сохраняем в localStorage в currentDitails.note
-		manageDataLocalStorage("getEditableNote", notes[index])
-	}
-
-	// сохраняем value input'a редактируемого поля header
-	else if (name === "editHeaderNote") {
-		obj = getNewObjDetails(obj, "note", "header", value)
-	}
-
-	// сохраняем value textarea редактируемого поля text
-	else if (name === "editTextNote") {
-		obj = getNewObjDetails(obj, "note", "text", value)
-	}
-
-	// сохраняем value input'a редактируемого поля remarks
-	else if (name === "editRemarksNote") {
-		obj = getNewObjDetails(obj, "note", "remarks", value)
-	}
-
-	// сохраняем value input'a редактируемого поля link
-	else if (name === "editLinkNote") {
-		obj = getNewObjDetails(obj, "note", "link", value)
-	}
-
-	// сохраняем value select'a редактируемого поля sectionId
-	else if (name === "editNoteSectionId") {
-		obj = getNewObjDetails(obj, "note", "sectionId", value)
-	}
-
-	// сохраняем value select'a редактируемого поля tagId
-	else if (name === "editNoteTagId") {
-		obj = getNewObjDetails(obj, "note", "tagId", value)
-	}
-
-	// сохраняем id удаляемоой note
-	else if (name === "saveIdRemovedNote") {
-		obj = getNewObjDetails(obj, "note", "id", value)
-	}
-
-	// очищаем поля note'а в currentDitails.note,
-	// когда note removed или edited
-	else if (name === "buttonEditNote" || name === "buttonRemoveNote") {
-		obj = getNewObjDetails(obj, "note", "id", (value = ""))
-		obj = getNewObjDetails(obj, "note", "header", (value = ""))
-		obj = getNewObjDetails(obj, "note", "text", (value = ""))
-		obj = getNewObjDetails(obj, "note", "remarks", (value = ""))
-		obj = getNewObjDetails(obj, "note", "link", (value = ""))
-		obj = getNewObjDetails(obj, "note", "sectionId", (value = ""))
-		obj = getNewObjDetails(obj, "note", "tagId", (value = ""))
-		obj = getNewObjDetails(obj, "note", "userId", (value = ""))
+		manageDataLocalStorage("getEditableNote", noteObj)
 	}
 
 	// ------- ОБРАБОТЧИКИ СВОЙСТВ currentDetails.user -------
 
 	// сохраняем данные User'а при входе/регистрации в профиль
 	else if (name === "userData") {
-		// деструктурируем value, т.к. в данном случае
-		// value = user{login, token}
+		// деструктурируем value, т.к. в данном случае value = user{login, token}
 		const { id, login, token, status, lang, theme } = value
 		// обновляем значения полей
 		obj = getNewObjDetails(obj, "userProfile", "id", id)
@@ -417,23 +304,37 @@ const editingItem = (
 		| any
 ): any => {
 	if (nameItem === "editSection") {
-		const arr = state.sections.slice()
+		const arr: any = state.sections.slice()
 		// получаем index элемента массива sections с id === id
-		const index = arr.findIndex(param => param.id === params.id)
-		// присваиваем новое значение полю section.nameSection
-		arr[index].nameSection = params.nameSection
-		// присваиваем новое значение полю section.userId
-		arr[index].userId = params.userId
+		const index = arr.findIndex((param: any) => param.id === params.id)
+		// // присваиваем новое значение полю section.nameSection
+		// arr[index].nameSection = params.nameSection
+		// // присваиваем новое значение полю section.userId
+		// arr[index].userId = params.userId
+
+		// присваиваем изменённые значения полям
+		for (const key in params) {
+			if (arr[index][key] !== params[key]) {
+				arr[index][key] = params[key]
+			}
+		}
 
 		return arr
 	} else if (nameItem === "editTag") {
-		const arr = state.tags.slice()
+		const arr: any = state.tags.slice()
 		// получаем index элемента массива tags с id === id
-		const index = arr.findIndex(param => param.id === params.id)
-		// присваиваем новое значение полю tag.nameTag
-		arr[index].nameTag = params.nameTag
-		// присваиваем новое значение полю tag.sectionId
-		arr[index].sectionId = params.sectionId
+		const index = arr.findIndex((param: any) => param.id === params.id)
+		// // присваиваем новое значение полю tag.nameTag
+		// arr[index].nameTag = params.nameTag
+		// // присваиваем новое значение полю tag.sectionId
+		// arr[index].sectionId = params.sectionId
+
+		// присваиваем изменённые значения полям
+		for (const key in params) {
+			if (arr[index][key] !== params[key]) {
+				arr[index][key] = params[key]
+			}
+		}
 
 		return arr
 	} else if (nameItem === "editNote") {
@@ -633,7 +534,7 @@ const manageDataLocalStorage = (
 				})
 			)
 		}
-	} else if (nameData === "addSection") {
+	} else if (nameData === "createSection") {
 		const addSectionParams = {
 			id: action.result.data.id,
 			nameSection: action.result.data.nameSection,
@@ -645,7 +546,7 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				sections: addingItem(state, "addSection", addSectionParams),
+				sections: addingItem(data, "addSection", addSectionParams),
 			})
 		)
 	} else if (nameData === "editSection") {
@@ -660,7 +561,7 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				sections: editingItem(state, "editSection", editSectionParams),
+				sections: editingItem(data, "editSection", editSectionParams),
 			})
 		)
 	} else if (nameData === "getEditableSection") {
@@ -683,12 +584,12 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				sections: removingItem(state, "Section", action.result.data.id),
-				tags: transplaceTags(state, action.result.data.id),
-				notes: transplaceNotes(state, "Section", action.result.data.id),
+				sections: removingItem(data, "Section", action.result.data.id),
+				tags: transplaceTags(data, action.result.data.id),
+				notes: transplaceNotes(data, "Section", action.result.data.id),
 			})
 		)
-	} else if (nameData === "addTag") {
+	} else if (nameData === "createTag") {
 		const addTagParams = {
 			id: action.result.data.id,
 			nameTag: action.result.data.nameTag,
@@ -701,7 +602,7 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				tags: addingItem(state, "addTag", addTagParams),
+				tags: addingItem(data, "addTag", addTagParams),
 			})
 		)
 	} else if (nameData === "editTag") {
@@ -717,8 +618,8 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				tags: editingItem(state, "editTag", editTagParams),
-				notes: transplaceNotes(state, "editTag", action.result.data),
+				tags: editingItem(data, "editTag", editTagParams),
+				notes: transplaceNotes(data, "editTag", action.result.data),
 			})
 		)
 	} else if (nameData === "getEditableTag") {
@@ -730,7 +631,7 @@ const manageDataLocalStorage = (
 					...data.currentDetails,
 					tag: {
 						id: action.id,
-						nameSection: action.nameTag,
+						nameTag: action.nameTag,
 						sectionId: action.sectionId,
 						userId: action.userId,
 					},
@@ -742,8 +643,8 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				tags: removingItem(state, "Tag", action.result.data.id),
-				notes: transplaceNotes(state, "Tag", action.result.data.id),
+				tags: removingItem(data, "Tag", action.result.data.id),
+				notes: transplaceNotes(data, "Tag", action.result.data.id),
 			})
 		)
 	} else if (nameData === "createNote") {
@@ -763,7 +664,7 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				notes: addingItem(state, "addNote", addNoteParams),
+				notes: addingItem(data, "addNote", addNoteParams),
 			})
 		)
 	} else if (nameData === "editNote") {
@@ -783,7 +684,7 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				notes: editingItem(state, "editNote", editNoteParams),
+				notes: editingItem(data, "editNote", editNoteParams),
 			})
 		)
 	} else if (nameData === "getEditableNote") {
@@ -811,13 +712,15 @@ const manageDataLocalStorage = (
 			NAME_LOCAL_STORAGE,
 			JSON.stringify({
 				...data,
-				notes: removingItem(state, "Note", action.result.data.id),
+				notes: removingItem(data, "Note", action.result.data.id),
 			})
 		)
 	}
 }
 
 export const Reducer = (state: IState = initialState, action: any) => {
+	const data = getDataLocalStorage()
+
 	switch (action.type) {
 		case "LOAD_REQUESTED_DATA_ACTION":
 			return {
@@ -996,7 +899,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "ADD_NEW_SECTION_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("addSection", action, state)
+			manageDataLocalStorage("createSection", action)
 			const addSectionParams = {
 				id: action.result.data.id,
 				nameSection: action.result.data.nameSection,
@@ -1006,7 +909,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			return {
 				...state,
-				sections: addingItem(state, "addSection", addSectionParams),
+				sections: addingItem(data, "addSection", addSectionParams),
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
@@ -1014,7 +917,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "EDIT_SECTION_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("editSection", action, state)
+			manageDataLocalStorage("editSection", action)
 			const editSectionParams = {
 				id: action.result.data.id,
 				nameSection: action.result.data.nameSection,
@@ -1024,7 +927,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			return {
 				...state,
-				sections: editingItem(state, "editSection", editSectionParams),
+				sections: editingItem(data, "editSection", editSectionParams),
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
@@ -1032,12 +935,12 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "REMOVE_SECTION_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("removeSection", action, state)
+			manageDataLocalStorage("removeSection", action)
 			return {
 				...state,
-				sections: removingItem(state, "Section", action.result.data.id),
-				tags: transplaceTags(state, action.result.data.id),
-				notes: transplaceNotes(state, "Section", action.result.data.id),
+				sections: removingItem(data, "Section", action.result.data.id),
+				tags: transplaceTags(data, action.result.data.id),
+				notes: transplaceNotes(data, "Section", action.result.data.id),
 				filters: { sections: "All", tags: "All" },
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
@@ -1049,7 +952,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= TAGS =======
 		case "ADD_NEW_TAG_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("addTag", action, state)
+			manageDataLocalStorage("createTag", action)
 			const addTagParams = {
 				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
@@ -1060,7 +963,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			return {
 				...state,
-				tags: addingItem(state, "addTag", addTagParams),
+				tags: addingItem(data, "addTag", addTagParams),
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
@@ -1068,7 +971,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "EDIT_TAG_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("editTag", action, state)
+			manageDataLocalStorage("editTag", action)
 			const editTagParams = {
 				id: action.result.data.id,
 				nameTag: action.result.data.nameTag,
@@ -1079,8 +982,8 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			return {
 				...state,
-				tags: editingItem(state, "editTag", editTagParams),
-				notes: transplaceNotes(state, "editTag", action.result.data),
+				tags: editingItem(data, "editTag", editTagParams),
+				notes: transplaceNotes(data, "editTag", action.result.data),
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
@@ -1088,11 +991,11 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "REMOVE_TAG_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("removeTag", action, state)
+			manageDataLocalStorage("removeTag", action)
 			return {
 				...state,
-				tags: removingItem(state, "Tag", action.result.data.id),
-				notes: transplaceNotes(state, "Tag", action.result.data.id),
+				tags: removingItem(data, "Tag", action.result.data.id),
+				notes: transplaceNotes(data, "Tag", action.result.data.id),
 				filters: { sections: state.filters.sections, tags: "All" },
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
@@ -1103,7 +1006,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 		// ======= NOTES =======
 		case "ADD_NEW_NOTE_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("addNote", action, state)
+			manageDataLocalStorage("createNote", action)
 			const addNoteParams = {
 				id: action.result.data.id,
 				header: action.result.data.header,
@@ -1118,7 +1021,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			return {
 				...state,
-				notes: addingItem(state, "addNote", addNoteParams),
+				notes: addingItem(data, "addNote", addNoteParams),
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
@@ -1126,7 +1029,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "EDIT_NOTE_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("editNote", action, state)
+			manageDataLocalStorage("editNote", action)
 			const editNoteParams = {
 				id: action.result.data.id,
 				header: action.result.data.header,
@@ -1141,7 +1044,7 @@ export const Reducer = (state: IState = initialState, action: any) => {
 			}
 			return {
 				...state,
-				notes: editingItem(state, "editNote", editNoteParams),
+				notes: editingItem(data, "editNote", editNoteParams),
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,
@@ -1149,10 +1052,10 @@ export const Reducer = (state: IState = initialState, action: any) => {
 
 		case "REMOVE_NOTE_ACTION":
 			startModalAlert()
-			manageDataLocalStorage("removeNote", action, state)
+			manageDataLocalStorage("removeNote", action)
 			return {
 				...state,
-				notes: removingItem(state, "Note", action.result.data.id),
+				notes: removingItem(data, "Note", action.result.data.id),
 				messagePopup: { category: "success", message: action.result.message },
 				loading: false,
 				loaded: true,

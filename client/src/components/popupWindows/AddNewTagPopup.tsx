@@ -1,7 +1,6 @@
-import * as React from "react"
+import React, { useState } from "react"
 import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
-import $ from "jquery"
 
 interface IAddNewTagPopup {
 	sections: [];
@@ -17,6 +16,14 @@ interface IAddNewTagPopup {
 export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 	const { sections, addNewTag, namePopup, userProfile } = props
 	const { lang, id } = userProfile
+
+	const initialState = {
+		nameTag: "",
+		sectionId: "",
+		userId: id,
+	}
+
+	const [fields, setFields] = useState(initialState)
 
 	let sectionsList: any = ""
 
@@ -63,10 +70,15 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 								<label htmlFor="addNameTag">{CONSTANTS[lang].NAME_TAG}</label>
 								<input
 									id="addNameTag"
+									name="nameTag"
 									type="text"
 									className="form-control"
 									placeholder="enter Name Tag"
 									aria-describedby="formAddTag"
+									value={fields.nameTag}
+									onChange={ev =>
+										setFields({ ...fields, [ev.target.name]: ev.target.value })
+									}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
@@ -76,8 +88,13 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 								</label>
 								<select
 									id="addTagSectionId"
+									name="sectionId"
 									className="form-control"
 									aria-describedby="formAddTag"
+									value={fields.sectionId}
+									onChange={ev =>
+										setFields({ ...fields, [ev.target.name]: ev.target.value })
+									}
 								>
 									{sectionsList}
 									<option value="0">All</option>
@@ -87,19 +104,15 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 						</div>
 						<div className="modal-footer">
 							<button
+								disabled={fields.nameTag === ""}
 								onClick={() => {
-									const nameTag = $("#addNameTag").val()
-									const sectionId = $("#addTagSectionId").val()
-									if (nameTag !== "" && sectionId !== "") {
-										const newTag = {
-											nameTag,
-											sectionId,
-											userId: id,
-										}
-										addNewTag(newTag)
-										$("#addNameTag").val("")
-										$("#addTagSectionId").val("")
+									const newTag = {
+										nameTag: fields.nameTag,
+										sectionId: fields.sectionId,
+										userId: fields.userId,
 									}
+									addNewTag(newTag)
+									setFields({ ...fields, nameTag: "" })
 								}}
 								type="button"
 								className="btn btn-info btn-block mt-3"

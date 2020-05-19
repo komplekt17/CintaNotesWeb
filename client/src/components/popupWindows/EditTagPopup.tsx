@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, { useState, useEffect } from "react"
 import { CONSTANTS } from "../../constants"
 
 interface IEditTagProps {
@@ -9,28 +9,25 @@ interface IEditTagProps {
 		sectionId: string,
 		userId: string,
 	}) => void;
-	handlerCurrentValue: (name: string, value: string) => void;
-	currentEditedTag:	{
-		id: string;
-    nameTag: string;
-    userId: string;
-		sectionId: string;
-	}
+	currentEditedTag: {
+		id: string,
+		nameTag: string,
+		userId: string,
+		sectionId: string,
+	};
 	namePopup: string;
 	lang: string;
 }
 
 export const EditTagPopup: React.FC<IEditTagProps> = props => {
-	const {
-		editTag,
-		handlerCurrentValue,
-		currentEditedTag,
-		namePopup,
-		lang,
-		sections,
-	} = props
+	const { editTag, currentEditedTag, namePopup, lang, sections } = props
 
-	const {id, nameTag, sectionId, userId} = currentEditedTag
+	const [fields, setFields] = useState(currentEditedTag)
+
+	// обновляем стейт после обновления props
+	useEffect(() => {
+		setFields(currentEditedTag)
+	}, [currentEditedTag, setFields])
 
 	let sectionsList: any = ""
 
@@ -74,19 +71,18 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 					>
 						<div className="modal-body">
 							<div className="form-label-group">
-								<label htmlFor="editNameTag">
-									{CONSTANTS[lang].NAME_TAG}
-								</label>
+								<label htmlFor="editNameTag">{CONSTANTS[lang].NAME_TAG}</label>
 								<input
 									id="editNameTag"
+									name="nameTag"
 									type="text"
-									value={nameTag}
 									className="form-control"
 									placeholder="enter Name Tag"
 									aria-describedby="formEditTag"
-									onChange={ev => {
-										handlerCurrentValue(ev.target.id, ev.target.value)
-									}}
+									value={fields.nameTag}
+									onChange={e =>
+										setFields({ ...fields, [e.target.name]: e.target.value })
+									}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
@@ -96,13 +92,14 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 									{CONSTANTS[lang].SELECT_SECTION}
 								</label>
 								<select
-									value={sectionId == null ? "" : sectionId}
-									onChange={ev => {
-										handlerCurrentValue(ev.target.id, ev.target.value)
-									}}
 									id="editTagSectionId"
+									name="sectionId"
 									className="form-control"
 									aria-describedby="formEditTag"
+									value={fields.sectionId}
+									onChange={e =>
+										setFields({ ...fields, [e.target.name]: e.target.value })
+									}
 								>
 									{sectionsList}
 									<option value="0">All</option>
@@ -112,21 +109,17 @@ export const EditTagPopup: React.FC<IEditTagProps> = props => {
 								</div>
 							</div>
 						</div>
-						<div className="modal-footer"> 
+						<div className="modal-footer">
 							<button
+								disabled={fields.nameTag === ""}
 								onClick={() => {
-									if (nameTag !== "") {
-										const editedTag = {
-											id, 
-											nameTag, 
-											sectionId,
-											userId,
-										}
-										editTag(editedTag)
-										// очищаем поля currentDetails.tag,
-										// action.name === buttonEditTag
-										handlerCurrentValue("buttonEditTag", "")
+									const editedTag = {
+										id: fields.id,
+										nameTag: fields.nameTag,
+										sectionId: fields.sectionId,
+										userId: fields.userId,
 									}
+									editTag(editedTag)
 								}}
 								type="button"
 								className="btn btn-success btn-block mt-3"

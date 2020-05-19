@@ -1,5 +1,4 @@
-import * as React from "react"
-import $ from "jquery"
+import React, { useState } from "react"
 import { EditorState, convertToRaw } from "draft-js"
 import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
@@ -35,11 +34,19 @@ interface IAddNewTagPopup {
 export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 	const { tags, addNewNote, namePopup, userProfile } = props
 
-	const [editorState, setEditorState] = React.useState(
-		EditorState.createEmpty()
-	)
-
 	const { lang, id } = userProfile
+	const initialState = {
+		header: "",
+		text: "",
+		remarks: "",
+		link: "",
+		sectionId: "",
+		tagId: "",
+		userId: id,
+	}
+
+	const [editorState, setEditorState] = useState(EditorState.createEmpty())
+	const [fields, setFields] = useState(initialState)
 
 	// получаем SectionId из tags[] по tagId из notes[]
 	const getSectionIdtag = (tagId: any): string => {
@@ -108,6 +115,8 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									className="form-control"
 									placeholder="enter Name Note"
 									aria-describedby="formAddNote"
+									value={fields.header}
+									onChange={e => setFields({ ...fields, header: e.target.value })}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
@@ -201,6 +210,8 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									id="addNoteTagId"
 									className="form-control"
 									aria-describedby="formAddNote"
+									value={fields.tagId}
+									onChange={e => setFields({ ...fields, tagId: e.target.value })}
 								>
 									{tagsList}
 									<option value="0">Untagged</option>
@@ -218,6 +229,8 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									className="form-control"
 									placeholder="enter any remarks"
 									aria-describedby="formAddNote"
+									value={fields.remarks}
+									onChange={e => setFields({ ...fields, remarks: e.target.value })}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
@@ -229,37 +242,32 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									type="text"
 									className="form-control"
 									placeholder="enter any link"
-									aria-describedby="formaddNote"
+									aria-describedby="formAddNote"
+									value={fields.link}
+									onChange={e => setFields({ ...fields, link: e.target.value })}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
 						</div>
 						<div className="modal-footer">
 							<button
+								disabled={fields.header === ""}
 								onClick={() => {
-									const header = $("#addHeaderNote").val()
 									const content = convertToRaw(editorState.getCurrentContent())
 									const text = toHTML(content)
-									const tagId = $("#addNoteTagId").val()
-									const remarks = $("#addRemarksNote").val()
-									const link = $("#addLinkNote").val()
-									if (header !== "" && text !== "<p></p>") {
-										$("#modal-addNote").modal("hide")
+									if (text !== "<p></p>") {
 										const newNote = {
-											header,
+											header: fields.header,
 											text,
-											remarks,
-											link,
-											sectionId: getSectionIdtag(tagId),
-											tagId,
-											userId: id,
+											remarks: fields.remarks,
+											link: fields.link,
+											sectionId: getSectionIdtag(fields.tagId),
+											tagId: fields.tagId,
+											userId: fields.userId,
 										}
 										addNewNote(newNote)
-										$("#addHeaderNote").val("")
-										$("#addRemarksNote").val("")
-										$("#addLinkNote").val("")
-										// очищаем поле редактора
 										setEditorState(EditorState.createEmpty())
+										setFields({ ...fields, header: "", remarks: "", link: "" })
 									}
 								}}
 								type="button"

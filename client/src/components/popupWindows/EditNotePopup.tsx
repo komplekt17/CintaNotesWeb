@@ -1,6 +1,10 @@
-import * as React from "react"
-import $ from "jquery"
-import { EditorState, ContentState, convertToRaw, convertFromHTML } from "draft-js"
+import React, { useState, useEffect } from "react"
+import {
+	EditorState,
+	ContentState,
+	convertToRaw,
+	convertFromHTML,
+} from "draft-js"
 import { CONSTANTS } from "../../constants"
 import { DraftailEditor, BLOCK_TYPE, INLINE_STYLE } from "draftail"
 import {
@@ -8,7 +12,7 @@ import {
 	UNDO_ICON,
 	REDO_ICON,
 	CustomIcon,
-	toHTML
+	toHTML,
 } from "../notesEditor"
 
 interface IEditNoteProps {
@@ -16,84 +20,72 @@ interface IEditNoteProps {
 		id: string,
 		nameTag: string,
 		sectionId: string,
-		userId: string
+		userId: string,
 	}>;
 	editNote: (editedNote: {
-    id: string,
-    header: string,
-    text: string,
-    remarks: string,
-    link: string,
-    sectionId: string,
-    tagId: string,
+		id: string,
+		header: string,
+		text: string,
+		remarks: string,
+		link: string,
+		sectionId: string,
+		tagId: string,
 		userId: string,
 	}) => void;
-	handlerCurrentValue: (name: string, value: string) => void;
-	currentEditedNote:	{
-		id: string;
-    header: string;
-    text: string;
-    remarks: string;
-    link: string;
-		sectionId: string;
-    tagId: string;
+	currentEditedNote: {
+		id: string,
+		header: string,
+		text: string,
+		remarks: string,
+		link: string,
+		sectionId: string,
+		tagId: string,
 		userId: string,
-	}
+	};
 	namePopup: string;
 	lang: string;
 }
 
 export const EditNotePopup: React.FC<IEditNoteProps> = props => {
-	const {
-		editNote,
-		handlerCurrentValue,
-		currentEditedNote,
-		namePopup,
-		tags,
-		lang,
-	} = props
+	const { editNote, currentEditedNote, namePopup, tags, lang } = props
 
-	const {
-    id, 
-    header,
-    text,
-    remarks,
-    link,
-		tagId, 
-		userId } = currentEditedNote;
+	const [editorState, setEditorState] = useState(EditorState.createEmpty())
+	const [fields, setFields] = useState(currentEditedNote)
 
-	const [editorState, setEditorState] = 
-  React.useState(EditorState.createEmpty())
+	const getContentFromHTML = (stringHTML: string): any => {
+		const blocksFromHTML = convertFromHTML(stringHTML)
+		const content = ContentState.createFromBlockArray(
+			blocksFromHTML.contentBlocks
+		)
+		return content
+	}
 
-  const getContentFromHTML = (stringHTML:string): any => {
-    const blocksFromHTML = convertFromHTML(stringHTML);
-    const content = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks
-    );
-    return content
-  }
-
- React.useEffect (() => {
-  	if(text !==""){
+	useEffect(() => {
+		setFields(currentEditedNote)
+		if (currentEditedNote.text !== "") {
 			setEditorState(
-      	EditorState.createWithContent(
-      		getContentFromHTML(text)
-    		)
-      );
-	  }
-	}, [text]);
-
-		// получаем SectionId из tags[] по tagId из notes[] 
-		const getSectionIdtag = (tagId:string): string =>{
-			let noteTagSectionId = "0"
-			for(let i=0;i<tags.length;i++){
-				if(tags[i].id === tagId ) noteTagSectionId = tags[i].sectionId
-			}
-			return noteTagSectionId
+				EditorState.createWithContent(
+					getContentFromHTML(currentEditedNote.text)
+				)
+			)
 		}
+	}, [currentEditedNote, setFields])
+
+	const handlerFields = (e: any): void => {
+		setFields({ ...fields, [e.target.name]: e.target.value })
+	}
+
+	// получаем SectionId из tags[] по tagId из notes[]
+	const getSectionIdtag = (tagId: string): string => {
+		let noteTagSectionId = "0"
+		for (let i = 0; i < tags.length; i++) {
+			if (tags[i].id === tagId) noteTagSectionId = tags[i].sectionId
+		}
+		return noteTagSectionId
+	}
 
 	let tagsList: any = ""
-	
+
 	// получаем сортированный array tags[]
 	const NewArr = tags.sort((a, b) => {
 		if (a.nameTag < b.nameTag) {
@@ -111,7 +103,7 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 			)
 		})
 	}
-	
+
 	// react editors examples
 	// https://github.com/thibaudcolas/draftail-playground
 	// https://draftjs.org/docs/getting-started
@@ -153,22 +145,19 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 								</label>
 								<input
 									id="editHeaderNote"
+									name="header"
 									type="text"
-									value={header}
+									value={fields.header}
 									className="form-control"
 									placeholder="enter Name Note"
 									aria-describedby="formEditNote"
-									onChange={ev => {
-										handlerCurrentValue(ev.target.id, ev.target.value)
-									}}
+									onChange={event => handlerFields(event)}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="editTextNote">
-									{CONSTANTS[lang].TEXT_NOTE}
-								</label>
+								<label htmlFor="editTextNote">{CONSTANTS[lang].TEXT_NOTE}</label>
 								<DraftailEditor
 									editorState={editorState}
 									onChange={setEditorState}
@@ -251,89 +240,74 @@ export const EditNotePopup: React.FC<IEditNoteProps> = props => {
 							</div>
 
 							<div className="form-label-group">
-								<label htmlFor="editNoteTagId">
-									{CONSTANTS[lang].SELECT_TAG}
-								</label>
+								<label htmlFor="editNoteTagId">{CONSTANTS[lang].SELECT_TAG}</label>
 								<select
-									value={tagId == null ? "" : tagId}
-									onChange={ev => {
-										handlerCurrentValue(ev.target.id, ev.target.value)
-									}}
 									id="editNoteTagId"
+									name="tagId"
 									className="form-control"
 									aria-describedby="formEditNote"
+									value={fields.tagId}
+									onChange={event => handlerFields(event)}
 								>
 									{tagsList}
 									<option value="0">Untagged</option>
 								</select>
-								<div className="invalid-feedback">
-									Please select a tag Note
-								</div>
+								<div className="invalid-feedback">Please select a tag Note</div>
 							</div>
 
 							<div className="form-label-group">
-							<label htmlFor="editRemarksNote">
-								{CONSTANTS[lang].REMARK_NOTE}
-							</label>
-							<input
-								id="editRemarksNote"
-								type="text"
-								value={remarks}
-								className="form-control"
-								placeholder="enter Name Note"
-								aria-describedby="formEditNote"
-								onChange={ev => {
-									handlerCurrentValue(ev.target.id, ev.target.value)
-								}}
-							/>
-							<div className="invalid-feedback">Some text</div>
-						</div>
+								<label htmlFor="editRemarksNote">
+									{CONSTANTS[lang].REMARK_NOTE}
+								</label>
+								<input
+									id="editRemarksNote"
+									name="remarks"
+									type="text"
+									value={fields.remarks}
+									className="form-control"
+									placeholder="enter Name Note"
+									aria-describedby="formEditNote"
+									onChange={event => handlerFields(event)}
+								/>
+								<div className="invalid-feedback">Some text</div>
+							</div>
 
 							<div className="form-label-group">
-							<label htmlFor="editLinkNote">
-									{CONSTANTS[lang].LINK_NOTE}
-								</label>
-							<input
-								id="editLinkNote"
-								type="text"
-								value={link}
-								className="form-control"
-								placeholder="enter Name Note"
-								aria-describedby="formEditNote"
-								onChange={ev => {
-									handlerCurrentValue(ev.target.id, ev.target.value)
-								}}
-							/>
-							<div className="invalid-feedback">Some text</div>
-						</div>
+								<label htmlFor="editLinkNote">{CONSTANTS[lang].LINK_NOTE}</label>
+								<input
+									id="editLinkNote"
+									name="link"
+									type="text"
+									value={fields.link}
+									className="form-control"
+									placeholder="enter Name Note"
+									aria-describedby="formEditNote"
+									onChange={event => handlerFields(event)}
+								/>
+								<div className="invalid-feedback">Some text</div>
+							</div>
 						</div>
 
-						<div className="modal-footer"> 
+						<div className="modal-footer">
 							<button
+								disabled={
+									fields.header === "" || currentEditedNote.text === "<p></p>"
+								}
 								onClick={() => {
-									if (header !== "" && text !== "<p></p>") {
-										$("#modal-editNote").modal("hide")
-										const content = convertToRaw(
-											editorState.getCurrentContent()
-										);
-										const editedNote = {
-                      id, 
-											header, 
-											text: toHTML(content), 
-											remarks, 
-											link, 
-											sectionId: getSectionIdtag(tagId), 
-											tagId, 
-											userId 
-										}
-                    // отправляем editedNote в store
-										editNote(editedNote)
-										// очищаем поля currentDetails.note,
-										// action.name === buttonEditNote
-										handlerCurrentValue("buttonEditNote", "")
-                    // очищаем поле редактора, сбрасываем state
-                    setEditorState(EditorState.createEmpty());
+									const content = convertToRaw(editorState.getCurrentContent())
+									const editedNote = {
+										id: fields.id,
+										header: fields.header,
+										text: toHTML(content),
+										remarks: fields.remarks,
+										link: fields.link,
+										sectionId: getSectionIdtag(fields.tagId),
+										tagId: fields.tagId,
+										userId: fields.userId,
 									}
+									// отправляем editedNote в store
+									editNote(editedNote)
+									setEditorState(EditorState.createEmpty())
 								}}
 								type="button"
 								className="btn btn-success btn-block mt-3"

@@ -1,23 +1,23 @@
-import * as React from "react"
+import React, { useState } from "react"
 import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
-import $ from "jquery"
 
 interface IAddSectionProps {
 	addNewSection: (value: any) => void;
-	handlerCurrentValue: (nameInput: string, value: string) => void;
 	namePopup: string;
 	userProfile: IUserProfile;
 }
 export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
-	const {
-		addNewSection,
-		handlerCurrentValue,
-		namePopup,
-		userProfile,
-	} = props
+	const { addNewSection, namePopup, userProfile } = props
 
 	const { lang, id } = userProfile
+
+	const initialState = {
+		nameSection: "",
+		userId: id,
+	}
+
+	const [fields, setFields] = useState(initialState)
 
 	return (
 		<div
@@ -54,29 +54,29 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 								</label>
 								<input
 									id="addNameSection"
+									name="nameSection"
 									type="text"
 									className="form-control"
 									placeholder="enter Name Section"
 									aria-describedby="formAddSection"
+									value={fields.nameSection}
+									onChange={ev =>
+										setFields({ ...fields, [ev.target.name]: ev.target.value })
+									}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
 						</div>
 						<div className="modal-footer">
 							<button
+								disabled={fields.nameSection === ""}
 								onClick={() => {
-									const nameSection = $("#addNameSection").val()
-									if (nameSection !== "") {
-										const newSection = {
-											nameSection,
-											userId: id,
-										}
-										addNewSection(newSection)
-										// очищаем поле addNameSection,
-										// action.name === buttonAddSection
-										handlerCurrentValue("buttonAddSection", "")
-										$("#addNameSection").val("")
+									const newSection = {
+										nameSection: fields.nameSection,
+										userId: fields.userId,
 									}
+									addNewSection(newSection)
+									setFields({ ...fields, nameSection: "" })
 								}}
 								type="button"
 								className="btn btn-info btn-block mt-3"

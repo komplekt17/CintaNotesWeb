@@ -1,4 +1,4 @@
-import * as React from "react"
+import React, { useState, useEffect } from "react"
 import { CONSTANTS } from "../../constants"
 
 interface IEditSectionProps {
@@ -7,7 +7,6 @@ interface IEditSectionProps {
 		nameSection: string,
 		userId: string,
 	}) => void;
-	handlerCurrentValue: (nameInput: string, value: string) => void;
 	currentEditedSection: {
 		id: string,
 		nameSection: string,
@@ -17,15 +16,15 @@ interface IEditSectionProps {
 	lang: string;
 }
 export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
-	const {
-		editSection,
-		handlerCurrentValue,
-		currentEditedSection,
-		namePopup,
-		lang,
-	} = props
+	const { editSection, currentEditedSection, namePopup, lang } = props
 
-	const { id, nameSection, userId } = currentEditedSection
+	const [fields, setFields] = useState(currentEditedSection)
+
+	// обновляем стейт после обновления props
+	useEffect(() => {
+		setFields(currentEditedSection)
+	}, [setFields, currentEditedSection])
+
 	return (
 		<div
 			id="modal-editSection"
@@ -61,32 +60,29 @@ export const EditSectionPopup: React.FC<IEditSectionProps> = props => {
 								</label>
 								<input
 									id="editNameSection"
+									name="nameSection"
 									type="text"
-									value={nameSection}
 									className="form-control"
 									placeholder="enter Name Section"
 									aria-describedby="formEditSection"
-									onChange={ev => {
-										handlerCurrentValue(ev.target.id, ev.target.value)
-									}}
+									value={fields.nameSection}
+									onChange={e =>
+										setFields({ ...fields, [e.target.name]: e.target.value })
+									}
 								/>
 								<div className="invalid-feedback">Some text</div>
 							</div>
 						</div>
 						<div className="modal-footer">
 							<button
+								disabled={fields.nameSection === ""}
 								onClick={() => {
-									if (nameSection !== "") {
-										const editedSection = {
-											id,
-											nameSection,
-											userId,
-										}
-										editSection(editedSection)
-										// очищаем поля currentDetails.section,
-										// action.name === buttonEditSection
-										handlerCurrentValue("buttonEditSection", "")
+									const editedSection = {
+										id: fields.id,
+										nameSection: fields.nameSection,
+										userId: fields.userId,
 									}
+									editSection(editedSection)
 								}}
 								type="button"
 								className="btn btn-success btn-block mt-3"
