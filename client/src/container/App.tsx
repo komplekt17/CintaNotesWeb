@@ -462,7 +462,6 @@ const App: React.FC<IAppProps> = props => {
 			/>
 			<AddNewSectionPopup
 				addNewSection={addNewSectionToApp}
-				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				userProfile={currentDetails.userProfile}
 			/>
@@ -480,7 +479,6 @@ const App: React.FC<IAppProps> = props => {
 			/>
 			<EditSectionPopup
 				editSection={editSectionToApp}
-				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedSection={currentDetails.section}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
@@ -488,7 +486,6 @@ const App: React.FC<IAppProps> = props => {
 			<EditTagPopup
 				sections={sections}
 				editTag={editTagToApp}
-				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedTag={currentDetails.tag}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
@@ -496,7 +493,6 @@ const App: React.FC<IAppProps> = props => {
 			<EditNotePopup
 				tags={tags}
 				editNote={editNoteToApp}
-				handlerCurrentValue={handlerCurrentValueToApp}
 				currentEditedNote={currentDetails.note}
 				namePopup={namePopup}
 				lang={currentDetails.userProfile.lang}
@@ -505,7 +501,6 @@ const App: React.FC<IAppProps> = props => {
 				removeSection={removeSectionToApp}
 				removeTag={removeTagToApp}
 				removeNote={removeNoteToApp}
-				handlerCurrentValue={handlerCurrentValueToApp}
 				namePopup={namePopup}
 				removableItemId={getRemovableItemId(namePopup)}
 				resetHighlightItem={resetHighlightItem}
