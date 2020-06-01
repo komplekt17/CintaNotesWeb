@@ -263,7 +263,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 											link: fields.link,
 											sectionId: getSectionIdtag(fields.tagId),
 											tagId: fields.tagId,
-											userId: fields.userId,
+											userId: id,
 										}
 										addNewNote(newNote)
 										setEditorState(EditorState.createEmpty())

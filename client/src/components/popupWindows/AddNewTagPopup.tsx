@@ -109,7 +109,7 @@ export const AddNewTagPopup: React.FC<IAddNewTagPopup> = props => {
 									const newTag = {
 										nameTag: fields.nameTag,
 										sectionId: fields.sectionId,
-										userId: fields.userId,
+										userId: id,
 									}
 									addNewTag(newTag)
 									setFields({ ...fields, nameTag: "" })

@@ -73,7 +73,7 @@ export const AddNewSectionPopup: React.FC<IAddSectionProps> = props => {
 								onClick={() => {
 									const newSection = {
 										nameSection: fields.nameSection,
-										userId: fields.userId,
+										userId: id,
 									}
 									addNewSection(newSection)
 									setFields({ ...fields, nameSection: "" })
