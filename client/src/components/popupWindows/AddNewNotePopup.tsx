@@ -1,15 +1,16 @@
 import React, { useState } from "react"
 import { EditorState, convertToRaw } from "draft-js"
+import {
+	DraftailEditor,
+	BLOCK_TYPE,
+	INLINE_STYLE,
+	ENTITY_TYPE,
+} from "draftail"
+
 import { IUserProfile } from "../../types"
 import { CONSTANTS } from "../../constants"
-import { DraftailEditor, BLOCK_TYPE, INLINE_STYLE } from "draftail"
-import {
-	BR_ICON,
-	UNDO_ICON,
-	REDO_ICON,
-	CustomIcon,
-	toHTML,
-} from "../notesEditor"
+import { ICONS, CustomIcon, toHTML } from "../notesEditor"
+import { LinkSource, ImageSource, ImageBlock, Link } from "../entities"
 
 interface IAddNewTagPopup {
 	tags: Array<{
@@ -126,6 +127,22 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 								<DraftailEditor
 									editorState={editorState}
 									onChange={setEditorState}
+									entityTypes={[
+										{
+											type: ENTITY_TYPE.IMAGE,
+											description: "Image",
+											icon: ICONS.IMAGE_ICON,
+											source: ImageSource,
+											block: ImageBlock,
+										},
+										{
+											type: ENTITY_TYPE.LINK,
+											description: "Link",
+											icon: ICONS.LINK_ICON,
+											source: LinkSource,
+											decorator: Link,
+										},
+									]}
 									blockTypes={[
 										{ type: BLOCK_TYPE.UNSTYLED },
 										{ type: BLOCK_TYPE.HEADER_ONE },
@@ -142,7 +159,7 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 											type: BLOCK_TYPE.ORDERED_LIST_ITEM,
 											icon: <CustomIcon icon="fa-list-ol" />,
 										},
-										// { type: BLOCK_TYPE.CODE },
+										{ type: BLOCK_TYPE.CODE },
 									]}
 									inlineStyles={[
 										{
@@ -191,15 +208,15 @@ export const AddNewNotePopup: React.FC<IAddNewTagPopup> = props => {
 									enableHorizontalRule={{ description: "Horizontal rule" }}
 									enableLineBreak={{
 										description: "Soft line break",
-										icon: BR_ICON,
+										icon: ICONS.BR_ICON,
 									}}
 									showUndoControl={{
 										description: "Undo last change",
-										icon: UNDO_ICON,
+										icon: ICONS.UNDO_ICON,
 									}}
 									showRedoControl={{
 										description: "Redo last change",
-										icon: REDO_ICON,
+										icon: ICONS.REDO_ICON,
 									}}
 								/>
 							</div>

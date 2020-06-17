@@ -1,19 +1,20 @@
+import React from "react"
 import { BLOCK_TYPE, ENTITY_TYPE } from "draftail"
 import { convertToHTML, convertFromHTML } from "draft-convert"
 import { convertFromRaw, convertToRaw } from "draft-js"
 
 // FOR EXPORT
 const exporterConfig = {
-	blockToHTML: (block: any): any => {
-		// if (block.type === BLOCK_TYPE.BLOCKQUOTE) {
-		//   // tslint:disable-next-line: no-angle-bracket-type-assertion
-		//   return <blockquote/>
-		// }
+	blockToHTML: block => {
+		if (block.type === BLOCK_TYPE.BLOCKQUOTE) {
+			// tslint:disable-next-line: no-angle-bracket-type-assertion
+			return <blockquote />
+		}
 
-		// if (block.type === BLOCK_TYPE.CODE) {
-		//   // tslint:disable-next-line: no-angle-bracket-type-assertion
-		//   return <pre />
-		// }
+		if (block.type === BLOCK_TYPE.CODE) {
+			// tslint:disable-next-line: no-angle-bracket-type-assertion
+			return <pre />
+		}
 
 		// Discard atomic blocks, as they get converted based on their entity.
 		if (block.type === BLOCK_TYPE.ATOMIC) {
@@ -26,19 +27,23 @@ const exporterConfig = {
 		return null
 	},
 
-	entityToHTML: (entity: any, originalText: any): any => {
-		// if (entity.type === ENTITY_TYPE.LINK) {
-		//   return <a href={entity.data.url}>{originalText}</a>
-		// }
+	entityToHTML: (entity, originalText) => {
+		if (entity.type === ENTITY_TYPE.LINK) {
+			return (
+				<a href={entity.data.url} target="_blank" rel="noopener noreferrer">
+					{originalText}
+				</a>
+			)
+		}
 
-		// if (entity.type === ENTITY_TYPE.IMAGE) {
-		//   return <img src={entity.data.src} alt={entity.data.alt} />
-		// }
+		if (entity.type === ENTITY_TYPE.IMAGE) {
+			return <img src={entity.data.src} alt={entity.data.alt} />
+		}
 
-		// if (entity.type === ENTITY_TYPE.HORIZONTAL_RULE) {
-		//   // tslint:disable-next-line: no-angle-bracket-type-assertion
-		//   return <hr />
-		// }
+		if (entity.type === ENTITY_TYPE.HORIZONTAL_RULE) {
+			// tslint:disable-next-line: no-angle-bracket-type-assertion
+			return <hr />
+		}
 
 		return originalText
 	},
@@ -46,7 +51,7 @@ const exporterConfig = {
 
 // FOR IMPORT
 const importerConfig = {
-	htmlToEntity: (nodeName: any, node: any, createEntity: any): any => {
+	htmlToEntity: (nodeName, node, createEntity) => {
 		// a tags will become LINK entities, marked as mutable, with only the URL as data.
 		if (nodeName === "a") {
 			return createEntity(ENTITY_TYPE.LINK, "MUTABLE", { url: node.href })
@@ -64,7 +69,7 @@ const importerConfig = {
 
 		return null
 	},
-	htmlToBlock: (nodeName: any): any => {
+	htmlToBlock: nodeName => {
 		if (nodeName === "hr" || nodeName === "img") {
 			// "atomic" blocks is how Draft.js structures block-level entities.
 			return "atomic"
@@ -75,11 +80,13 @@ const importerConfig = {
 }
 
 // for export text note toHTML
-const toHTML = (raw: any): string =>
+const toHTML = raw =>
 	raw ? convertToHTML(exporterConfig)(convertFromRaw(raw)) : ""
 
 // FOR IMPORT
-const fromHTML = (html: any): any =>
-	convertToRaw(convertFromHTML(importerConfig)(html))
+const fromHTML = htmlString =>
+	htmlString !== ""
+		? convertToRaw(convertFromHTML(importerConfig)(htmlString))
+		: ""
 
 export { toHTML, fromHTML }
