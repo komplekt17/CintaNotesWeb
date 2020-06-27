@@ -191,11 +191,13 @@ const handlerCurrentDetails = (
 	// сохранение значения поля searchText
 	else if (name === "searchText") {
 		obj = getNewObjDetails(obj, "searchDetails", "searchText", value)
+		manageDataLocalStorage("editSearchText", value)
 	}
 
 	// сохранение значения поля searchSort
 	else if (name === "searchSort") {
 		obj = getNewObjDetails(obj, "searchDetails", "searchSort", value)
+		manageDataLocalStorage("editSearchSort", value)
 	}
 
 	return obj
@@ -713,6 +715,34 @@ const manageDataLocalStorage = (
 			JSON.stringify({
 				...data,
 				notes: removingItem(data, "Note", action.result.data.id),
+			})
+		)
+	} else if (nameData === "editSearchText") {
+		localStorage.setItem(
+			NAME_LOCAL_STORAGE,
+			JSON.stringify({
+				...data,
+				currentDetails: {
+					...data.currentDetails,
+					searchDetails: {
+						...data.currentDetails.searchDetails,
+						searchText: action,
+					},
+				},
+			})
+		)
+	} else if (nameData === "editSearchSort") {
+		localStorage.setItem(
+			NAME_LOCAL_STORAGE,
+			JSON.stringify({
+				...data,
+				currentDetails: {
+					...data.currentDetails,
+					searchDetails: {
+						...data.currentDetails.searchDetails,
+						searchSort: action,
+					},
+				},
 			})
 		)
 	}
