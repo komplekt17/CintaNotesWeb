@@ -1,9 +1,9 @@
-import * as React from "react"
-import $ from "jquery"
-import { INotes, ITags } from "../types"
-import { CONSTANTS } from "../constants"
-import "../styles/ItemNotes.sass"
-import Scrollbar from "react-scrollbars-custom"
+import * as React from 'react';
+import $ from 'jquery';
+import { INotes, ITags } from '../types';
+import { CONSTANTS } from '../constants';
+import '../styles/ItemNotes.sass';
+import Scrollbar from 'react-scrollbars-custom';
 
 interface INoteItemProps {
 	tags: ITags[];
@@ -15,7 +15,7 @@ interface INoteItemProps {
 	heightDisplay: number;
 }
 
-const ItemNotes: React.FC<INoteItemProps> = props => {
+const ItemNotes: React.FC<INoteItemProps> = (props) => {
 	const {
 		tags,
 		notes,
@@ -24,46 +24,50 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 		heightDisplay,
 		handlerHeaderPopup,
 		handlerCurrentValue,
-	} = props
+	} = props;
 
 	// получение отформатированной даты создания/редактирования
 	const getDateNormed = (date: string): string => {
 		// отрезаем перед . 2019-12-15T08:46:08.000Z
-		const arrD = date.split(".")
+		const arrD = date.split('.');
 		// отрезаем перед T 2019-12-15T08:46:08.000Z
-		const arrT = arrD[0].split("T")
+		const arrT = arrD[0].split('T');
 		// преобразуем дату к виду DD.MM.YYYY
-		const arrR = arrT[0].split("-")
-		const result = `${arrR[2]}.${arrR[1]}.${arrR[0]}, ${arrT[1]}`
-		return result
-	}
+		const arrR = arrT[0].split('-');
+		const result = `${arrR[2]}.${arrR[1]}.${arrR[0]}, ${arrT[1]}`;
+		return result;
+	};
 
 	let NotesList: any = (
 		<div className="col-12">{CONSTANTS[lang].ERROR_TEXT}</div>
-	)
+	);
 
 	// получение nameTag из tags[]
 	const getNameTag = (tagIdfromNotes: string): string => {
-		let nameTag = "Untagged"
+		let nameTag = 'Untagged';
 		for (let i = 0; i < tags.length; i++) {
 			if (tags[i].id === tagIdfromNotes) {
-				nameTag = tags[i].nameTag
+				nameTag = tags[i].nameTag;
 			}
 		}
-		return nameTag
-	}
+		return nameTag;
+	};
 
 	if (notes && notes.length !== 0) {
 		NotesList = notes.map((item: any, index: number) => {
 			return (
 				<div key={index} className="col-12 note" id={item.id}>
-					{item.link === "" ? (
+					{item.link === '' ? (
 						<div className={`note-header-${theme}`}>{item.header}</div>
 					) : (
 						<div className={`note-header-${theme}`}>
-							<a href={item.link} target="_blank" rel="noopener noreferrer">
+							<a
+								href={item.link}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
 								<i className="fas fa-reply" />
-							</a>{" "}
+							</a>{' '}
 							{item.header}
 						</div>
 					)}
@@ -73,8 +77,14 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 							<span
 								className="text-primary"
 								onClick={() => {
-									$(`#${item.id} .arrow-switch`).toggleClass("d-none", 2000)
-									$(`#${item.id} .note-text`).toggleClass("note-text-short", 2000)
+									$(`#${item.id} .arrow-switch`).toggleClass(
+										'd-none',
+										2000
+									);
+									$(`#${item.id} .note-text`).toggleClass(
+										'note-text-short',
+										2000
+									);
 								}}
 							>
 								<i className="arrow-switch d-none fas fa-angle-double-down" />
@@ -86,17 +96,23 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 						</div>
 						<div className="note-date">
 							{item.updatedAt === item.createdAt ? (
-								""
+								''
 							) : (
 								<span>
-									<i className="far fa-calendar-alt text-primary" title="updated" />
-									{"   " + getDateNormed(item.updatedAt)}
+									<i
+										className="far fa-calendar-alt text-primary"
+										title="updated"
+									/>
+									{'   ' + getDateNormed(item.updatedAt)}
 									<span className="date-devision"> | </span>
 								</span>
 							)}
 							<span>
-								<i className="fas fa-calendar-alt text-info" title="created" />
-								{"   " + getDateNormed(item.createdAt)}
+								<i
+									className="fas fa-calendar-alt text-info"
+									title="created"
+								/>
+								{'   ' + getDateNormed(item.createdAt)}
 							</span>
 						</div>
 					</div>
@@ -110,22 +126,22 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 							<span
 								className="text-success"
 								onClick={() => {
-									handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_NOTE)
+									handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_NOTE);
 									// сохраняем id удаляемой Note
-									handlerCurrentValue("saveIdEditedNote", item.id)
-									$("#modal-editNote").modal("show")
+									handlerCurrentValue('saveIdEditedNote', item.id);
+									$('#modal-editNote').modal('show');
 								}}
 							>
 								<i className="fas fa-edit" />
 							</span>
-							{"  "}
+							{'  '}
 							<span
 								className="text-danger"
 								onClick={() => {
-									handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_NOTE)
+									handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_NOTE);
 									// сохраняем id удаляемой Note
-									handlerCurrentValue("saveIdRemovedNote", item.id)
-									$("#modal-removeItem").modal("show")
+									handlerCurrentValue('saveIdRemovedNote', item.id);
+									$('#modal-removeItem').modal('show');
 								}}
 							>
 								<i className="fas fa-trash-alt" />
@@ -133,14 +149,14 @@ const ItemNotes: React.FC<INoteItemProps> = props => {
 						</div>
 					</div>
 				</div>
-			)
-		})
+			);
+		});
 	}
 	return (
 		<Scrollbar style={{ height: heightDisplay - 180 }}>
 			{NotesList}
 		</Scrollbar>
-	)
-}
+	);
+};
 
-export { ItemNotes }
+export { ItemNotes };

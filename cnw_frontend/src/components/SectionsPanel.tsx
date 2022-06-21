@@ -1,8 +1,8 @@
-import * as React from "react"
-import $ from "jquery"
-import { CONSTANTS } from "../constants"
-import "../styles/SectionsPanel.sass"
-import { SectionSlider } from "./SectionSlider"
+import * as React from 'react';
+import $ from 'jquery';
+import { CONSTANTS } from '../constants';
+import { SectionSlider } from './SectionSlider';
+import '../styles/SectionsPanel.sass';
 // https://github.com/xobotyi/react-scrollbars-custom/tree/master
 
 interface ISectionsPanelProps {
@@ -16,7 +16,7 @@ interface ISectionsPanelProps {
 	widthDisplay: number;
 }
 
-export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
+export const SectionsPanel: React.FC<ISectionsPanelProps> = (props) => {
 	const {
 		sections,
 		lang,
@@ -26,31 +26,31 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 		handlerValueFilters,
 		resetHighlightItem,
 		widthDisplay,
-	} = props
+	} = props;
 
-	let listSections: any = ""
-	let isSliderShow: boolean = false
-	let infinite: boolean = true
-	let slidesToShow: number = 1
-	let slidesToScroll: number = 1
+	let listSections: any = '';
+	let isSliderShow: boolean = false;
+	let infinite: boolean = true;
+	let slidesToShow: number = 1;
+	let slidesToScroll: number = 1;
 
 	if (widthDisplay > 768 && sections.length > 4) {
-		slidesToShow = 3
-		slidesToScroll = 3
-		isSliderShow = true
+		slidesToShow = 3;
+		slidesToScroll = 3;
+		isSliderShow = true;
 	} else if (
 		widthDisplay < 768 &&
 		widthDisplay > 510 &&
 		sections.length > 2
 	) {
-		slidesToShow = 2
-		slidesToScroll = 2
-		isSliderShow = true
+		slidesToShow = 2;
+		slidesToScroll = 2;
+		isSliderShow = true;
 	} else if (widthDisplay < 510 && sections.length > 1) {
-		slidesToShow = 1
-		slidesToScroll = 1
-		isSliderShow = true
-		infinite = false
+		slidesToShow = 1;
+		slidesToScroll = 1;
+		isSliderShow = true;
+		infinite = false;
 	}
 
 	if (sections && sections.length !== 0) {
@@ -59,39 +59,43 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 				<div
 					key={index}
 					className={`nav-item section-tab-${theme}`}
-					onClick={ev => {
-						let elem = $(ev.target)
-						if ($(elem).hasClass("fas")) elem = $(elem).parent()
-						resetHighlightItem(elem, $(".section-panel .nav-item"), "clearItems")
-						handlerValueFilters("filterSection", item.id)
+					onClick={(ev) => {
+						let elem = $(ev.target);
+						if ($(elem).hasClass('fas')) elem = $(elem).parent();
+						resetHighlightItem(
+							elem,
+							$('.section-panel .nav-item'),
+							'clearItems'
+						);
+						handlerValueFilters('filterSection', item.id);
 					}}
 				>
 					<span className="nav-link">
-						{item.nameSection}{" "}
+						{item.nameSection}{' '}
 						<i
 							className="fas fa-edit text-success"
 							onClick={() => {
-								handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_SECTION)
+								handlerHeaderPopup(CONSTANTS[lang].HEADER_EDIT_SECTION);
 								// сохраняем value input редактируемой section
-								handlerCurrentValue("editNameSection", item.nameSection)
+								handlerCurrentValue('editNameSection', item.nameSection);
 								// сохраняем id редактируемой section
-								handlerCurrentValue("saveIdEditedSection", item.id)
-								$("#modal-editSection").modal("show")
+								handlerCurrentValue('saveIdEditedSection', item.id);
+								$('#modal-editSection').modal('show');
 							}}
-						/>{" "}
+						/>{' '}
 						<i
 							className="fas fa-trash-alt text-danger"
 							onClick={() => {
-								handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_SECTION)
+								handlerHeaderPopup(CONSTANTS[lang].HEADER_REMOVE_SECTION);
 								// сохраняем id удаляемой section
-								handlerCurrentValue("saveIdRemovedSection", item.id)
-								$("#modal-removeItem").modal("show")
+								handlerCurrentValue('saveIdRemovedSection', item.id);
+								$('#modal-removeItem').modal('show');
 							}}
 						/>
 					</span>
 				</div>
-			)
-		})
+			);
+		});
 	}
 
 	return (
@@ -104,13 +108,13 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						>
 							<span
 								className="nav-link"
-								onClick={ev => {
+								onClick={(ev) => {
 									resetHighlightItem(
 										ev.target,
-										$(".section-panel .nav-item"),
-										"clearItems"
-									)
-									handlerValueFilters("filterSection", "All")
+										$('.section-panel .nav-item'),
+										'clearItems'
+									);
+									handlerValueFilters('filterSection', 'All');
 								}}
 							>
 								{CONSTANTS[lang].BUTTON_ALL}
@@ -121,8 +125,8 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 							<span
 								className="nav-link"
 								onClick={() => {
-									handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_SECTION)
-									$("#modal-addSection").modal("show")
+									handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_SECTION);
+									$('#modal-addSection').modal('show');
 								}}
 							>
 								<i className="fas fa-plus" />
@@ -138,13 +142,13 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 						>
 							<span
 								className="nav-link"
-								onClick={ev => {
+								onClick={(ev) => {
 									resetHighlightItem(
 										ev.target,
-										$(".section-panel .nav-item"),
-										"clearItems"
-									)
-									handlerValueFilters("filterSection", "All")
+										$('.section-panel .nav-item'),
+										'clearItems'
+									);
+									handlerValueFilters('filterSection', 'All');
 								}}
 							>
 								{CONSTANTS[lang].BUTTON_ALL}
@@ -154,9 +158,9 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 							<span
 								className="nav-link"
 								onClick={() => {
-									console.log("ev.target")
-									handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_SECTION)
-									$("#modal-addSection").modal("show")
+									console.log('ev.target');
+									handlerHeaderPopup(CONSTANTS[lang].HEADER_ADD_SECTION);
+									$('#modal-addSection').modal('show');
 								}}
 							>
 								<i className="fas fa-plus" />
@@ -172,5 +176,5 @@ export const SectionsPanel: React.FC<ISectionsPanelProps> = props => {
 				</div>
 			)}
 		</div>
-	)
-}
+	);
+};

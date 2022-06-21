@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { IUserProfile } from '../types';
 import $ from 'jquery';
+import { IUserProfile } from '../types';
 import { CONSTANTS } from '../constants';
 
 import '../styles/UserPanel.sass';
