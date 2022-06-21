@@ -1,4 +1,4 @@
-### Version 1.6.1 from 21/06/2022
+### Version 1.6.1 from 22/06/2022
 
 - Переработано подключение к fontawesome
 - Добавлена докеризация
@@ -35,4 +35,3 @@ In the project directory, you can
 
 - cd cnw_backend
 - npm run dev
-
