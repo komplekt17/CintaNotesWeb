@@ -1,0 +1,60 @@
+@import settings
+
+.app-side-tags
+  position: fixed !important
+  top: 87px !important
+
+.app-side-tags-mobile
+  display: none
+
+.app-side-tags .nav-link
+  padding: 0.2rem 1rem !important
+
+.tags-item
+  cursor: pointer
+
+.app-side-tags-night, 
+.app-side-tags-night .ScrollbarsCustom-Wrapper
+  background-color: $bg-night
+  color: $fc-night
+
+.app-side-tags-light, 
+.app-side-tags-light .ScrollbarsCustom-Wrapper
+  background-color: $bg-light
+  color: $fc-light
+
+.tags-item-active-night
+  background-color: $bg-night-hover
+
+.tags-item-active-light
+  background-color: $bg-light-hover
+
+.app-side-tags-night .nav-item:hover .name_tag-btns,
+.app-side-tags-light .nav-item:hover .name_tag-btns
+  display: block
+
+.app-side-tags-night .tags-item:hover
+  background-color: $bg-night-hover
+
+.app-side-tags-light .tags-item:hover
+  background-color: $bg-light-hover
+
+.app-side-tags-night .nav-item:hover .name_tag-qwt,
+.app-side-tags-light .nav-item:hover .name_tag-qwt
+  display: none
+
+.name_tag-btns 
+  display: none
+
+@media (max-width: 768px)
+
+  .app-side-tags
+    display: none
+
+  .app-side-tags-mobile
+    display: block;
+    width: 270px !important;
+    height: 100%;
+    border-right: 2px solid #863c8391;
+    z-index: 3;
+    position: fixed !important

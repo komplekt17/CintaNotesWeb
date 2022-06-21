@@ -1,0 +1,36 @@
+{
+	"name": "cnw_server",
+	"version": "1.4.1",
+	"description": "",
+	"main": "./src/server.js",
+	"keywords": [],
+	"author": "red-partisan<komplekt_17@mail.ru>",
+	"license": "ISC",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.19.0",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"jsonwebtoken": "^8.5.1",
+		"mysql2": "^2.0.2",
+		"nodemailer": "^6.4.2",
+		"sequelize": "^5.21.2",
+		"validator": "^12.1.0",
+		"yenv": "^2.1.1"
+	},
+	"scripts": {
+		"start": "babel-node ./src/server.js",
+		"server": "nodemon --exec babel-node ./src/server.js",
+		"client": "npm run start --prefix ../cnw_frontend",
+		"dev": "concurrently \"npm run server\" \"npm run client\"",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.4.5",
+		"@babel/core": "^7.4.5",
+		"@babel/node": "^7.4.5",
+		"@babel/preset-env": "^7.4.5",
+		"concurrently": "^5.2.0",
+		"nodemon": "^2.0.4"
+	}
+}
