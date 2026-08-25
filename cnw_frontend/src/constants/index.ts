@@ -1,22 +1,19 @@
-// import yenv from 'yenv';
-
 interface IConstants {
 	[key: string]: {
 		[key: string]: string;
 	};
 }
 
-// const env = yenv('enw_cnw.yaml', { env: 'development' });
+const isProduction = process.env.NODE_ENV === 'production';
+export const SERVER_URI = isProduction
+	? 'http://100.94.207.20:5021'
+	: 'http://localhost:5021';
 
-const SERVER_URI = 'http://77.87.213.246:5021';
-// const SERVER_URI = `${process.env.SITE_HOST}`;
-// const SERVER_URI = `http://localhost:5021`;
-// const SERVER_URI = `${env.SITE_HOST}:${env.PORT_SERVICE_API}`;
-const DELAY_MODAL_ALERT = 3000;
-const NAME_LOCAL_STORAGE = 'data';
-const DEMO_LOGIN = 'demo@demo.com';
-const DEMO_PASS = 'demo';
-const CONSTANTS: IConstants = {
+export const DELAY_MODAL_ALERT = 3000;
+export const NAME_LOCAL_STORAGE = 'data';
+export const DEMO_LOGIN = 'demo@demo.com';
+export const DEMO_PASS = 'demo';
+export const CONSTANTS: IConstants = {
 	ru: {
 		ERROR_TEXT: 'Нет элементов для отображения',
 		FEEDBACK_EMAIL: 'Введите ваш емайл (мин 4 символа)',
@@ -153,13 +150,4 @@ const CONSTANTS: IConstants = {
 		MENU_LOGOUT: 'LogOut',
 		MENU_CHANGE_PASS: 'Change pass',
 	},
-};
-
-export {
-	CONSTANTS,
-	SERVER_URI,
-	DELAY_MODAL_ALERT,
-	NAME_LOCAL_STORAGE,
-	DEMO_LOGIN,
-	DEMO_PASS,
 };

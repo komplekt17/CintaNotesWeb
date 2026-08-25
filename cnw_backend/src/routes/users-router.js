@@ -3,7 +3,6 @@ import validator from 'validator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
-
 import { User, Section, Tag, Note } from '../models';
 import {
 	SERVICE_HOST,
@@ -16,8 +15,8 @@ import {
 export const usersRouter = Router();
 
 // Хешируем пароль
-const getHashPassUser = (pass) => {
-	const passHashed = bcrypt.hash(pass, 8);
+const getHashPassUser = async (pass) => {
+	const passHashed = await bcrypt.hash(pass, 8);
 	return passHashed;
 };
 
@@ -94,58 +93,55 @@ const getRundomPass = () => {
 
 // добавление нового user
 usersRouter.post('/create', async (req, res) => {
-	const user = new User({
-		login: req.body.login,
-		pass: await getHashPassUser(req.body.pass),
-		status: req.body.status,
-		lang: req.body.lang,
-		theme: req.body.theme,
-		token: await generateAuthToken(),
-	});
+	try {
+		const { login, pass, status, lang, theme } = req.body;
 
-	// проверяем на валидность логин
-	const isLoginEmail = validator.isEmail(user.login);
-	// если логин валиден, проверяем его уникальность
-	const isExistLogin = await User.findOne({
-		where: { login: user.login },
-	});
-	// если логин валиден
-	if (isLoginEmail) {
-		// если логин уникальный и еще не существует
-		if (!isExistLogin) {
-			await user
-				.save()
-				.then(() => {
-					const data = {
-						user,
-						typeMsg: 'success',
-						message: 'NewUser was created successful!',
-					};
-					return res.status(200).json(data);
-				})
-				.catch((error) => {
-					return res.status(400).json({
-						error,
-						message: 'User not created!',
-					});
+		// Сначала все проверки
+		const isLoginEmail = validator.isEmail(login);
+		if (!isLoginEmail) {
+			return res
+				.status(201)
+				.json({
+					typeMsg: 'error',
+					message: 'Login is not email. User not created!',
 				});
 		}
-		// если логин не уникальный и уже существует
-		else {
-			const data = {
-				typeMsg: 'error',
-				message: 'This Login is already busy. User not created!',
-			};
-			return res.status(201).json(data);
+
+		const isExistLogin = await User.findOne({ where: { login } });
+		if (isExistLogin) {
+			return res
+				.status(201)
+				.json({
+					typeMsg: 'error',
+					message: 'This Login is already busy. User not created!',
+				});
 		}
-	}
-	// если логин не валиден
-	else {
-		const data = {
-			typeMsg: 'error',
-			message: 'Login is not email. User not created!',
-		};
-		return res.status(201).json(data);
+
+		// Только если всё ок, хешируем и создаем
+		const hashedPass = await getHashPassUser(pass);
+		const user = new User({
+			login,
+			pass: hashedPass,
+			status,
+			lang,
+			theme,
+			token: '', // Пока пустой
+		});
+
+		await user.save(); // Сохраняем, чтобы база присвоила ID
+
+		// Генерируем токен с реальным ID и обновляем запись
+		user.token = generateAuthToken(user);
+		await user.save();
+
+		return res.status(200).json({
+			user,
+			typeMsg: 'success',
+			message: 'NewUser was created successful!',
+		});
+	} catch (error) {
+		console.error('Ошибка создания:', error);
+		return res.status(400).json({ error, message: 'User not created!' });
 	}
 });
 
