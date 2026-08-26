@@ -12,7 +12,7 @@ export const DATABASE_DIALECT = env.DATABASE_DIALECT;
 export const SERVICE_HOST = env.SERVICE_HOST;
 export const SERVICE_USER = env.SERVICE_USER;
 export const SERVICE_PASS = env.SERVICE_PASS;
-export const TYPE_ENV = env.TYPE_ENV;
+export const TYPE_ENV = env.NODE_ENV;
 export const SITE_NAME = env.SITE_NAME;
 export const JWT_KEY = env.JWT_KEY;
 

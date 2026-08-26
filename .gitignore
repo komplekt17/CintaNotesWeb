@@ -13,6 +13,7 @@ cnw_frontend/public/images/
 cnw_frontend/coverage
 
 #common files
+*.*production
 *.*yaml
 *.*yml
 *.*sql
