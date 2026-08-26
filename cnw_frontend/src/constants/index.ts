@@ -4,10 +4,7 @@ interface IConstants {
 	};
 }
 
-const isProduction = process.env.NODE_ENV === 'production';
-export const SERVER_URI = isProduction
-	? 'http://100.94.207.20:5021'
-	: 'http://localhost:5021';
+export const SERVER_URI = process.env.REACT_APP_SERVER_URI || 'http://localhost:5021';
 
 export const DELAY_MODAL_ALERT = 3000;
 export const NAME_LOCAL_STORAGE = 'data';

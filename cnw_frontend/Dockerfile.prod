@@ -12,4 +12,4 @@ COPY . .
 
 # RUN npm run build
 
-RUN npm install -g serve
+RUN npm install -g serve@11.3.2

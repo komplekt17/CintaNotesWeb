@@ -99,22 +99,18 @@ usersRouter.post('/create', async (req, res) => {
 		// Сначала все проверки
 		const isLoginEmail = validator.isEmail(login);
 		if (!isLoginEmail) {
-			return res
-				.status(201)
-				.json({
-					typeMsg: 'error',
-					message: 'Login is not email. User not created!',
-				});
+			return res.status(201).json({
+				typeMsg: 'error',
+				message: 'Login is not email. User not created!',
+			});
 		}
 
 		const isExistLogin = await User.findOne({ where: { login } });
 		if (isExistLogin) {
-			return res
-				.status(201)
-				.json({
-					typeMsg: 'error',
-					message: 'This Login is already busy. User not created!',
-				});
+			return res.status(201).json({
+				typeMsg: 'error',
+				message: 'This Login is already busy. User not created!',
+			});
 		}
 
 		// Только если всё ок, хешируем и создаем
